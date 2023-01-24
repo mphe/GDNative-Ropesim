@@ -103,15 +103,45 @@ void NativeRopeServer::_simulate(Node2D* rope, float delta)
     Ref<Curve> damping_curve = rope->get("damping_curve");
     float gravity = rope->get("gravity");
     float damping = rope->get("damping");
+    float stiffness = rope->get("stiffness");
     int num_constraint_iterations = rope->get("num_constraint_iterations");
     PoolRealArray seg_lengths = rope->call("get_segment_lengths");
+    Vector2 parent_seg_dir = rope->get_global_transform().xform(Vector2::DOWN).normalized();
 
     // Simulate
     for (size_t i = 1; i < points.size(); ++i)
     {
         Vector2 vel = points[i] - oldpoints[i];
-        oldpoints.set(i, points[i]);
         float dampmult = damping_curve.is_valid() ? damping_curve->interpolate_baked(get_point_perc(i, points)) : 1.0;
+
+        if (stiffness > 0)
+        {
+            //  parent_seg_dir        parent_seg_tangent
+            //  |                     -->
+            //  |                     \   seg_dir
+            //  V                      \
+            //  \  seg_dir              V
+            //   \
+            //    V
+            Vector2 seg_dir = (points[i] - oldpoints[i - 1]).normalized();
+            Vector2 parent_seg_tangent = parent_seg_dir.tangent();
+            float angle = std::abs(seg_dir.dot(parent_seg_dir));
+
+            // The force directs orthogonal to the current segment
+            // TODO: Ask a physicist if this is physically correct.
+            Vector2 force_dir = seg_dir.tangent();
+
+            // Check the direction to the parent segment and flip the vector so ensure it always
+            // points into the right direction.
+            if (parent_seg_tangent.dot(seg_dir) > 0)
+                force_dir = -force_dir;
+
+            // Scale the force the further the segment bends.
+            vel += force_dir * (angle / 3.1415) * stiffness;
+            parent_seg_dir = seg_dir;
+        }
+
+        oldpoints.set(i, points[i]);
         points.set(i, points[i] + damp_vec(vel, damping * dampmult, delta) + Vector2(0, gravity * delta));
     }
 
