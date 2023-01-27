@@ -4,6 +4,7 @@
 #include <Curve.hpp>
 #include <algorithm>
 #include <OS.hpp>
+#include <Engine.hpp>
 
 using namespace godot;
 
@@ -25,6 +26,9 @@ void NativeRopeServer::_register_methods()
     register_method("unregister_rope", &NativeRopeServer::unregister_rope);
     register_method("get_num_ropes", &NativeRopeServer::get_num_ropes);
     register_method("get_computation_time", &NativeRopeServer::get_computation_time);
+    register_method("set_update_in_editor", &NativeRopeServer::set_update_in_editor);
+    register_method("get_update_in_editor", &NativeRopeServer::get_update_in_editor);
+    register_property<NativeRopeServer, bool>("update_in_editor", &NativeRopeServer::set_update_in_editor, &NativeRopeServer::get_update_in_editor, false);
 }
 
 NativeRopeServer::NativeRopeServer()
@@ -38,7 +42,8 @@ NativeRopeServer::~NativeRopeServer()
 
 void NativeRopeServer::_init()
 {
-    // initialize any variables here
+    _last_time = 0.0;
+    _update_in_editor = false;
     _start_stop_process();
 }
 
@@ -82,11 +87,27 @@ void NativeRopeServer::unregister_rope(Node2D* rope)
     _start_stop_process();
 }
 
+void NativeRopeServer::set_update_in_editor(bool value)
+{
+    _update_in_editor = value;
+    _start_stop_process();
+}
+
+bool NativeRopeServer::get_update_in_editor() const
+{
+    return _update_in_editor;
+}
+
 void NativeRopeServer::_start_stop_process()
 {
-    set_physics_process(!_ropes.empty());
     if (_ropes.empty())
+    {
         _last_time = 0.f;
+        set_physics_process(false);
+    }
+    else if (!Engine::get_singleton()->is_editor_hint() || get_update_in_editor())
+        set_physics_process(true);
+
     // if (is_physics_processing())
     //     Godot::print("RopeServer deactivated");
     // else

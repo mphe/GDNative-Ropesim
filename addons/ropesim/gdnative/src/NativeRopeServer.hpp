@@ -25,6 +25,9 @@ namespace godot
             void register_rope(Node2D* rope);
             void unregister_rope(Node2D* rope);
 
+            void set_update_in_editor(bool value);
+            bool get_update_in_editor() const;
+
             int get_num_ropes() const;
             float get_computation_time() const;
 
@@ -35,6 +38,7 @@ namespace godot
         private:
             std::vector<Node2D*> _ropes;
             float _last_time;
+            bool _update_in_editor;
     };
 
 }
