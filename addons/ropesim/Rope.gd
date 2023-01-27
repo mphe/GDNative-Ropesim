@@ -7,7 +7,7 @@ export var draw_debug: bool = false setget _set_draw_debug
 export var line_width: float = 2 setget _set_line_width
 export var color: Color = Color.white setget _set_color
 export var color_gradient: Gradient setget _set_gradient
-export var preview_in_editor: bool = false setget _set_preview
+export var render_in_editor: bool = false setget _set_preview
 export var num_segments: int = 10 setget _set_num_segs
 export var rope_length: float = 100 setget _set_length
 export var segment_length_distribution: Curve setget _set_seg_dist
@@ -95,8 +95,8 @@ func _setup() -> void:
 
 
 func _start_stop_process() -> void:
-    var should_simulate = not pause and (not Engine.editor_hint or preview_in_editor)
-    var should_render = not pause and (render_line or draw_debug) and ((Engine.editor_hint and preview_in_editor) or (not Engine.editor_hint and auto_update_render))
+    var should_simulate = not pause
+    var should_render = not pause and (render_line or draw_debug) and ((Engine.editor_hint and render_in_editor) or (not Engine.editor_hint and auto_update_render))
     set_physics_process(should_render)
     if should_simulate:
         _register_server()
@@ -231,7 +231,7 @@ func _set_length(value: float):
     _setup()
 
 func _set_preview(value: bool):
-    preview_in_editor = value
+    render_in_editor = value
     _setup()
 
 func _set_draw_debug(value: bool):
