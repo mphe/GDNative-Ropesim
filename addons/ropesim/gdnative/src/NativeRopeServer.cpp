@@ -29,6 +29,8 @@ void NativeRopeServer::_register_methods()
     register_method("set_update_in_editor", &NativeRopeServer::set_update_in_editor);
     register_method("get_update_in_editor", &NativeRopeServer::get_update_in_editor);
     register_property<NativeRopeServer, bool>("update_in_editor", &NativeRopeServer::set_update_in_editor, &NativeRopeServer::get_update_in_editor, false);
+    register_signal<NativeRopeServer>((char*)"on_post_update");
+    register_signal<NativeRopeServer>((char*)"on_pre_update");
 }
 
 NativeRopeServer::NativeRopeServer()
@@ -44,47 +46,50 @@ void NativeRopeServer::_init()
 {
     _last_time = 0.0;
     _update_in_editor = false;
+}
+
+void NativeRopeServer::_enter_tree()
+{
     _start_stop_process();
 }
 
 void NativeRopeServer::_physics_process(float delta)
 {
+    emit_signal("on_pre_update");
     auto start = OS::get_singleton()->get_ticks_usec();
+
     for (Node2D* rope : _ropes)
         _simulate(rope, delta);
+
     _last_time = (OS::get_singleton()->get_ticks_usec() - start) / 1000.f;
+    emit_signal("on_post_update");
 }
 
 void NativeRopeServer::register_rope(Node2D* rope)
 {
     _ropes.emplace_back(rope);
-    // Godot::print("Rope registered: " + String::num_int64(_ropes.size()));
     _start_stop_process();
+    // Godot::print("Rope registered: " + String::num_int64(_ropes.size()));
 }
 
 void NativeRopeServer::unregister_rope(Node2D* rope)
 {
-    if (!_ropes.empty() && rope == _ropes.back())
+    if (_ropes.empty() || rope != _ropes.back())
     {
-        _ropes.pop_back();
-        _start_stop_process();
-        // Godot::print("Rope unregistered: " + String::num_int64(_ropes.size()));
-        return;
+        auto it = std::find(_ropes.begin(), _ropes.end(), rope);
+        if (it == _ropes.end())
+        {
+            WARN_PRINT("Unregistering non-registered Rope");
+            return;
+        }
+
+        // Swap and pop
+        (*it) = _ropes.back();
     }
 
-    auto it = std::find(_ropes.begin(), _ropes.end(), rope);
-    if (it == _ropes.end())
-    {
-        WARN_PRINT("Unregistering non-registered Rope");
-        return;
-    }
-
-    // Swap and pop
-    (*it) = _ropes.back();
     _ropes.pop_back();
-
-    // Godot::print("Rope unregistered: " + String::num_int64(_ropes.size()));
     _start_stop_process();
+    // Godot::print("Rope unregistered: " + String::num_int64(_ropes.size()));
 }
 
 void NativeRopeServer::set_update_in_editor(bool value)
@@ -100,13 +105,9 @@ bool NativeRopeServer::get_update_in_editor() const
 
 void NativeRopeServer::_start_stop_process()
 {
-    if (_ropes.empty())
-    {
-        _last_time = 0.f;
-        set_physics_process(false);
-    }
-    else if (!Engine::get_singleton()->is_editor_hint() || get_update_in_editor())
-        set_physics_process(true);
+    _last_time = 0.f;
+    set_physics_process(!_ropes.empty()
+            && (!Engine::get_singleton()->is_editor_hint() || get_update_in_editor()));
 
     // if (is_physics_processing())
     //     Godot::print("RopeServer deactivated");
@@ -158,6 +159,7 @@ void NativeRopeServer::_simulate(Node2D* rope, float delta)
                 force_dir = -force_dir;
 
             // Scale the force the further the segment bends.
+            // TODO: Ask a physicist if this is physically correct.
             vel += force_dir * (angle / 3.1415) * stiffness;
             parent_seg_dir = seg_dir;
         }

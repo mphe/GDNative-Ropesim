@@ -19,6 +19,7 @@ namespace godot
             static void _register_methods();
 
             void _init();
+            void _enter_tree();
 
             void _physics_process(float delta);
 
