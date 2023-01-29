@@ -5,17 +5,31 @@ const MENU_INDEX_UPDATE_IN_EDITOR = 0
 
 var _menu_toolbox: HBoxContainer
 var _menu_popup: PopupMenu
+
 var _NativeRopeServer: Node
+var _Rope
+var _RopeAnchor
+var _RopeHandle
+var _RopeRendererLine2D
 
 func _enter_tree() -> void:
     add_autoload_singleton("NativeRopeServer", "res://addons/ropesim/NativeRopeServer.gdns")
 
     # It takes a frame until the autoload exists in the tree.
-    # We need to wait because subsequent code requires NativeRopeServer autoload to exist.
+    # We need to wait because subsequent code requires the NativeRopeServer autoload to exist.
     # See also here: https://github.com/godotengine/godot/issues/30064
     yield(get_tree(), "idle_frame")
+
+    # _NativeRopeServer = Engine.get_singleton("NativeRopeServer")  # Doesn't work for some reason
     _NativeRopeServer = get_node("/root/NativeRopeServer")
-    # _NativeRopeServer = Engine.get_singleton("NativeRopeServer")  # NOTE: Doesn't work for some reason
+
+    # We can't reference class names directly because of dependencies issues when loading the Plugin.
+    # plugin.gd -> Rope.gd -> NativeRopeServer -> NativeRopeServer hasn't been loaded yet
+    # -> Rope.gd Error -> plugin.gd Error
+    _Rope = load("res://addons/ropesim/Rope.gd")
+    _RopeAnchor = load("res://addons/ropesim/RopeAnchor.gd")
+    _RopeHandle = load("res://addons/ropesim/RopeHandle.gd")
+    _RopeRendererLine2D = load("res://addons/ropesim/RopeRendererLine2D.gd")
 
     _build_gui()
 
@@ -28,7 +42,10 @@ func _exit_tree() -> void:
 func handles(object: Object) -> bool:
     if _menu_toolbox:
         _menu_toolbox.hide()
-    return object is RopeBase
+    return object is _Rope \
+        or object is _RopeAnchor \
+        or object is _RopeHandle \
+        or object is _RopeRendererLine2D
 
 
 func edit(object: Object) -> void:
