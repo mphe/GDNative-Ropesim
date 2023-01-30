@@ -1,5 +1,0 @@
-*.idx
-*.dblite
-*.os
-*.gdb_history
-compile_commands.json

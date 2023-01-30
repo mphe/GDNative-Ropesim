@@ -1,0 +1,76 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=4
+
+_global_script_classes=[ {
+"base": "RopeBase",
+"class": "Rope",
+"language": "GDScript",
+"path": "res://addons/ropesim/Rope.gd"
+}, {
+"base": "Position2D",
+"class": "RopeAnchor",
+"language": "GDScript",
+"path": "res://addons/ropesim/RopeAnchor.gd"
+}, {
+"base": "Node2D",
+"class": "RopeBase",
+"language": "GDScript",
+"path": "res://addons/ropesim/RopeBase.gd"
+}, {
+"base": "Position2D",
+"class": "RopeHandle",
+"language": "GDScript",
+"path": "res://addons/ropesim/RopeHandle.gd"
+}, {
+"base": "MeshInstance2D",
+"class": "RopeRenderer",
+"language": "GDScript",
+"path": "res://addons/ropesim/RopeRenderer.gd"
+}, {
+"base": "Line2D",
+"class": "RopeRendererLine2D",
+"language": "GDScript",
+"path": "res://addons/ropesim/RopeRendererLine2D.gd"
+}, {
+"base": "Node",
+"class": "RopeToolHelper",
+"language": "GDScript",
+"path": "res://addons/ropesim/RopeToolHelper.gd"
+} ]
+_global_script_class_icons={
+"Rope": "",
+"RopeAnchor": "",
+"RopeBase": "",
+"RopeHandle": "",
+"RopeRenderer": "",
+"RopeRendererLine2D": "",
+"RopeToolHelper": ""
+}
+
+[application]
+
+config/name="ropesim example"
+config/icon="res://icon.png"
+
+[autoload]
+
+NativeRopeServer="*res://addons/ropesim/NativeRopeServer.gdns"
+
+[editor_plugins]
+
+enabled=PoolStringArray( "res://addons/ropesim/plugin.cfg" )
+
+[gui]
+
+common/drop_mouse_on_gui_input_disabled=true
+
+[physics]
+
+common/enable_pause_aware_picking=true
