@@ -128,7 +128,7 @@ void NativeRopeServer::_simulate(Node2D* rope, float delta)
     float stiffness = rope->get("stiffness");
     int num_constraint_iterations = rope->get("num_constraint_iterations");
     PoolRealArray seg_lengths = rope->call("get_segment_lengths");
-    Vector2 parent_seg_dir = rope->get_global_transform().xform(Vector2::DOWN).normalized();
+    Vector2 parent_seg_dir = rope->get_global_transform().basis_xform(Vector2::DOWN).normalized();
 
     // Simulate
     for (size_t i = 1; i < points.size(); ++i)
@@ -138,29 +138,24 @@ void NativeRopeServer::_simulate(Node2D* rope, float delta)
 
         if (stiffness > 0)
         {
-            //  parent_seg_dir        parent_seg_tangent
-            //  |                     -->
-            //  |                     \   seg_dir
-            //  V                      \
+            //  |  parent_seg_dir     --->  parent_seg_tangent
+            //  |                     \
+            //  V                      \   seg_dir
             //  \  seg_dir              V
             //   \
             //    V
-            Vector2 seg_dir = (points[i] - oldpoints[i - 1]).normalized();
+            Vector2 seg_dir = (points[i] - points[i - 1]).normalized();
             Vector2 parent_seg_tangent = parent_seg_dir.tangent();
-            float angle = std::abs(seg_dir.dot(parent_seg_dir));
+            float angle = seg_dir.angle_to(parent_seg_dir);
 
             // The force directs orthogonal to the current segment
             // TODO: Ask a physicist if this is physically correct.
             Vector2 force_dir = seg_dir.tangent();
 
-            // Check the direction to the parent segment and flip the vector so ensure it always
-            // points into the right direction.
-            if (parent_seg_tangent.dot(seg_dir) > 0)
-                force_dir = -force_dir;
-
             // Scale the force the further the segment bends.
+            // angle is signed and can be used to determine the force direction
             // TODO: Ask a physicist if this is physically correct.
-            vel += force_dir * (angle / 3.1415) * stiffness;
+            vel += force_dir * (-angle / 3.1415) * stiffness;
             parent_seg_dir = seg_dir;
         }
 
@@ -169,7 +164,7 @@ void NativeRopeServer::_simulate(Node2D* rope, float delta)
     }
 
     // Constraint
-    for (size_t _ = 0; _ < num_constraint_iterations; ++_)
+    for (int _ = 0; _ < num_constraint_iterations; ++_)
     {
         points.set(0, rope->get_global_position());
         points.set(1, points[0] + (points[1] - points[0]).normalized() * seg_lengths[0]);
