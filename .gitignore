@@ -5,6 +5,9 @@
 *.os
 *.gdb_history
 compile_commands.json
+*.dll
+*.so
+*.exe
 
 # Godot-specific ignores
 .import/
