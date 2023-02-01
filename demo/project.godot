@@ -9,7 +9,7 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "RopeBase",
+"base": "Node2D",
 "class": "Rope",
 "language": "GDScript",
 "path": "res://addons/ropesim/Rope.gd"
@@ -19,20 +19,10 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/ropesim/RopeAnchor.gd"
 }, {
-"base": "Node2D",
-"class": "RopeBase",
-"language": "GDScript",
-"path": "res://addons/ropesim/RopeBase.gd"
-}, {
 "base": "Position2D",
 "class": "RopeHandle",
 "language": "GDScript",
 "path": "res://addons/ropesim/RopeHandle.gd"
-}, {
-"base": "MeshInstance2D",
-"class": "RopeRenderer",
-"language": "GDScript",
-"path": "res://addons/ropesim/RopeRenderer.gd"
 }, {
 "base": "Line2D",
 "class": "RopeRendererLine2D",
@@ -47,9 +37,7 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "Rope": "",
 "RopeAnchor": "",
-"RopeBase": "",
 "RopeHandle": "",
-"RopeRenderer": "",
 "RopeRendererLine2D": "",
 "RopeToolHelper": ""
 }

@@ -1,5 +1,5 @@
 tool
-extends RopeBase
+extends Node2D
 class_name Rope
 
 # TODO: Split line rendering into a separate node
