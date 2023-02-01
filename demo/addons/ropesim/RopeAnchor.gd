@@ -2,10 +2,10 @@ tool
 extends Position2D
 class_name RopeAnchor
 
-export var enable: bool = true setget set_enable, get_enable
-export(NodePath) var rope_path setget set_rope_path
-export(float, 0, 1) var rope_position = 1.0
-export var apply_angle := false
+export var enable: bool = true setget set_enable, get_enable  # Enable or disable.
+export(NodePath) var rope_path setget set_rope_path  # Target rope path.
+export(float, 0, 1) var rope_position = 1.0  # Position on the rope between 0 and 1.
+export var apply_angle := false  # Also apply rotation according to the rope curvature.
 var _helper: RopeToolHelper
 
 

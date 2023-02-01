@@ -5,10 +5,10 @@ class_name RopeRendererLine2D
 const UPDATE_HOOK = "on_post_update"
 const HOOK_FUNC = "refresh"
 
-export var force_update: bool setget _force_update
-export var target_rope_path: NodePath = ".." setget set_rope_path
-export var keep_rope_position: bool = true setget _set_keep_pos
-export var auto_update: bool = true setget set_auto_update, get_auto_update
+export var force_update: bool setget _force_update  # Can be used in Editor to force regenerating.
+export var target_rope_path: NodePath = ".." setget set_rope_path  # Target rope path
+export var keep_rope_position: bool = true setget _set_keep_pos  # Render at the rope's position instead of RopeRendererLine2D's position.
+export var auto_update: bool = true setget set_auto_update, get_auto_update  # Automatically update
 var _helper: RopeToolHelper
 
 

@@ -4,21 +4,21 @@ class_name Rope
 
 # TODO: Split line rendering into a separate node
 
-export var pause: bool = false setget _set_pause
-export var num_segments: int = 10 setget _set_num_segs
-export var rope_length: float = 100 setget _set_length
-export var segment_length_distribution: Curve setget _set_seg_dist
-export var stiffness: float = 0.0
-export var gravity: float = 100
-export var damping: float = 0
-export var damping_curve: Curve
-export var num_constraint_iterations: int = 20
+export var pause: bool = false setget _set_pause  # Pause simulation
+export var num_segments: int = 10 setget _set_num_segs  # Amount of segments the rope consists of.
+export var rope_length: float = 100 setget _set_length  # The length of the rope.
+export var segment_length_distribution: Curve setget _set_seg_dist  # (Optional) Allows to non-uniformly distribute rope segment lengths. Useful to add more detail/precision to certain parts of the rope.
+export var stiffness: float = 0.0  # Stiffness forces the rope to return to its resting position.
+export var gravity: float = 100  # Gravity
+export var damping: float = 0  # Friction
+export var damping_curve: Curve  # (Optional) Apply different amounts of damping along the rope.
+export var num_constraint_iterations: int = 10  # Constraints the rope to its intended length. Less constraint iterations effectively makes the rope more elastic.
 
-export var render_debug: bool = false setget _set_draw_debug
-export var render_line: bool = true setget _set_render_line
-export var line_width: float = 2 setget _set_line_width
-export var color: Color = Color.white setget _set_color
-export var color_gradient: Gradient setget _set_gradient
+export var render_debug: bool = false setget _set_draw_debug  # Render segments for debugging debug
+export var render_line: bool = true setget _set_render_line  # Render the rope using lines.
+export var line_width: float = 2 setget _set_line_width  # Render line widht
+export var color: Color = Color.white setget _set_color  # Render color
+export var color_gradient: Gradient setget _set_gradient  # (Optional) A color gradient along the rope.
 
 var _colors := PoolColorArray()
 var _seg_lengths := PoolRealArray()
