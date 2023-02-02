@@ -8,8 +8,10 @@ The computation-heavy simulation part is written in C++, the rest in GDscript. T
 
 1. Clone or download the repository
 2. Run `git submodule update --init --recursive`
-3. [Build](#building) the library.
-4. Copy or link `demo/addons` to your project or use the provided demo project.
+3. Get the library
+    * [Build](#building) it yourself or
+    * [Download](https://github.com/mphe/GDNative-Ropesim/actions) it from the latest Github Actions workflow run and put all contained files in `demo/addons/ropesim/bin/`.
+4. Copy or symlink `demo/addons` to your project or use the provided demo project.
 5. Enable the addon in the project settings
 6. Restart Godot
 
