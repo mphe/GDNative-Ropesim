@@ -8,6 +8,7 @@ compile_commands.json
 *.dll
 *.so
 *.exe
+*.dylib
 
 # Godot-specific ignores
 .import/
