@@ -129,6 +129,7 @@ void NativeRopeServer::_simulate(Node2D* rope, float delta)
     int num_constraint_iterations = rope->get("num_constraint_iterations");
     PoolRealArray seg_lengths = rope->call("get_segment_lengths");
     Vector2 parent_seg_dir = rope->get_global_transform().basis_xform(Vector2::DOWN).normalized();
+    Vector2 last_stiffness_force;
 
     // Simulate
     for (size_t i = 1; i < points.size(); ++i)
@@ -155,7 +156,8 @@ void NativeRopeServer::_simulate(Node2D* rope, float delta)
             // Scale the force the further the segment bends.
             // angle is signed and can be used to determine the force direction
             // TODO: Ask a physicist if this is physically correct.
-            vel += force_dir * (-angle / 3.1415) * stiffness;
+            last_stiffness_force += force_dir * (-angle / 3.1415) * stiffness;
+            vel += last_stiffness_force;
             parent_seg_dir = seg_dir;
         }
 
