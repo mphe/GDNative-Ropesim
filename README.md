@@ -46,3 +46,16 @@ Following nodes exist:
 See inline comments for documentation of node properties.
 
 When one of these nodes is selected, a "Ropesim" menu appears in the editor toolbar that can be used to toggle live preview in the editor on and off.
+
+# Showcase
+
+A quick overview of how to use each node.
+
+https://user-images.githubusercontent.com/7116001/216790870-4e57fce0-7981-44f5-9963-daa1d9751abf.mp4
+
+
+
+Jellyfish with rope simulated tentacles.
+
+https://user-images.githubusercontent.com/7116001/216791913-35321ddb-ee35-44e2-85ba-0632a1123fda.mp4
+
