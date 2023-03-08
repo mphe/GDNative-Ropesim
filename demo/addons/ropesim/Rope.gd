@@ -174,6 +174,7 @@ func update_segments():
 
 # Access
 
+
 func get_num_points() -> int:
     return _points.size()
 
@@ -185,6 +186,18 @@ func get_point_index(position_percent: float) -> int:
 func get_point_perc(index: int) -> float:
     return index / float(_points.size() - 1) if _points.size() > 0 else 0.0
 
+
+func get_nearest_point_index(pos: Vector2) -> int:
+    var min_dist = 1e10
+    var idx = 0
+
+    for i in _points.size():
+        var dist = pos.distance_squared_to(_points[i])
+        if dist < min_dist:
+            min_dist = dist
+            idx = i
+
+    return idx
 
 func get_point(index: int) -> Vector2:
     return _points[index]
