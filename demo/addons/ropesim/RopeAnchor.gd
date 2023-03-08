@@ -5,6 +5,7 @@ class_name RopeAnchor
 # Gets emitted just after applying the position.
 signal on_after_update()
 
+export var force_update: bool setget _set_force_update  # Can be used in the Inspector to force an update
 export var enable: bool = true setget set_enable, get_enable  # Enable or disable.
 export(NodePath) var rope_path setget set_rope_path  # Target rope path.
 export(float, 0, 1) var rope_position = 1.0  # Position on the rope between 0 and 1.
@@ -24,14 +25,7 @@ func _ready() -> void:
 
 
 func _on_post_update() -> void:
-    var rope: Rope = _helper.target_rope
-
-    global_position = rope.get_point(rope.get_point_index(rope_position))
-    if apply_angle:
-        var a := rope.get_point(rope.get_point_index(rope_position - 0.1))
-        var b := rope.get_point(rope.get_point_index(rope_position + 0.1))
-        global_rotation = (b - a).angle()
-
+    _update()
     emit_signal("on_after_update")
 
 
@@ -47,3 +41,18 @@ func set_enable(value: bool):
 
 func get_enable() -> bool:
     return _helper.enable
+
+
+func _update() -> void:
+    var rope: Rope = _helper.target_rope
+    global_position = rope.get_point(rope.get_point_index(rope_position))
+
+    if apply_angle:
+        var a := rope.get_point(rope.get_point_index(rope_position - 0.1))
+        var b := rope.get_point(rope.get_point_index(rope_position + 0.1))
+        global_rotation = (b - a).angle()
+
+
+func _set_force_update(_val: bool) -> void:
+    if Engine.editor_hint and _helper.target_rope:
+        _update()
