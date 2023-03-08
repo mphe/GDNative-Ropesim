@@ -4,6 +4,9 @@ class_name Rope
 
 # TODO: Split line rendering into a separate node
 
+signal on_registered()
+signal on_unregistered()
+
 export var pause: bool = false setget _set_pause  # Pause simulation
 export var num_segments: int = 10 setget _set_num_segs  # Amount of segments the rope consists of.
 export var rope_length: float = 100 setget _set_length  # The length of the rope.
@@ -115,6 +118,7 @@ func _start_stop_rendering() -> void:
 func _register_server():
     if not _registered:
         NativeRopeServer.register_rope(self)
+        emit_signal("on_registered")
         if render_debug or render_line:
             NativeRopeServer.connect("on_post_update", self, "_on_post_update")  # warning-ignore: return_value_discarded
         _registered = true
@@ -123,6 +127,7 @@ func _register_server():
 func _unregister_server():
     if _registered:
         NativeRopeServer.unregister_rope(self)
+        emit_signal("on_unregistered")
         if NativeRopeServer.is_connected("on_post_update", self, "_on_post_update"):
             NativeRopeServer.disconnect("on_post_update", self, "_on_post_update")
         _registered = false

@@ -47,7 +47,8 @@ func _on_update() -> void:
 # additional_enable_requirement can be used to pass an expression that acts as an additional
 # requirement for enabling processing.
 func start_stop_process() -> void:
-    if enable and is_inside_tree() and target_rope:
+    # NOTE: It sounds smart to disable this helper if the rope is paused, but maybe there are exceptions.
+    if enable and is_inside_tree() and target_rope and not target_rope.pause:
         if not _is_registered():
             NativeRopeServer.connect(_update_hook, self, "_on_update")  # warning-ignore: return_value_discarded
     else:
@@ -60,5 +61,17 @@ func set_enable(value: bool) -> void:
 
 
 func set_target_rope(value: Rope) -> void:
+    if value == target_rope:
+        return
+
+    if target_rope and is_instance_valid(target_rope):
+        target_rope.disconnect("on_registered", self, "start_stop_process")
+        target_rope.disconnect("on_unregistered", self, "start_stop_process")
+
     target_rope = value
+
+    if target_rope and is_instance_valid(target_rope):
+        target_rope.connect("on_registered", self, "start_stop_process")  # warning-ignore: return_value_discarded
+        target_rope.connect("on_unregistered", self, "start_stop_process")  # warning-ignore: return_value_discarded
+
     start_stop_process()
