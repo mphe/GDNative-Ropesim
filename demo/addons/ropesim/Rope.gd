@@ -174,7 +174,7 @@ func get_num_points() -> int:
 
 
 func get_point_index(position_percent: float) -> int:
-    return int((get_num_points() - 1) * position_percent)
+    return int((get_num_points() - 1) * clamp(position_percent, 0, 1))
 
 
 func get_point_perc(index: int) -> float:
