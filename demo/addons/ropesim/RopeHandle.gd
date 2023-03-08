@@ -2,6 +2,9 @@ tool
 extends Position2D
 class_name RopeHandle
 
+# Gets emitted just before applying the position.
+signal on_before_update()
+
 export var enable: bool = true setget set_enable, get_enable  # Enable or disable
 export(NodePath) var rope_path setget set_rope_path  # Target rope path
 export(float, 0, 1) var rope_position = 1.0  # Position on the rope between 0 and 1.
@@ -22,6 +25,7 @@ func _ready() -> void:
 
 
 func _on_pre_update() -> void:
+    emit_signal("on_before_update")
     var rope: Rope = _helper.target_rope
     var point_index: int = rope.get_point_index(rope_position)
     var new_pos: Vector2
