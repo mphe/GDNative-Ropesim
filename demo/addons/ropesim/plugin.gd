@@ -7,10 +7,7 @@ var _menu_toolbox: HBoxContainer
 var _menu_popup: PopupMenu
 
 var _NativeRopeServer: Node
-var _Rope
-var _RopeAnchor
-var _RopeHandle
-var _RopeRendererLine2D
+var _rope_nodes = []
 
 func _enter_tree() -> void:
     add_autoload_singleton("NativeRopeServer", "res://addons/ropesim/NativeRopeServer.gdns")
@@ -26,10 +23,13 @@ func _enter_tree() -> void:
     # We can't reference class names directly because of dependencies issues when loading the Plugin.
     # plugin.gd -> Rope.gd -> NativeRopeServer -> NativeRopeServer hasn't been loaded yet
     # -> Rope.gd Error -> plugin.gd Error
-    _Rope = load("res://addons/ropesim/Rope.gd")
-    _RopeAnchor = load("res://addons/ropesim/RopeAnchor.gd")
-    _RopeHandle = load("res://addons/ropesim/RopeHandle.gd")
-    _RopeRendererLine2D = load("res://addons/ropesim/RopeRendererLine2D.gd")
+    _rope_nodes = [
+        load("res://addons/ropesim/Rope.gd"),
+        load("res://addons/ropesim/RopeAnchor.gd"),
+        load("res://addons/ropesim/RopeHandle.gd"),
+        load("res://addons/ropesim/RopeRendererLine2D.gd"),
+        load("res://addons/ropesim/RopeCollisionShapeGenerator.gd"),
+    ]
 
     _build_gui()
 
@@ -42,17 +42,18 @@ func _exit_tree() -> void:
 func handles(object: Object) -> bool:
     if _menu_toolbox:
         _menu_toolbox.hide()
-    return object is _Rope \
-        or object is _RopeAnchor \
-        or object is _RopeHandle \
-        or object is _RopeRendererLine2D
+
+    for i in _rope_nodes:
+        if object is i:
+            return true
+    return false
 
 
-func edit(object: Object) -> void:
+func edit(_object: Object) -> void:
     _menu_toolbox.show()
 
 
-func make_visible(visible: bool) -> void:
+func make_visible(_visible: bool) -> void:
     pass
 
 
@@ -67,7 +68,7 @@ func _build_gui() -> void:
     _menu_popup = menu_button.get_popup()
     _menu_popup.add_check_item("Preview in Editor")
     _menu_popup.set_item_checked(MENU_INDEX_UPDATE_IN_EDITOR, _NativeRopeServer.update_in_editor)
-    _menu_popup.connect("id_pressed", self, "_menu_item_clicked")
+    _menu_popup.connect("id_pressed", self, "_menu_item_clicked")  # warning-ignore: return_value_discarded
 
 
 func _menu_item_clicked(idx: int) -> void:

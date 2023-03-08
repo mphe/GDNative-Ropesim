@@ -42,8 +42,9 @@ Following nodes exist:
 * `RopeAnchor`: Always snaps to the specified position on the target rope. Optionally, also adapts to the rope's curvature. Can be used to attach objects to a rope.
 * `RopeHandle`: A handle that can be used to control, animate, or fixate parts of the rope.
 * `RopeRendererLine2D`: Renders a target rope using `Line2D`.
+* `RopeCollisionShapeGenerator`: Can be used e.g. in an `Area2D` to detect collisions with the target rope.
 
-See inline comments for documentation of node properties.
+See inline comments for further information and documentation of node properties.
 
 When one of these nodes is selected, a "Ropesim" menu appears in the editor toolbar that can be used to toggle live preview in the editor on and off.
 
