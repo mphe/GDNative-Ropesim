@@ -69,8 +69,8 @@ func _enable_shapes(num: int) -> void:
         for i in diff:
             var shape := CollisionShape2D.new()
             shape.shape = SegmentShape2D.new()
-            get_parent().call_deferred("add_child", shape)
             _colliders.append(shape)
+            get_parent().call_deferred("add_child", shape)
     elif diff < 0:
         for i in abs(diff):
             _colliders.pop_back().queue_free()
@@ -78,10 +78,10 @@ func _enable_shapes(num: int) -> void:
 
 func _update_shapes() -> void:
     var points = _helper.target_rope.get_points()
-    var root = _helper.target_rope.global_position
 
-    for i in range(0, _colliders.size() - 1):
-        var c: CollisionShape2D = _colliders[i]
-        var seg: SegmentShape2D = c.shape
-        seg.a = points[i] - root
-        seg.b = points[i + 1] - root
+    for i in _colliders.size():
+        var shape: CollisionShape2D = _colliders[i]
+        shape.global_transform = Transform2D(0, Vector2.ZERO)  # set_as_toplevel() is buggy with collision shapes
+        var seg: SegmentShape2D = shape.shape
+        seg.a = points[i]
+        seg.b = points[i + 1]
