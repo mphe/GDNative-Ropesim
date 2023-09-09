@@ -32,19 +32,11 @@ var _registered: bool = false
 
 # General
 
-func _init() -> void:
-    if Engine.editor_hint and is_inside_tree():
-        _ready()
-
-
-func _ready() -> void:
+func _enter_tree() -> void:
     _setup()
+
     if Engine.iterations_per_second != 60:
         push_warning("Verlet Integration is FPS dependant -> Only 60 FPS are supported")
-
-
-func _enter_tree() -> void:
-    _start_stop_process()
 
 
 func _exit_tree() -> void:
@@ -73,7 +65,7 @@ func _draw() -> void:
 
 # Logic
 
-func _setup() -> void:
+func _setup(reset: bool = true) -> void:
     if not is_inside_tree():
         return
 
@@ -97,7 +89,8 @@ func _setup() -> void:
         # simultaneously.
         damping_curve.bake()
 
-    reset()
+    if reset:
+        reset()
     _start_stop_process()
 
 
@@ -256,11 +249,11 @@ func get_segment_lengths() -> PoolRealArray:
 
 func _set_num_segs(value: int):
     num_segments = value
-    _setup()
+    _setup(false)
 
 func _set_length(value: float):
     rope_length = value
-    _setup()
+    _setup(false)
 
 func _set_draw_debug(value: bool):
     render_debug = value
