@@ -10,6 +10,8 @@ export(NodePath) var rope_path setget set_rope_path  # Target rope path
 export(float, 0, 1) var rope_position = 1.0  # Position on the rope between 0 and 1.
 export var smoothing: bool = false  # Whether to smoothly snap to RopeHandle's position instead of instantly.
 export var smoothing_speed: float = 0.5  # Smoothing speed
+## If false, only affect the nearest vertex on the rope. Otherwise, affect both surrounding points when applicable.
+export var precise: bool = false
 var _helper: RopeToolHelper
 
 
@@ -28,12 +30,27 @@ func _on_pre_update() -> void:
     emit_signal("on_before_update")
     var rope: Rope = _helper.target_rope
     var point_index: int = rope.get_point_index(rope_position)
-    var new_pos: Vector2
-    if smoothing:
-        new_pos = rope.get_point(point_index).linear_interpolate(global_position, get_physics_process_delta_time() * smoothing_speed)
+
+    # Only use this method if this is not the last point.
+    if precise and point_index < rope.get_num_points() - 1:
+        # TODO: Consider creating a corresponding function in Rope.gd for universal access, e.g. set_point_interpolated().
+        var point_pos: Vector2 = rope.get_point_interpolate(rope_position)
+        var diff := global_position - point_pos
+        var pos_a: Vector2 = rope.get_point(point_index)
+        var pos_b: Vector2 = rope.get_point(point_index + 1)
+        var new_pos_a: Vector2 = pos_a + diff
+        var new_pos_b: Vector2 = pos_b + diff
+
+        _move_point(point_index, pos_a, new_pos_a)
+        _move_point(point_index + 1, pos_b, new_pos_b)
     else:
-        new_pos = global_position
-    rope.set_point(point_index, new_pos)
+        _move_point(point_index, rope.get_point(point_index), global_position)
+
+
+func _move_point(idx: int, from: Vector2, to: Vector2) -> void:
+    if smoothing:
+        to = from.linear_interpolate(to, get_physics_process_delta_time() * smoothing_speed)
+    _helper.target_rope.set_point(idx, to)
 
 
 func set_rope_path(value: NodePath):

@@ -167,7 +167,6 @@ func update_segments():
 
 # Access
 
-
 func get_num_points() -> int:
     return _points.size()
 
@@ -178,6 +177,16 @@ func get_point_index(position_percent: float) -> int:
 
 func get_point_perc(index: int) -> float:
     return index / float(_points.size() - 1) if _points.size() > 0 else 0.0
+
+
+func get_point_interpolate(position_perc: float) -> Vector2:
+    var idx := get_point_index(position_perc)
+    if idx == _points.size() - 1:
+        return _points[idx]
+    var next := idx + 1
+    var next_perc := get_point_perc(next)
+    var perc := get_point_perc(idx)
+    return lerp(_points[idx], _points[next], (position_perc - perc) / (next_perc - perc))
 
 
 func get_nearest_point_index(pos: Vector2) -> int:
