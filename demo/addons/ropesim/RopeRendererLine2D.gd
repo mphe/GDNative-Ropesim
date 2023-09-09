@@ -9,6 +9,7 @@ export var force_update: bool setget _force_update  # Can be used in Editor to f
 export var target_rope_path: NodePath = ".." setget set_rope_path  # Target rope path
 export var keep_rope_position: bool = true setget _set_keep_pos  # Render at the rope's position instead of RopeRendererLine2D's position.
 export var auto_update: bool = true setget set_auto_update, get_auto_update  # Automatically update
+export var invert: bool = false
 var _helper: RopeToolHelper
 
 
@@ -37,7 +38,10 @@ func refresh() -> void:
         else:
             transform = Transform2D(0, -target.get_point(0))
         transform = transform.scaled(scale)
-        points = transform.xform(target.get_points())
+        var p: PoolVector2Array = transform.xform(target.get_points())
+        if invert:
+            p.invert()
+        points = p
         global_rotation = 0
 
 
