@@ -70,6 +70,7 @@ func _setup(reset: bool = true) -> void:
         return
 
     _points.resize(num_segments + 1)
+    _oldpoints.resize(num_segments + 1)
     update_colors()
     update_segments()
 
