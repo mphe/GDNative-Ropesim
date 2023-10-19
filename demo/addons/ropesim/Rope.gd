@@ -16,6 +16,9 @@ export var gravity: float = 100  # Gravity
 export var damping: float = 0  # Friction
 export var damping_curve: Curve  # (Optional) Apply different amounts of damping along the rope.
 export var num_constraint_iterations: int = 10  # Constraints the rope to its intended length. Less constraint iterations effectively makes the rope more elastic.
+export var enable_collisions: bool = false
+export(int, LAYERS_2D_PHYSICS) var collision_mask = 1
+export var max_num_slides: int = 2
 
 export var render_debug: bool = false setget _set_draw_debug  # Render segments for debugging debug
 export var render_line: bool = true setget _set_render_line  # Render the rope using lines.
