@@ -1,27 +1,21 @@
 #ifndef NATIVE_ROPE_SERVER_HPP
 #define NATIVE_ROPE_SERVER_HPP
 
-#include <Godot.hpp>
-#include <Node.hpp>
-#include <Sprite.hpp>
+#include <godot_cpp/classes/node.hpp>
+#include <godot_cpp/classes/sprite2d.hpp>
 #include <vector>
 
 namespace godot
 {
     class NativeRopeServer : public Node
     {
-        GODOT_CLASS(NativeRopeServer, Node)
+        GDCLASS(NativeRopeServer, Node)
 
         public:
             NativeRopeServer();
-            ~NativeRopeServer();
 
-            static void _register_methods();
-
-            void _init();
-            void _enter_tree();
-
-            void _physics_process(float delta);
+            void _enter_tree() override;
+            void _physics_process(double delta) override;
 
             void register_rope(Node2D* rope);
             void unregister_rope(Node2D* rope);
@@ -31,6 +25,9 @@ namespace godot
 
             int get_num_ropes() const;
             float get_computation_time() const;
+
+        protected:
+            static void _bind_methods();
 
         private:
             void _start_stop_process();
