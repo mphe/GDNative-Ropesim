@@ -6,60 +6,22 @@
 ;   [section] ; section goes between []
 ;   param=value ; assign values to parameters
 
-config_version=4
-
-_global_script_classes=[ {
-"base": "Node2D",
-"class": "Rope",
-"language": "GDScript",
-"path": "res://addons/ropesim/Rope.gd"
-}, {
-"base": "Position2D",
-"class": "RopeAnchor",
-"language": "GDScript",
-"path": "res://addons/ropesim/RopeAnchor.gd"
-}, {
-"base": "Node",
-"class": "RopeCollisionShapeGenerator",
-"language": "GDScript",
-"path": "res://addons/ropesim/RopeCollisionShapeGenerator.gd"
-}, {
-"base": "Position2D",
-"class": "RopeHandle",
-"language": "GDScript",
-"path": "res://addons/ropesim/RopeHandle.gd"
-}, {
-"base": "Line2D",
-"class": "RopeRendererLine2D",
-"language": "GDScript",
-"path": "res://addons/ropesim/RopeRendererLine2D.gd"
-}, {
-"base": "Node",
-"class": "RopeToolHelper",
-"language": "GDScript",
-"path": "res://addons/ropesim/RopeToolHelper.gd"
-} ]
-_global_script_class_icons={
-"Rope": "",
-"RopeAnchor": "",
-"RopeCollisionShapeGenerator": "",
-"RopeHandle": "",
-"RopeRendererLine2D": "",
-"RopeToolHelper": ""
-}
+config_version=5
 
 [application]
 
 config/name="ropesim example"
+run/main_scene="res://main.tscn"
+config/features=PackedStringArray("4.2")
 config/icon="res://icon.png"
 
-[autoload]
+[debug]
 
-NativeRopeServer="*res://addons/ropesim/NativeRopeServer.gdns"
+gdscript/warnings/exclude_addons=false
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/ropesim/plugin.cfg" )
+enabled=PackedStringArray("res://addons/ropesim/plugin.cfg")
 
 [gui]
 
