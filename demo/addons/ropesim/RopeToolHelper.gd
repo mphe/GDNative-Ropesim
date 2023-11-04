@@ -7,8 +7,8 @@ class_name RopeToolHelper
 const UPDATE_HOOK_POST = "on_post_update"
 const UPDATE_HOOK_PRE = "on_pre_update"
 
-export var enable: bool = true setget set_enable
-var target_rope: Rope setget set_target_rope
+@export var enable: bool = true: set = set_enable
+var target_rope: Rope: set = set_target_rope
 
 var _update_hook: String
 var _target_method: String
@@ -31,11 +31,11 @@ func _exit_tree() -> void:
 
 func _unregister_server() -> void:
     if _is_registered():
-        NativeRopeServer.disconnect(_update_hook, self, "_on_update")
+        NativeRopeServer.disconnect(_update_hook, Callable(self, "_on_update"))
 
 
 func _is_registered() -> bool:
-    return NativeRopeServer.is_connected(_update_hook, self, "_on_update")
+    return NativeRopeServer.is_connected(_update_hook, Callable(self, "_on_update"))
 
 
 func _on_update() -> void:
@@ -44,13 +44,11 @@ func _on_update() -> void:
 
 
 # Start or stop the process depending on internal variables.
-# additional_enable_requirement can be used to pass an expression that acts as an additional
-# requirement for enabling processing.
 func start_stop_process() -> void:
     # NOTE: It sounds smart to disable this helper if the rope is paused, but maybe there are exceptions.
     if enable and is_inside_tree() and target_rope and not target_rope.pause:
         if not _is_registered():
-            NativeRopeServer.connect(_update_hook, self, "_on_update")  # warning-ignore: return_value_discarded
+            NativeRopeServer.connect(_update_hook, Callable(self, "_on_update"))
     else:
         _unregister_server()
 
@@ -65,13 +63,13 @@ func set_target_rope(value: Rope) -> void:
         return
 
     if target_rope and is_instance_valid(target_rope):
-        target_rope.disconnect("on_registered", self, "start_stop_process")
-        target_rope.disconnect("on_unregistered", self, "start_stop_process")
+        target_rope.disconnect("on_registered", Callable(self, "start_stop_process"))
+        target_rope.disconnect("on_unregistered", Callable(self, "start_stop_process"))
 
     target_rope = value
 
     if target_rope and is_instance_valid(target_rope):
-        target_rope.connect("on_registered", self, "start_stop_process")  # warning-ignore: return_value_discarded
-        target_rope.connect("on_unregistered", self, "start_stop_process")  # warning-ignore: return_value_discarded
+        target_rope.connect("on_registered", Callable(self, "start_stop_process"))  # warning-ignore: return_value_discarded
+        target_rope.connect("on_unregistered", Callable(self, "start_stop_process"))  # warning-ignore: return_value_discarded
 
     start_stop_process()

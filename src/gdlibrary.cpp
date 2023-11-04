@@ -4,8 +4,12 @@
 #include <gdextension_interface.h>
 #include <godot_cpp/core/defs.hpp>
 #include <godot_cpp/godot.hpp>
+#include <godot_cpp/classes/engine.hpp>
 
 using namespace godot;
+
+static NativeRopeServer* rope_server = nullptr;
+
 
 void initialize_libropesim(ModuleInitializationLevel p_level) {
     if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
@@ -13,12 +17,18 @@ void initialize_libropesim(ModuleInitializationLevel p_level) {
     }
 
     ClassDB::register_class<NativeRopeServer>();
+    rope_server = memnew(NativeRopeServer);
+    Engine::get_singleton()->register_singleton("NativeRopeServer", rope_server);
 }
 
 void uninitialize_libropesim(ModuleInitializationLevel p_level) {
     if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
         return;
     }
+
+    Engine::get_singleton()->unregister_singleton("NativeRopeServer");
+    memdelete(rope_server);
+    rope_server = nullptr;
 }
 
 extern "C" {

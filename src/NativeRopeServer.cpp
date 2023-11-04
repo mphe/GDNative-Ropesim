@@ -1,16 +1,23 @@
 #include "NativeRopeServer.hpp"
+#include "godot_cpp/classes/window.hpp"
 #include <godot_cpp/variant/vector2.hpp>
 #include <godot_cpp/variant/packed_vector2_array.hpp>
 #include <godot_cpp/variant/packed_float32_array.hpp>
 #include <godot_cpp/classes/curve.hpp>
 #include <godot_cpp/classes/time.hpp>
 #include <godot_cpp/classes/engine.hpp>
+#include <godot_cpp/variant/utility_functions.hpp>
 #include <algorithm>
+
+// TODO: Remove std algorithm
 
 using namespace godot;
 
 const Vector2 VECTOR_ZERO = Vector2();
 const Vector2 VECTOR_DOWN = Vector2(0, 1);
+
+
+NativeRopeServer* NativeRopeServer::_singleton = nullptr;
 
 
 float get_point_perc(int index, const PackedVector2Array& points)
@@ -25,9 +32,23 @@ Vector2 damp_vec(Vector2 value, float damping_factor, float delta)
 
 
 NativeRopeServer::NativeRopeServer() :
+    _tree(nullptr),
     _last_time(0.0),
-    _update_in_editor(false)
-{ }
+    _update_in_editor(false),
+    _is_running(false)
+{
+    _singleton = this;
+}
+
+NativeRopeServer::~NativeRopeServer()
+{
+    _singleton = nullptr;
+}
+
+NativeRopeServer* NativeRopeServer::get_singleton()
+{
+    return _singleton;
+}
 
 void NativeRopeServer::_bind_methods()
 {
@@ -37,33 +58,17 @@ void NativeRopeServer::_bind_methods()
     ClassDB::bind_method(D_METHOD("get_computation_time"), &NativeRopeServer::get_computation_time);
     ClassDB::bind_method(D_METHOD("set_update_in_editor", "value"), &NativeRopeServer::set_update_in_editor);
     ClassDB::bind_method(D_METHOD("get_update_in_editor"), &NativeRopeServer::get_update_in_editor);
-    ClassDB::add_property("NativeRopeServer", PropertyInfo(Variant::BOOL, "update_in_editor"), "set_update_in_editor", "get_update_in_editor");
-    ClassDB::add_signal("NativeRopeServer", MethodInfo("on_post_update"));
-    ClassDB::add_signal("NativeRopeServer", MethodInfo("on_pre_update"));
-}
-
-void NativeRopeServer::_enter_tree()
-{
-    _start_stop_process();
-}
-
-void NativeRopeServer::_physics_process(double delta)
-{
-    emit_signal("on_pre_update");
-    auto start = Time::get_singleton()->get_ticks_usec();
-
-    for (Node2D* rope : _ropes)
-        _simulate(rope, delta);
-
-    _last_time = (Time::get_singleton()->get_ticks_usec() - start) / 1000.f;
-    emit_signal("on_post_update");
+    ClassDB::bind_method(D_METHOD("_on_physics_frame"), &NativeRopeServer::_on_physics_frame);
+    ADD_PROPERTY(PropertyInfo(Variant::BOOL, "update_in_editor"), "set_update_in_editor", "get_update_in_editor");
+    ADD_SIGNAL(MethodInfo("on_post_update"));
+    ADD_SIGNAL(MethodInfo("on_pre_update"));
 }
 
 void NativeRopeServer::register_rope(Node2D* rope)
 {
     _ropes.emplace_back(rope);
     _start_stop_process();
-    // Godot::print("Rope registered: " + String::num_int64(_ropes.size()));
+    // UtilityFunctions::print("Rope registered: " + String::num_int64(_ropes.size()));
 }
 
 void NativeRopeServer::unregister_rope(Node2D* rope)
@@ -73,7 +78,7 @@ void NativeRopeServer::unregister_rope(Node2D* rope)
         auto it = std::find(_ropes.begin(), _ropes.end(), rope);
         if (it == _ropes.end())
         {
-            WARN_PRINT("Unregistering non-registered Rope");
+            UtilityFunctions::push_warning("Unregistering non-registered Rope");
             return;
         }
 
@@ -83,7 +88,7 @@ void NativeRopeServer::unregister_rope(Node2D* rope)
 
     _ropes.pop_back();
     _start_stop_process();
-    // Godot::print("Rope unregistered: " + String::num_int64(_ropes.size()));
+    // UtilityFunctions::print("Rope unregistered: " + String::num_int64(_ropes.size()));
 }
 
 void NativeRopeServer::set_update_in_editor(bool value)
@@ -99,14 +104,47 @@ bool NativeRopeServer::get_update_in_editor() const
 
 void NativeRopeServer::_start_stop_process()
 {
-    _last_time = 0.f;
-    set_physics_process(!_ropes.empty()
-            && (!Engine::get_singleton()->is_editor_hint() || get_update_in_editor()));
+    // Since this node is not part of the tree itself, we need to grab the scene tree from outside.
+    if (!_tree)
+    {
+        _tree = Object::cast_to<SceneTree>(Engine::get_singleton()->get_main_loop());
 
-    // if (is_physics_processing())
-    //     Godot::print("RopeServer deactivated");
-    // else
-    //     Godot::print("RopeServer activated");
+        if (!_tree)
+        {
+            UtilityFunctions::push_error("MainLoop is not a SceneTree");
+            return;
+        }
+    }
+
+    _last_time = 0.f;
+    bool should_run = !_ropes.empty() && (!Engine::get_singleton()->is_editor_hint() || _update_in_editor);
+
+    if (should_run != _is_running)
+    {
+        if (should_run)
+        {
+            _tree->connect("physics_frame", Callable(this, "_on_physics_frame"));
+            _is_running = true;
+        }
+        else
+        {
+            _tree->disconnect("physics_frame", Callable(this, "_on_physics_frame"));
+            _is_running = false;
+        }
+    }
+}
+
+void NativeRopeServer::_on_physics_frame()
+{
+    emit_signal("on_pre_update");
+    double delta = _tree->get_root()->get_physics_process_delta_time();
+    auto start = Time::get_singleton()->get_ticks_usec();
+
+    for (Node2D* rope : _ropes)
+        _simulate(rope, delta);
+
+    _last_time = (Time::get_singleton()->get_ticks_usec() - start) / 1000.f;
+    emit_signal("on_post_update");
 }
 
 void NativeRopeServer::_simulate(Node2D* rope, float delta)
@@ -131,25 +169,30 @@ void NativeRopeServer::_simulate(Node2D* rope, float delta)
         Vector2 vel = points[i] - oldpoints[i];
         float dampmult = damping_curve.is_valid() ? damping_curve->sample_baked(get_point_perc(i, points)) : 1.0;
 
+        // NOTE: Asked a physicist to confirm this computation is physically accurate.
+        // He mentioned that, while it is technically correct, there is a material-dependent limit
+        // how far an object can bend before bending properties (stiffness) changes.
+        // E.g. a material might be less inclined to snap back into place at smaller bend angles, or
+        // a material might stop bending at some point, i.e. when it breaks.
+        // This implementation should probably suffice in most cases, but a more advanced
+        // implementation would include curves for stiffness in relation to segment position and
+        // for stiffness in relation to bend angle.
         if (stiffness > 0)
         {
-            //  |  parent_seg_dir     --->  parent_seg_tangent
+            //  |  parent_seg_dir     --->  parent_seg_dir.orthogonal()
             //  |                     \
             //  V                      \   seg_dir
             //  \  seg_dir              V
             //   \
             //    V
             Vector2 seg_dir = (points[i] - points[i - 1]).normalized();
-            Vector2 parent_seg_tangent = parent_seg_dir.orthogonal();
             float angle = seg_dir.angle_to(parent_seg_dir);
 
             // The force directs orthogonal to the current segment
-            // TODO: Ask a physicist if this is physically correct.
             Vector2 force_dir = seg_dir.orthogonal();
 
             // Scale the force the further the segment bends.
             // angle is signed and can be used to determine the force direction
-            // TODO: Ask a physicist if this is physically correct.
             last_stiffness_force += force_dir * (-angle / 3.1415) * stiffness;
             vel += last_stiffness_force;
             parent_seg_dir = seg_dir;

@@ -1,17 +1,17 @@
-tool
-extends Position2D
+@tool
+extends Marker2D
 class_name RopeAnchor
 
 # Gets emitted just after applying the position.
 signal on_after_update()
 
-export var force_update: bool setget _set_force_update  # Can be used in the Inspector to force an update
-export var enable: bool = true setget set_enable, get_enable  # Enable or disable.
-export(NodePath) var rope_path setget set_rope_path  # Target rope path.
-export(float, 0, 1) var rope_position = 1.0  # Position on the rope between 0 and 1.
-export var apply_angle := false  # Also apply rotation according to the rope curvature.
+@export var force_update: bool: set = _set_force_update
+@export var enable: bool = true: get = get_enable, set = set_enable  # Enable or disable.
+@export var rope_path: NodePath: set = set_rope_path
+@export var rope_position = 1.0  # Position on the rope between 0 and 1. # (float, 0, 1)
+@export var apply_angle := false  # Also apply rotation according to the rope curvature.
 ## If false, only consider the nearest vertex on the rope. Otherwise, interpolate the position between two relevant points when applicable.
-export var precise: bool = false
+@export var precise: bool = false
 var _helper: RopeToolHelper
 
 
@@ -61,5 +61,5 @@ func _update() -> void:
 
 
 func _set_force_update(_val: bool) -> void:
-    if Engine.editor_hint and _helper.target_rope:
+    if Engine.is_editor_hint() and _helper.target_rope:
         _update()

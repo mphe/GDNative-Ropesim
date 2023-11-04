@@ -1,4 +1,4 @@
-tool
+@tool
 extends EditorPlugin
 
 const MENU_INDEX_UPDATE_IN_EDITOR = 0
@@ -6,55 +6,29 @@ const MENU_INDEX_UPDATE_IN_EDITOR = 0
 var _menu_toolbox: HBoxContainer
 var _menu_popup: PopupMenu
 
-var _NativeRopeServer: Node
-var _rope_nodes = []
-
 func _enter_tree() -> void:
-    add_autoload_singleton("NativeRopeServer", "res://addons/ropesim/NativeRopeServer.gdns")
-
-    # It takes a frame until the autoload exists in the tree.
-    # We need to wait because subsequent code requires the NativeRopeServer autoload to exist.
-    # See also here: https://github.com/godotengine/godot/issues/30064
-    yield(get_tree(), "idle_frame")
-
-    # _NativeRopeServer = Engine.get_singleton("NativeRopeServer")  # Doesn't work for some reason
-    _NativeRopeServer = get_node("/root/NativeRopeServer")
-
-    # We can't reference class names directly because of dependencies issues when loading the Plugin.
-    # plugin.gd -> Rope.gd -> NativeRopeServer -> NativeRopeServer hasn't been loaded yet
-    # -> Rope.gd Error -> plugin.gd Error
-    _rope_nodes = [
-        load("res://addons/ropesim/Rope.gd"),
-        load("res://addons/ropesim/RopeAnchor.gd"),
-        load("res://addons/ropesim/RopeHandle.gd"),
-        load("res://addons/ropesim/RopeRendererLine2D.gd"),
-        load("res://addons/ropesim/RopeCollisionShapeGenerator.gd"),
-    ]
-
     _build_gui()
 
 
 func _exit_tree() -> void:
-    remove_autoload_singleton("NativeRopeServer")
     _free_gui()
 
 
-func handles(object: Object) -> bool:
+func _handles(object: Object) -> bool:
     if _menu_toolbox:
         _menu_toolbox.hide()
 
-    for i in _rope_nodes:
-        if object is i:
-            return true
-    return false
+    return (
+        object is Rope or
+        object is RopeAnchor or
+        object is RopeHandle or
+        object is RopeCollisionShapeGenerator or
+        object is RopeRendererLine2D
+    )
 
 
-func edit(_object: Object) -> void:
+func _edit(_object: Object) -> void:
     _menu_toolbox.show()
-
-
-func make_visible(_visible: bool) -> void:
-    pass
 
 
 func _build_gui() -> void:
@@ -67,8 +41,8 @@ func _build_gui() -> void:
     _menu_toolbox.add_child(menu_button)
     _menu_popup = menu_button.get_popup()
     _menu_popup.add_check_item("Preview in Editor")
-    _menu_popup.set_item_checked(MENU_INDEX_UPDATE_IN_EDITOR, _NativeRopeServer.update_in_editor)
-    _menu_popup.connect("id_pressed", self, "_menu_item_clicked")  # warning-ignore: return_value_discarded
+    _menu_popup.set_item_checked(MENU_INDEX_UPDATE_IN_EDITOR, NativeRopeServer.update_in_editor)
+    _menu_popup.connect("id_pressed", self._menu_item_clicked)
 
 
 func _menu_item_clicked(idx: int) -> void:
@@ -76,7 +50,7 @@ func _menu_item_clicked(idx: int) -> void:
         MENU_INDEX_UPDATE_IN_EDITOR:
             var value = not _menu_popup.is_item_checked(idx)
             _menu_popup.set_item_checked(MENU_INDEX_UPDATE_IN_EDITOR, value)
-            _NativeRopeServer.update_in_editor = value
+            NativeRopeServer.update_in_editor = value
 
 
 func _free_gui() -> void:

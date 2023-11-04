@@ -1,4 +1,4 @@
-tool
+@tool
 extends Node2D
 class_name Rope
 
@@ -7,26 +7,26 @@ class_name Rope
 signal on_registered()
 signal on_unregistered()
 
-export var pause: bool = false setget _set_pause  # Pause simulation
-export var num_segments: int = 10 setget _set_num_segs  # Amount of segments the rope consists of.
-export var rope_length: float = 100 setget _set_length  # The length of the rope.
-export var segment_length_distribution: Curve setget _set_seg_dist  # (Optional) Allows to non-uniformly distribute rope segment lengths. Useful to add more detail/precision to certain parts of the rope.
-export var stiffness: float = 0.0  # Stiffness forces the rope to return to its resting position.
-export var gravity: float = 100  # Gravity
-export var damping: float = 0  # Friction
-export var damping_curve: Curve  # (Optional) Apply different amounts of damping along the rope.
-export var num_constraint_iterations: int = 10  # Constraints the rope to its intended length. Less constraint iterations effectively makes the rope more elastic.
+@export var pause: bool = false: set = _set_pause
+@export var num_segments: int = 10: set = _set_num_segs
+@export var rope_length: float = 100: set = _set_length
+@export var segment_length_distribution: Curve: set = _set_seg_dist
+@export var stiffness: float = 0.0  # Stiffness forces the rope to return to its resting position.
+@export var gravity: float = 100  # Gravity
+@export var damping: float = 0  # Friction
+@export var damping_curve: Curve  # (Optional) Apply different amounts of damping along the rope.
+@export var num_constraint_iterations: int = 10  # Constraints the rope to its intended length. Less constraint iterations effectively makes the rope more elastic.
 
-export var render_debug: bool = false setget _set_draw_debug  # Render segments for debugging debug
-export var render_line: bool = true setget _set_render_line  # Render the rope using lines.
-export var line_width: float = 2 setget _set_line_width  # Render line widht
-export var color: Color = Color.white setget _set_color  # Render color
-export var color_gradient: Gradient setget _set_gradient  # (Optional) A color gradient along the rope.
+@export var render_debug: bool = false: set = _set_draw_debug
+@export var render_line: bool = true: set = _set_render_line
+@export var line_width: float = 2: set = _set_line_width
+@export var color: Color = Color.WHITE: set = _set_color
+@export var color_gradient: Gradient: set = _set_gradient
 
-var _colors := PoolColorArray()
-var _seg_lengths := PoolRealArray()
-var _points := PoolVector2Array()
-var _oldpoints := PoolVector2Array()
+var _colors := PackedColorArray()
+var _seg_lengths := PackedFloat32Array()
+var _points := PackedVector2Array()
+var _oldpoints := PackedVector2Array()
 var _registered: bool = false
 
 
@@ -35,7 +35,7 @@ var _registered: bool = false
 func _enter_tree() -> void:
     _setup()
 
-    if Engine.iterations_per_second != 60:
+    if Engine.physics_ticks_per_second != 60:
         push_warning("Verlet Integration is FPS dependant -> Only 60 FPS are supported")
 
 
@@ -45,7 +45,7 @@ func _exit_tree() -> void:
 
 func _on_post_update() -> void:
     if visible:
-        update()
+        queue_redraw()
 
 
 func _draw() -> void:
@@ -60,12 +60,12 @@ func _draw() -> void:
 
     if render_debug:
         for i in _points.size():
-            draw_circle(_points[i], line_width / 2, Color.red)
+            draw_circle(_points[i], line_width / 2, Color.RED)
 
 
 # Logic
 
-func _setup(reset: bool = true) -> void:
+func _setup(run_reset: bool = true) -> void:
     if not is_inside_tree():
         return
 
@@ -90,7 +90,7 @@ func _setup(reset: bool = true) -> void:
         # simultaneously.
         damping_curve.bake()
 
-    if reset:
+    if run_reset:
         reset()
     _start_stop_process()
 
@@ -106,7 +106,7 @@ func _start_stop_rendering() -> void:
     # Re-register (or not) to hook NativeRopeServer.on_post_update() if neccessary.
     _unregister_server()
     _start_stop_process()
-    update()
+    queue_redraw()
 
 
 func _register_server():
@@ -114,7 +114,7 @@ func _register_server():
         NativeRopeServer.register_rope(self)
         emit_signal("on_registered")
         if render_debug or render_line:
-            NativeRopeServer.connect("on_post_update", self, "_on_post_update")  # warning-ignore: return_value_discarded
+            NativeRopeServer.connect("on_post_update", Callable(self, "_on_post_update"))  # warning-ignore: return_value_discarded
         _registered = true
 
 
@@ -122,8 +122,8 @@ func _unregister_server():
     if _registered:
         NativeRopeServer.unregister_rope(self)
         emit_signal("on_unregistered")
-        if NativeRopeServer.is_connected("on_post_update", self, "_on_post_update"):
-            NativeRopeServer.disconnect("on_post_update", self, "_on_post_update")
+        if NativeRopeServer.is_connected("on_post_update", Callable(self, "_on_post_update")):
+            NativeRopeServer.disconnect("on_post_update", Callable(self, "_on_post_update"))
         _registered = false
 
 
@@ -137,9 +137,9 @@ func update_colors():
         _colors.resize(_points.size())
 
     for i in _colors.size():
-        _colors[i] = color * color_gradient.interpolate(get_point_perc(i))
+        _colors[i] = color * color_gradient.sample(get_point_perc(i))
 
-    update()
+    queue_redraw()
 
 
 # Recompute segment lengths according to rope_length, num_segments and segment_length_distribution curve.
@@ -152,7 +152,7 @@ func update_segments():
         var length = 0.0
 
         for i in _seg_lengths.size():
-            _seg_lengths[i] = segment_length_distribution.interpolate(get_point_perc(i + 1))
+            _seg_lengths[i] = segment_length_distribution.sample(get_point_perc(i + 1))
             length += _seg_lengths[i]
 
         var scaling = rope_length / length
@@ -215,12 +215,12 @@ func move_point(index: int, vec: Vector2) -> void:
 
 
 # Makes a copy! PoolVector2Array is pass-by-value.
-func get_points() -> PoolVector2Array:
+func get_points() -> PackedVector2Array:
     return _points
 
 
 # Makes a copy! PoolVector2Array is pass-by-value.
-func get_old_points() -> PoolVector2Array:
+func get_old_points() -> PackedVector2Array:
     return _oldpoints
 
 
@@ -234,14 +234,14 @@ func reset(dir: Vector2 = Vector2.DOWN) -> void:
     for i in range(1, _points.size()):
         _points[i] = _points[i - 1] + dir * get_segment_length(i - 1)
     _oldpoints = _points
-    update()
+    queue_redraw()
 
 
-func set_points(points: PoolVector2Array) -> void:
+func set_points(points: PackedVector2Array) -> void:
     _points = points
 
 
-func set_old_points(points: PoolVector2Array) -> void:
+func set_old_points(points: PackedVector2Array) -> void:
     _oldpoints = points
 
 
@@ -251,7 +251,7 @@ func get_color(index: int) -> Color:
     return color
 
 
-func get_segment_lengths() -> PoolRealArray:
+func get_segment_lengths() -> PackedFloat32Array:
     return _seg_lengths
 
 
@@ -275,7 +275,7 @@ func _set_render_line(value: bool):
 
 func _set_line_width(value: float):
     line_width = value
-    update()
+    queue_redraw()
 
 func _set_color(value: Color):
     color = value
@@ -287,17 +287,17 @@ func _set_pause(value: bool):
 
 func _set_gradient(value: Gradient):
     if color_gradient:
-        color_gradient.disconnect("changed", self, "update_colors")
+        color_gradient.disconnect("changed", Callable(self, "update_colors"))
     color_gradient = value
     if color_gradient:
-        color_gradient.connect("changed", self, "update_colors")  # warning-ignore: return_value_discarded
+        color_gradient.connect("changed", Callable(self, "update_colors"))  # warning-ignore: return_value_discarded
     update_colors()
 
 func _set_seg_dist(value: Curve):
     if segment_length_distribution:
-        segment_length_distribution.disconnect("changed", self, "update_segments")
+        segment_length_distribution.disconnect("changed", Callable(self, "update_segments"))
     segment_length_distribution = value
     if segment_length_distribution:
-        segment_length_distribution.connect("changed", self, "update_segments")  # warning-ignore: return_value_discarded
+        segment_length_distribution.connect("changed", Callable(self, "update_segments"))  # warning-ignore: return_value_discarded
     update_segments()
 

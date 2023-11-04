@@ -1,4 +1,4 @@
-tool
+@tool
 extends Node
 class_name RopeCollisionShapeGenerator
 
@@ -6,8 +6,8 @@ class_name RopeCollisionShapeGenerator
 # It can be added as child to an Area2D for example, to detect if something collides with the rope.
 # It does _not_ make the rope interact with other physics objects.
 
-export var enable: bool = true setget set_enable, get_enable  # Enable or disable.
-export(NodePath) var rope_path setget set_rope_path  # Target rope path.
+@export var enable: bool = true: get = get_enable, set = set_enable  # Enable or disable.
+@export var rope_path: NodePath: set = set_rope_path
 
 var _helper: RopeToolHelper
 var _colliders := []  # Array[CollisionShape2D]
@@ -81,7 +81,7 @@ func _update_shapes() -> void:
 
     for i in _colliders.size():
         var shape: CollisionShape2D = _colliders[i]
-        shape.global_transform = Transform2D(0, Vector2.ZERO)  # set_as_toplevel() is buggy with collision shapes
+        shape.global_transform = Transform2D(0, Vector2.ZERO)  # set_as_top_level() is buggy with collision shapes
         var seg: SegmentShape2D = shape.shape
         seg.a = points[i]
         seg.b = points[i + 1]

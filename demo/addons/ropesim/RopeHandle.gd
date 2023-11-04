@@ -1,17 +1,17 @@
-tool
-extends Position2D
+@tool
+extends Marker2D
 class_name RopeHandle
 
 # Gets emitted just before applying the position.
 signal on_before_update()
 
-export var enable: bool = true setget set_enable, get_enable  # Enable or disable
-export(NodePath) var rope_path setget set_rope_path  # Target rope path
-export(float, 0, 1) var rope_position = 1.0  # Position on the rope between 0 and 1.
-export var smoothing: bool = false  # Whether to smoothly snap to RopeHandle's position instead of instantly.
-export var smoothing_speed: float = 0.5  # Smoothing speed
+@export var enable: bool = true: get = get_enable, set = set_enable  # Enable or disable
+@export var rope_path: NodePath: set = set_rope_path
+@export var rope_position = 1.0  # Position on the rope between 0 and 1. # (float, 0, 1)
+@export var smoothing: bool = false  # Whether to smoothly snap to RopeHandle's position instead of instantly.
+@export var position_smoothing_speed: float = 0.5  # Smoothing speed
 ## If false, only affect the nearest vertex on the rope. Otherwise, affect both surrounding points when applicable.
-export var precise: bool = false
+@export var precise: bool = false
 var _helper: RopeToolHelper
 
 
@@ -49,7 +49,7 @@ func _on_pre_update() -> void:
 
 func _move_point(idx: int, from: Vector2, to: Vector2) -> void:
     if smoothing:
-        to = from.linear_interpolate(to, get_physics_process_delta_time() * smoothing_speed)
+        to = from.lerp(to, get_physics_process_delta_time() * position_smoothing_speed)
     _helper.target_rope.set_point(idx, to)
 
 

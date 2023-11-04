@@ -1,15 +1,15 @@
-tool
+@tool
 extends Line2D
 class_name RopeRendererLine2D
 
 const UPDATE_HOOK = "on_post_update"
 const HOOK_FUNC = "refresh"
 
-export var force_update: bool setget _force_update  # Can be used in Editor to force regenerating.
-export var target_rope_path: NodePath = ".." setget set_rope_path  # Target rope path
-export var keep_rope_position: bool = true setget _set_keep_pos  # Render at the rope's position instead of RopeRendererLine2D's position.
-export var auto_update: bool = true setget set_auto_update, get_auto_update  # Automatically update
-export var invert: bool = false
+@export var force_update: bool: set = _force_update
+@export var target_rope_path: NodePath = "..": set = set_rope_path
+@export var keep_rope_position: bool = true: set = _set_keep_pos
+@export var auto_update: bool = true: get = get_auto_update, set = set_auto_update
+@export var invert: bool = false
 var _helper: RopeToolHelper
 
 
@@ -29,18 +29,22 @@ func refresh() -> void:
     var target: Rope = _helper.target_rope
 
     if target and target.get_num_points() > 0 and visible:
-        var transform: Transform2D
+        var xform: Transform2D
+
         if keep_rope_position:
-            if Engine.editor_hint:
-                transform = Transform2D(0, -global_position - target.get_point(0) + target.global_position)
+            if Engine.is_editor_hint():
+                xform = Transform2D(0, -global_position - target.get_point(0) + target.global_position)
             else:
-                transform = Transform2D(0, -global_position)
+                xform = Transform2D(0, -global_position)
         else:
-            transform = Transform2D(0, -target.get_point(0))
-        transform = transform.scaled(scale)
-        var p: PoolVector2Array = transform.xform(target.get_points())
+            xform = Transform2D(0, -target.get_point(0))
+
+        xform = xform.scaled(scale)
+        var p: PackedVector2Array = xform * target.get_points()
+
         if invert:
-            p.invert()
+            p.reverse()
+
         points = p
         global_rotation = 0
 
@@ -62,7 +66,6 @@ func _set_keep_pos(value: bool):
 
 
 func set_auto_update(value: bool):
-    auto_update = value
     _helper.enable = value
 
 func get_auto_update() -> bool:

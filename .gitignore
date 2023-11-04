@@ -11,6 +11,7 @@ compile_commands.json
 *.dylib
 
 # Godot-specific ignores
+.godot/
 .import/
 export.cfg
 export_presets.cfg
