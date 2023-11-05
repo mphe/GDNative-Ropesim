@@ -7,9 +7,6 @@
 #include <godot_cpp/classes/time.hpp>
 #include <godot_cpp/classes/engine.hpp>
 #include <godot_cpp/variant/utility_functions.hpp>
-#include <algorithm>
-
-// TODO: Remove std algorithm
 
 using namespace godot;
 
@@ -66,27 +63,26 @@ void NativeRopeServer::_bind_methods()
 
 void NativeRopeServer::register_rope(Node2D* rope)
 {
-    _ropes.emplace_back(rope);
+    _ropes.push_back(rope);
     _start_stop_process();
     // UtilityFunctions::print("Rope registered: " + String::num_int64(_ropes.size()));
 }
 
 void NativeRopeServer::unregister_rope(Node2D* rope)
 {
-    if (_ropes.empty() || rope != _ropes.back())
-    {
-        auto it = std::find(_ropes.begin(), _ropes.end(), rope);
-        if (it == _ropes.end())
-        {
-            UtilityFunctions::push_warning("Unregistering non-registered Rope");
-            return;
-        }
+    const int idx = _ropes.find(rope);
 
-        // Swap and pop
-        (*it) = _ropes.back();
+    if (idx < 0)
+    {
+        UtilityFunctions::push_warning("Unregistering non-registered Rope");
+        return;
     }
 
-    _ropes.pop_back();
+    // Swap and pop
+    const int last_idx = _ropes.size() - 1;
+    _ropes.set(idx, _ropes[last_idx]);
+    _ropes.remove_at(last_idx);
+
     _start_stop_process();
     // UtilityFunctions::print("Rope unregistered: " + String::num_int64(_ropes.size()));
 }
@@ -117,7 +113,7 @@ void NativeRopeServer::_start_stop_process()
     }
 
     _last_time = 0.f;
-    bool should_run = !_ropes.empty() && (!Engine::get_singleton()->is_editor_hint() || _update_in_editor);
+    bool should_run = !_ropes.is_empty() && (!Engine::get_singleton()->is_editor_hint() || _update_in_editor);
 
     if (should_run != _is_running)
     {

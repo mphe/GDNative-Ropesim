@@ -3,8 +3,7 @@
 
 #include <godot_cpp/classes/node2d.hpp>
 #include <godot_cpp/classes/scene_tree.hpp>
-#include <vector>
-// TODO: Remove std::vector
+#include "godot_cpp/templates/vector.hpp"
 
 namespace godot
 {
@@ -38,7 +37,7 @@ namespace godot
         private:
             static NativeRopeServer* _singleton;
             SceneTree* _tree;
-            std::vector<Node2D*> _ropes;
+            Vector<Node2D*> _ropes;
             float _last_time;
             bool _update_in_editor;
             bool _is_running;
