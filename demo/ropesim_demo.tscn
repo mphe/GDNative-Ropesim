@@ -1,0 +1,41 @@
+[gd_scene load_steps=6 format=3 uid="uid://n0h8fmj0t58s"]
+
+[ext_resource type="Script" path="res://addons/ropesim/RopeHandle.gd" id="1_3v13b"]
+[ext_resource type="Script" path="res://addons/ropesim/RopeAnchor.gd" id="2_60osf"]
+[ext_resource type="Texture2D" uid="uid://ckk8c7brnrgwa" path="res://icon.png" id="3_t3x7v"]
+[ext_resource type="Script" path="res://addons/ropesim/Rope.gd" id="4_ytdbs"]
+[ext_resource type="Script" path="res://addons/ropesim/RopeRendererLine2D.gd" id="5_8a6rj"]
+
+[node name="main" type="Node2D"]
+
+[node name="RopeHandle" type="Marker2D" parent="."]
+position = Vector2(306, 27)
+script = ExtResource("1_3v13b")
+rope_path = NodePath("../Rope")
+
+[node name="RopeAnchor" type="Marker2D" parent="."]
+position = Vector2(218.659, 126.848)
+script = ExtResource("2_60osf")
+rope_path = NodePath("../Rope")
+rope_position = 0.5
+
+[node name="Icon" type="Sprite2D" parent="RopeAnchor"]
+position = Vector2(0, 32)
+texture = ExtResource("3_t3x7v")
+
+[node name="Rope" type="Node2D" parent="."]
+texture_repeat = 2
+position = Vector2(160, 51)
+script = ExtResource("4_ytdbs")
+rope_length = 200.0
+stiffness = 10.0
+damping = 10.0
+render_line = false
+metadata/_edit_group_ = true
+
+[node name="RopeRendererLine2D" type="Line2D" parent="Rope"]
+show_behind_parent = true
+points = PackedVector2Array(0, 0, 5.20099, 20.105, 12.2605, 39.6173, 22.8247, 57.4408, 38.5036, 70.9496, 58.6586, 75.8485, 78.8454, 70.8324, 96.057, 59.2686, 110.207, 44.3834, 122.028, 27.9181, 132.197, 10.6967)
+texture = ExtResource("3_t3x7v")
+texture_mode = 1
+script = ExtResource("5_8a6rj")
