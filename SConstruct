@@ -8,7 +8,8 @@ import os
 import sys
 import subprocess
 
-TARGET_PATH = "demo/addons/ropesim/bin/libropesim"
+PROJECT_NAME = "libropesim"
+TARGET_PATH = f"demo/addons/ropesim/bin/{PROJECT_NAME}"
 
 env = SConscript("godot-cpp/SConstruct")
 
@@ -35,7 +36,7 @@ sources = Glob("src/*.cpp")
 if env["platform"] == "macos":
     # NOTE: This is from the Godot docs, but why do we need to do this on macos?
     library = env.SharedLibrary(
-        f"{TARGET_PATH}.{env['platform']}.{env['target']}.framework/libgdexample.{env['platform']}.{env['target']}",
+        f"{TARGET_PATH}.{env['platform']}.{env['target']}.framework/{PROJECT_NAME}.{env['platform']}.{env['target']}",
         source=sources
     )
 else:
