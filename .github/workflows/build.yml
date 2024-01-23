@@ -14,43 +14,74 @@ jobs:
       fail-fast: false
       matrix:
         include:
+          # Linux
           - identifier: linux-debug
             name: Linux Debug
             runner: ubuntu-20.04
             target: template_debug
             platform: linux
             arch: x86_64
+
           - identifier: linux-release
             name: Linux Release
             runner: ubuntu-20.04
             target: template_release
             platform: linux
             arch: x86_64
+
+          # Windows
           - identifier: windows-debug
             name: Windows Debug
             runner: ubuntu-20.04
             target: template_debug
             platform: windows
             arch: x86_64
+
           - identifier: windows-release
             name: Windows Release
             runner: ubuntu-20.04
             target: template_release
             platform: windows
             arch: x86_64
-          # Untested
+
+          # Android Arm64
           - identifier: android-release
-            name: Android Release
+            name: Android Release Arm64
             runner: ubuntu-20.04
             target: template_release
             platform: android
             arch: arm64
+
+          - identifier: android-debug
+            name: Android Debug Arm64
+            runner: ubuntu-20.04
+            target: template_debug
+            platform: android
+            arch: arm64
+
+          # Android x86_64
+          - identifier: android-release
+            name: Android Release x86_64
+            runner: ubuntu-20.04
+            target: template_release
+            platform: android
+            arch: x86_64
+
+          - identifier: android-debug
+            name: Android Debug x86_64
+            runner: ubuntu-20.04
+            target: template_debug
+            platform: android
+            arch: x86_64
+
+          # Mac
           - identifier: macos-debug
             name: macOS (universal) Debug
             runner: macos-latest
             target: template_debug
             platform: macos
             arch: universal
+
           - identifier: macos-release
             name: macOS (universal) Release
             runner: macos-latest
