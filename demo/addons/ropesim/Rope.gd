@@ -23,6 +23,25 @@ signal on_unregistered()
 @export var color: Color = Color.WHITE: set = _set_color
 @export var color_gradient: Gradient: set = _set_gradient
 
+@export_group("Collisions")
+
+## Enable collisions with physics bodies.
+## With this option enabled, raycasting will be performed for each rope segment.
+## Be wary of performance implications.
+## @experimental
+@export var enable_collisions: bool = false
+
+## Maximum number of slides for each rope segment. Works like [member CharacterBody2D.max_slides].
+## For each slide, another raycast will be performed, hence you should keep this value as low as
+## possible.
+## Setting this value to 1 often causes rope segments to get stuck.
+## Setting this value to 0 effectively disabled collisions.
+@export var max_num_slides: int = 2
+
+## Physics layers to collide with.
+@export_flags_2d_physics var collision_mask: int = 1
+
+
 var _colors := PackedColorArray()
 var _seg_lengths := PackedFloat32Array()
 var _points := PackedVector2Array()

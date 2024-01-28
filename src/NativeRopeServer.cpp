@@ -1,5 +1,5 @@
 #include "NativeRopeServer.hpp"
-#include "godot_cpp/classes/window.hpp"
+#include <godot_cpp/classes/window.hpp>
 #include <godot_cpp/variant/vector2.hpp>
 #include <godot_cpp/variant/packed_vector2_array.hpp>
 #include <godot_cpp/variant/packed_float32_array.hpp>
@@ -7,6 +7,9 @@
 #include <godot_cpp/classes/time.hpp>
 #include <godot_cpp/classes/engine.hpp>
 #include <godot_cpp/variant/utility_functions.hpp>
+#include <godot_cpp/classes/physics_ray_query_parameters2d.hpp>
+#include <godot_cpp/classes/physics_direct_space_state2d.hpp>
+#include <godot_cpp/classes/world2d.hpp>
 
 using namespace godot;
 
@@ -212,6 +215,59 @@ void NativeRopeServer::_simulate(Node2D* rope, float delta)
             float error = (seg_lengths[i] - distance) * 0.5;
             points.set(i, points[i] - error * dir);
             points.set(i + 1, points[i + 1] + error * dir);
+        }
+    }
+
+    // Collisions
+    if (rope->get("enable_collisions"))
+    {
+        Physics2DDirectSpaceState* space = rope->get_world_2d()->get_direct_space_state();
+        const int mask = rope->get("collision_mask");
+        const int max_slides = rope->get("max_num_slides");
+
+        for (size_t i = 1; i < points.size(); ++i)
+        {
+            Vector2 start = oldpoints[i];
+            Vector2 end = points[i];
+            Vector2 vel = end - start;
+            const Vector2 original_vel = vel;
+            PhysicsRayQueryParameters2D::
+
+
+            if (vel.length_squared() == 0.0)
+                break;
+
+            for (int slide = 0; slide < max_slides; ++slide)
+            {
+                const Dictionary result = space->intersect_ray(start, end, Array(), mask);
+
+                if (result.empty()) {
+                    points.set(i, end);
+                    break;
+                }
+
+                const Vector2 position = result["position"];
+                const Vector2 normal = result["normal"];
+                const float traveled = start.distance_to(position) / vel.length();
+
+                // If stuck, do nothing and keep the simulated position so it can unstuck itself.
+                if (traveled <= 0.001)
+                    break;
+
+                points.set(i, position + normal);
+
+                if (traveled > 0.999)
+                    break;
+
+                vel = normal.slide(vel) * (1.0 - traveled);
+
+                // Stop if the new velocity goes against the initial direction. Prevents jitter.
+                if (vel.dot(original_vel) < 0.0)
+                    break;
+
+                start = points[i];
+                end = start + vel;
+            }
         }
     }
 
