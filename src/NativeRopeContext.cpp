@@ -1,4 +1,10 @@
 #include "NativeRopeContext.hpp"
+#include "godot_cpp/classes/physics_direct_space_state2d.hpp"
+#include "godot_cpp/classes/physics_server2d.hpp"
+#include "godot_cpp/classes/physics_shape_query_parameters2d.hpp"
+#include "godot_cpp/classes/world2d.hpp"
+#include <godot_cpp/classes/window.hpp>
+#include <godot_cpp/variant/utility_functions.hpp>
 
 using namespace godot;
 
@@ -16,6 +22,19 @@ static Vector2 damp_vec(Vector2 value, float damping_factor, double delta)
     return value.lerp(VECTOR_ZERO, (float)(1.0 - exp(-damping_factor * delta)));
 }
 
+NativeRopeContext::NativeRopeContext() :
+    shape_query(memnew(PhysicsShapeQueryParameters2D))
+{
+    PhysicsServer2D* physics_server = PhysicsServer2D::get_singleton();
+    cast_shape_rid = physics_server->circle_shape_create();
+    shape_query->set_shape_rid(cast_shape_rid);
+}
+
+NativeRopeContext::~NativeRopeContext()
+{
+    PhysicsServer2D* physics_server = PhysicsServer2D::get_singleton();
+    physics_server->free_rid(cast_shape_rid);
+}
 
 bool NativeRopeContext::validate() const
 {
@@ -42,6 +61,11 @@ void NativeRopeContext::load_context(Node2D* rope)
     fixate_begin = rope->get("fixate_begin");
     resolve_to_begin = rope->get("resolve_to_begin");
     resolve_to_end = rope->get("resolve_to_end");
+    enable_collisions = rope->get("enable_collisions");
+    collision_radius = rope->get("collision_radius");
+    collision_mask = rope->get("collision_mask");
+    collision_damping = rope->get("collision_damping");
+    resolve_collisions_while_constraining = rope->get("resolve_collisions_while_constraining");
 }
 
 void NativeRopeContext::simulate(double delta)
@@ -58,7 +82,10 @@ void NativeRopeContext::simulate(double delta)
     }
 
     _simulate_velocities(delta);
-    _constraint();
+    _constraint(delta);
+
+    if (!resolve_collisions_while_constraining)
+        _resolve_collisions(delta);
 
     if (fixate_begin)
         simulation_weights[0] = backup_multiplier_begin;
@@ -168,7 +195,7 @@ static void constraint_segment(Vector2* point_a, Vector2* point_b, float weight_
     *point_b += (weight_b + weight_b * (1.0 - weight_a)) * dir;
 }
 
-void NativeRopeContext::_constraint()
+void NativeRopeContext::_constraint(double delta)
 {
     const bool use_euclid_constraint = max_endpoint_distance > 0;
 
@@ -205,10 +232,44 @@ void NativeRopeContext::_constraint()
         }
     }
 
-
     for (int _ = 0; _ < num_constraint_iterations; ++_)
     {
         for (int i = 0; i < points.size() - 1; ++i)
             constraint_segment(&points[i], &points[i + 1], simulation_weights[i], simulation_weights[i + 1], seg_lengths[i]);
+
+        if (resolve_collisions_while_constraining)
+            _resolve_collisions(delta);
     }
 }
+
+void NativeRopeContext::_resolve_collisions(double delta)
+{
+    if (!enable_collisions)
+        return;
+
+    PhysicsDirectSpaceState2D* space = rope->get_world_2d()->get_direct_space_state();
+    PhysicsServer2D* physics_server = PhysicsServer2D::get_singleton();
+    Transform2D transform;
+
+    physics_server->shape_set_data(cast_shape_rid, collision_radius);
+    shape_query->set_collision_mask(collision_mask);
+
+    for (int i = 0; i < points.size(); ++i)
+    {
+        transform.set_origin(points[i]);
+        shape_query->set_transform(transform);
+        const Dictionary rest_info = space->get_rest_info(shape_query);
+
+        if (rest_info.is_empty())
+            continue;
+
+        const Vector2 intersect_point = rest_info["point"];
+        const Vector2 intersect_normal = rest_info["normal"];
+        const Vector2 safe_point = intersect_point + intersect_normal * (collision_radius + CMP_EPSILON);
+        const Vector2 safe_motion = (safe_point - points[i]) * simulation_weights[i];
+        const Vector2 new_point = points[i] + safe_motion;
+
+        points[i] = oldpoints[i] + damp_vec(new_point - oldpoints[i], collision_damping, delta);
+    }
+}
+

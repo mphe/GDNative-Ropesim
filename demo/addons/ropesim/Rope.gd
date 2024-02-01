@@ -72,7 +72,7 @@ signal on_point_count_changed()
 ## Whether to fixate the first point at the rope's node position.
 @export var fixate_begin: bool = true
 
-## Render rope points for debugging purposes.
+## Render rope points and collision radius for debugging purposes.
 @export var render_debug: bool = false: set = _set_draw_debug
 
 ## Render the rope as line.
@@ -86,6 +86,33 @@ signal on_point_count_changed()
 
 ## Color gradient along the rendered line.
 @export var color_gradient: Gradient: set = _set_gradient
+
+@export_group("Collisions")
+
+## Enable collisions with physics bodies.
+## Collision checks are only performed for rope points, not whole segments.[br]
+## The performance impact is relatively cheap.[br]
+## [br]
+## If more precision is required to prevent tunneling or stretching between points, the number of
+## segments, the collision radius and the amount of constraint iterations can be tweaked.
+## There is also the [member resolve_collisions_while_constraining] option as last resort.
+@export var enable_collisions: bool = false
+
+## Collision radius around each rope point.
+@export var collision_radius: float = 1.0
+
+## Velocity damping after collisions. Gets applied in addition to regular damping.
+## Allows to make the rope appear smoother or rougher, i.e. make it slide more or less.
+@export var collision_damping: float = 0.0
+
+## Resolves collisions after each constraint iteration instead of once after the constraint step.
+## Increases precision but also drastically increases computation time.
+## Negligible with a single rope but expensive with many ropes.
+@export var resolve_collisions_while_constraining: bool = false
+
+## Physics layers to collide with.
+@export_flags_2d_physics var collision_mask: int = 1
+
 
 var _registered: bool = false
 var _colors := PackedColorArray()
@@ -126,6 +153,9 @@ func _draw() -> void:
     if render_debug:
         for i in _points.size():
             draw_circle(_points[i], line_width / 2, Color.RED)
+
+            if enable_collisions:
+                draw_circle(_points[i], collision_radius, Color.CYAN, false)
 
 
 # Logic

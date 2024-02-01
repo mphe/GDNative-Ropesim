@@ -10,6 +10,7 @@ compile_commands.json
 *.so
 *.exe
 *.dylib
+*.o
 
 # Godot-specific ignores
 .godot/

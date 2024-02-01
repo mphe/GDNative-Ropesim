@@ -8,6 +8,7 @@ Checks:
   - -cppcoreguidelines-init-variables  # Produces false positves when initialization happens later
   - -cppcoreguidelines-avoid-magic-numbers  # This also triggers with literals like 3.1415
   - -cppcoreguidelines-avoid-non-const-global-variables
+  - -cppcoreguidelines-owning-memory
   - misc-*
   - -misc-non-private-member-variables-in-classes
   - -misc-use-anonymous-namespace
@@ -21,3 +22,4 @@ Checks:
   - -readability-redundant-access-specifiers
   - -readability-implicit-bool-conversion
   - -readability-math-missing-parentheses
+  - -readability-avoid-unconditional-preprocessor-if

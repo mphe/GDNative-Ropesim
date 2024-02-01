@@ -1,8 +1,8 @@
-#ifndef NATIVE_ROPE_CONTEXT_HPP
-#define NATIVE_ROPE_CONTEXT_HPP
+#pragma once
 
 #include "godot_cpp/classes/curve.hpp"
 #include "godot_cpp/classes/node2d.hpp"
+#include "godot_cpp/classes/physics_shape_query_parameters2d.hpp"
 
 namespace godot
 {
@@ -11,14 +11,18 @@ namespace godot
     class NativeRopeContext
     {
         public:
-            void load_context(Node2D* rope);
+            NativeRopeContext();
+            ~NativeRopeContext();
+
+            void load_context(Node2D *rope);
             void simulate(double delta);
             bool validate() const;
 
         protected:
             void _simulate_velocities(double delta);
             void _simulate_stiffness(PackedVector2Array* velocities) const;
-            void _constraint();
+            void _resolve_collisions(double delta);
+            void _constraint(double delta);
 
         public:
             Node2D* rope = nullptr;
@@ -31,12 +35,17 @@ namespace godot
             float damping = 0.0;
             float stiffness = 0.0;
             float max_endpoint_distance = 0.0;
+            float collision_radius = 1.0;
+            float collision_damping = 0.0;
             int num_constraint_iterations = 0;
+            int collision_mask = 0;
             Ref<Curve> damping_curve;
+            Ref<PhysicsShapeQueryParameters2D> shape_query;
+            RID cast_shape_rid;
             bool fixate_begin = true;
             bool resolve_to_begin = false;
             bool resolve_to_end = false;
+            bool enable_collisions = false;
+            bool resolve_collisions_while_constraining = false;
     };
 }
-
-#endif
