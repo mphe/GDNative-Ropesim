@@ -1,0 +1,38 @@
+[gd_scene load_steps=5 format=3 uid="uid://cdjoxiv0y7jrp"]
+
+[ext_resource type="Script" path="res://addons/ropesim/Rope.gd" id="1_dht3u"]
+[ext_resource type="Texture2D" uid="uid://criwv6nuivcxy" path="res://icon.svg" id="2_qdvb7"]
+[ext_resource type="Script" path="res://addons/ropesim/RopeRendererLine2D.gd" id="3_jbvhu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_aatbp"]
+size = Vector2(128, 128)
+
+[node name="collisions_demo" type="Node2D"]
+
+[node name="Rope" type="Node2D" parent="."]
+texture_repeat = 2
+position = Vector2(42, 7)
+script = ExtResource("1_dht3u")
+num_segments = 20
+rope_length = 200.0
+damping = 10.0
+render_line = false
+enable_collisions = true
+metadata/_edit_group_ = true
+
+[node name="RopeRendererLine2D" type="Line2D" parent="Rope"]
+show_behind_parent = true
+points = PackedVector2Array(0, 0, 7.62939e-06, 12.8894, 1.14441e-05, 25.7053, 1.90735e-05, 38.4203, 2.67029e-05, 51.0134, 3.43323e-05, 63.4692, 4.19617e-05, 75.777, 5.34058e-05, 87.9296, 6.48499e-05, 99.9222, 7.62939e-05, 111.752, 8.39233e-05, 123.417, 9.53674e-05, 134.916, 0.000110626, 146.25, 0.000125885, 157.416, 0.000144958, 168.417, 0.000160217, 179.25, 0.000179291, 189.917, 0.000205994, 200.417, 0.000171661, 210.75, 0.00012207, 220.917, 7.62939e-06, 230.917)
+texture = ExtResource("2_qdvb7")
+texture_mode = 1
+script = ExtResource("3_jbvhu")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(154, 198)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("RectangleShape2D_aatbp")
+
+[node name="Icon" type="Sprite2D" parent="StaticBody2D"]
+texture = ExtResource("2_qdvb7")

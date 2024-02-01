@@ -3,6 +3,7 @@
 
 #include <godot_cpp/classes/node2d.hpp>
 #include <godot_cpp/classes/scene_tree.hpp>
+#include "godot_cpp/classes/physics_ray_query_parameters2d.hpp"
 #include "godot_cpp/templates/vector.hpp"
 
 namespace godot
@@ -39,6 +40,7 @@ namespace godot
             SceneTree* _tree;
             Vector<Node2D*> _ropes;
             float _last_time;
+            Ref<PhysicsRayQueryParameters2D> ray_params;
             bool _update_in_editor;
             bool _is_running;
     };
