@@ -1,4 +1,6 @@
 #include "NativeRopeServer.hpp"
+#include "godot_cpp/classes/physics_server2d.hpp"
+#include "godot_cpp/classes/physics_shape_query_parameters2d.hpp"
 #include <godot_cpp/classes/window.hpp>
 #include <godot_cpp/variant/vector2.hpp>
 #include <godot_cpp/variant/packed_vector2_array.hpp>
@@ -229,6 +231,23 @@ void NativeRopeServer::_simulate(Node2D* rope, float delta)
 
         ray_params->set_collision_mask(mask);
 
+        auto physics_server = PhysicsServer2D::get_singleton();
+        auto cast_shape_rid = physics_server->segment_shape_create();
+
+        const float margin = 1.0;
+
+        Ref<PhysicsShapeQueryParameters2D> shape_query = memnew(PhysicsShapeQueryParameters2D);
+        shape_query->set_shape_rid(cast_shape_rid);
+        shape_query->set_collision_mask(mask);
+        // shape_query->set_margin(margin);
+
+// #define USE_POINT_BUFFER
+
+#ifdef USE_POINT_BUFFER
+        Vector2 newpoints[points.size()];
+        newpoints[0] = points[0];
+#endif
+
         for (size_t i = 1; i < points.size(); ++i)
         {
             Vector2 start = oldpoints[i];
@@ -236,45 +255,75 @@ void NativeRopeServer::_simulate(Node2D* rope, float delta)
             Vector2 vel = end - start;
             const Vector2 original_vel = vel;
 
+            Vector2 seg_start = points[i - 1];
+            Vector2 seg_end = points[i];
+
             if (vel.length_squared() == 0.0)
-                break;
-
-            for (int slide = 0; slide < max_slides; ++slide)
             {
-                ray_params->set_from(start);
-                ray_params->set_to(end);
-                const Dictionary result = space->intersect_ray(ray_params);
-
-                if (result.is_empty()) {
-                    points.set(i, end);
-                    break;
-                }
-
-                const Vector2 position = result["position"];
-                const Vector2 normal = result["normal"];
-                const float traveled = start.distance_to(position) / vel.length();
-
-                // If stuck, do nothing and keep the simulated position so it can unstuck itself.
-                if (traveled <= 0.001)
-                    break;
-
-                points.set(i, position + normal);
-
-                if (traveled > 0.999)
-                    break;
-
-                vel = normal.slide(vel) * (1.0 - traveled);
-
-                // Stop if the new velocity goes against the initial direction. Prevents jitter.
-                if (vel.dot(original_vel) < 0.0)
-                    break;
-
-                start = points[i];
-                end = start + vel;
+#ifdef USE_POINT_BUFFER
+                newpoints[i] = seg_end;
+#endif
+                continue;
             }
+
+            physics_server->shape_set_data(cast_shape_rid, Rect2(seg_start, seg_end));
+
+            const Dictionary result = space->get_rest_info(shape_query);
+
+            if (result.is_empty())
+            {
+#ifdef USE_POINT_BUFFER
+                newpoints[i] = seg_end;
+#endif
+                continue;
+            }
+
+            Vector2 intersect_point = result["point"];
+            Vector2 intersect_normal = result["normal"];
+            Vector2 shift;
+
+            // Determine whether the intersection is at the end point or the starting point and
+            // compute the shift vector to move the segment out of it.
+            if ((intersect_point - seg_start).dot(intersect_normal) >= 0)  // start point first?
+            {
+                shift = intersect_point - seg_start;
+#ifdef USE_POINT_BUFFER
+                newpoints[i - 1] = seg_start + shift + intersect_normal * margin;
+#else
+                points.set(i - 1, seg_start + shift + intersect_normal * margin);
+#endif
+            }
+            else
+            {
+                shift = intersect_point - seg_end;
+#ifdef USE_POINT_BUFFER
+                newpoints[i] = seg_end + shift + intersect_normal * margin;
+#else
+                points.set(i, seg_end + shift + intersect_normal * margin);
+#endif
+            }
+
+#ifdef USE_POINT_BUFFER
+            // newpoints[i - 1] = seg_start + shift + intersect_normal;
+            // newpoints[i] = seg_end + shift + intersect_normal;
+#else
+            // points.set(i - 1, seg_start + shift);
+            // points.set(i, seg_end + shift);
+#endif
         }
+
+#ifdef USE_POINT_BUFFER
+        // Skip the first one, because the root should not be moved
+        for (size_t i = 1; i < points.size(); ++i)
+        {
+            points.set(i, newpoints[i]);
+        }
+#endif
+
+        physics_server->free_rid(cast_shape_rid);
     }
 
+    // Are these still necessary now that Packed* types are pass by reference?
     rope->call("set_points", points);
     rope->call("set_old_points", oldpoints);
 }
