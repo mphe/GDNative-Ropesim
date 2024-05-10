@@ -7,15 +7,38 @@ class_name Rope
 signal on_registered()
 signal on_unregistered()
 
+## Pause the simulation.
 @export var pause: bool = false: set = _set_pause
+
+## Number of rope segments. More segments results in smoother quality but also higher computation cost.
 @export var num_segments: int = 10: set = _set_num_segs
+
+## Overall rope length. Will be distributed uniformly among all segments.
 @export var rope_length: float = 100: set = _set_length
+
+## (Optional) Allows to distribute the length of rope segment in a non-uniform manner.
+## Useful when certain parts of the rope should be more detailed than the rest.
+## For example, if it is known that most movement happens at the beginning of the rope, a curve with
+## smaller values at the beginning and larger values towards the end can improve the overall quality
+## significantly by providing more segments at the beginning and less segments to the end.
 @export var segment_length_distribution: Curve: set = _set_seg_dist
-@export var stiffness: float = 0.0  # Stiffness forces the rope to return to its resting position.
-@export var gravity: float = 100  # Gravity
-@export var damping: float = 0  # Friction
-@export var damping_curve: Curve  # (Optional) Apply different amounts of damping along the rope.
-@export var num_constraint_iterations: int = 10  # Constraints the rope to its intended length. Less constraint iterations effectively makes the rope more elastic.
+
+## Stiffness forces the rope to return to its resting position.
+@export var stiffness: float = 0.0
+
+@export var gravity: float = 100
+
+## Gravity direction. Will not be normalized.
+@export var gravity_direction: Vector2 = Vector2.DOWN
+
+## Dampens the velocity of the rope.
+@export var damping: float = 0
+
+## (Optional) Apply different amounts of damping along the rope.
+@export var damping_curve: Curve
+
+## Constraints the rope to its intended length. Less constraint iterations effectively makes the rope more elastic.
+@export var num_constraint_iterations: int = 10
 
 @export var render_debug: bool = false: set = _set_draw_debug
 @export var render_line: bool = true: set = _set_render_line

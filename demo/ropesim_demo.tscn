@@ -37,7 +37,7 @@ texture = ExtResource("3_t3x7v")
 
 [node name="Rope" type="Node2D" parent="."]
 texture_repeat = 2
-position = Vector2(51, 42)
+position = Vector2(295, 46)
 script = ExtResource("4_ytdbs")
 num_segments = 20
 rope_length = 200.0
@@ -47,7 +47,7 @@ metadata/_edit_group_ = true
 
 [node name="RopeRendererLine2D" type="Line2D" parent="Rope"]
 show_behind_parent = true
-points = PackedVector2Array(0, 0, 6.71648, 8.31234, 14.071, 16.0065, 22.3896, 22.6058, 31.7818, 27.5522, 42.0733, 30.1881, 52.6983, 30.0319, 62.8985, 27.1567, 72.1514, 22.1537, 80.3221, 15.7348, 87.5358, 8.48028, 94.2058, 0.946163, 103.726, -1.96891, 104.262, 8.33314, 104.286, 18.7328, 104.269, 29.1566, 104.252, 39.5521, 104.24, 49.8774, 104.236, 60.1039, 104.241, 70.2171, 104.257, 80.2171)
+points = PackedVector2Array(0, 0, 0, 10, 0, 20, 0, 30, 0, 40, 0, 50, 0, 60, 0, 70, 0, 80, 0, 90, 0, 100, 0, 110, 0, 120, 0, 130, 0, 140, 0, 150, 0, 160, 0, 170, 0, 180, 0, 190, 0, 200)
 texture = ExtResource("3_t3x7v")
 texture_mode = 1
 script = ExtResource("5_8a6rj")

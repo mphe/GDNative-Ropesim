@@ -152,6 +152,7 @@ void NativeRopeServer::_simulate(Node2D* rope, float delta)
     PackedVector2Array oldpoints = rope->call("get_old_points");
     Ref<Curve> damping_curve = rope->get("damping_curve");
     float gravity = rope->get("gravity");
+    Vector2 gravity_direction = rope->get("gravity_direction");
     float damping = rope->get("damping");
     float stiffness = rope->get("stiffness");
     int num_constraint_iterations = rope->get("num_constraint_iterations");
@@ -195,7 +196,7 @@ void NativeRopeServer::_simulate(Node2D* rope, float delta)
         }
 
         oldpoints.set(i, points[i]);
-        points.set(i, points[i] + damp_vec(vel, damping * dampmult, delta) + Vector2(0, gravity * delta));
+        points.set(i, points[i] + damp_vec(vel, damping * dampmult, delta) + gravity_direction * gravity * delta);
     }
 
     // Constraint
