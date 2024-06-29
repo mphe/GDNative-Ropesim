@@ -36,7 +36,7 @@ func _build_gui() -> void:
     _menu_toolbox.hide()
     add_control_to_container(EditorPlugin.CONTAINER_CANVAS_EDITOR_MENU, _menu_toolbox)
 
-    var menu_button = MenuButton.new()
+    var menu_button := MenuButton.new()
     menu_button.text = "Ropesim"
     _menu_toolbox.add_child(menu_button)
     _menu_popup = menu_button.get_popup()
@@ -48,7 +48,7 @@ func _build_gui() -> void:
 func _menu_item_clicked(idx: int) -> void:
     match idx:
         MENU_INDEX_UPDATE_IN_EDITOR:
-            var value = not _menu_popup.is_item_checked(idx)
+            var value := not _menu_popup.is_item_checked(idx)
             _menu_popup.set_item_checked(MENU_INDEX_UPDATE_IN_EDITOR, value)
             NativeRopeServer.update_in_editor = value
 

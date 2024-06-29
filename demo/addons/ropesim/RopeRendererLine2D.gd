@@ -49,23 +49,23 @@ func refresh() -> void:
         global_rotation = 0
 
 
-func set_rope_path(value: NodePath):
+func set_rope_path(value: NodePath) -> void:
     target_rope_path = value
     if is_inside_tree():
         _helper.target_rope = get_node(target_rope_path) as Rope
         refresh()
 
 
-func _force_update(_value: bool):
+func _force_update(_value: bool) -> void:
     refresh()
 
 
-func _set_keep_pos(value: bool):
+func _set_keep_pos(value: bool) -> void:
     keep_rope_position = value
     refresh()
 
 
-func set_auto_update(value: bool):
+func set_auto_update(value: bool) -> void:
     _helper.enable = value
 
 func get_auto_update() -> bool:

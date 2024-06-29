@@ -2,16 +2,21 @@
 extends Marker2D
 class_name RopeAnchor
 
-# Gets emitted just after applying the position.
+## Gets emitted just after applying the position.
 signal on_after_update()
 
 @export var force_update: bool: set = _set_force_update
-@export var enable: bool = true: get = get_enable, set = set_enable  # Enable or disable.
+## Enable or disable.
+@export var enable: bool = true: get = get_enable, set = set_enable
+## Target rope node.
 @export var rope_path: NodePath: set = set_rope_path
-@export var rope_position = 1.0  # Position on the rope between 0 and 1. # (float, 0, 1)
-@export var apply_angle := false  # Also apply rotation according to the rope curvature.
+## Position on the rope between 0 and 1.
+@export_range(0.0, 1.0) var rope_position: float = 1.0
+## Also apply rotation according to the rope curvature.
+@export var apply_angle := false
 ## If false, only consider the nearest vertex on the rope. Otherwise, interpolate the position between two relevant points when applicable.
 @export var precise: bool = false
+
 var _helper: RopeToolHelper
 
 
@@ -28,16 +33,16 @@ func _ready() -> void:
 
 func _on_post_update() -> void:
     _update()
-    emit_signal("on_after_update")
+    on_after_update.emit()
 
 
-func set_rope_path(value: NodePath):
+func set_rope_path(value: NodePath) -> void:
     rope_path = value
     if is_inside_tree():
         _helper.target_rope = get_node(rope_path) as Rope
 
 
-func set_enable(value: bool):
+func set_enable(value: bool) -> void:
     enable = value
     _helper.enable = value
 

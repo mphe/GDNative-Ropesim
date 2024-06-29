@@ -2,16 +2,22 @@
 extends Marker2D
 class_name RopeHandle
 
-# Gets emitted just before applying the position.
+## Gets emitted just before applying the position.
 signal on_before_update()
 
-@export var enable: bool = true: get = get_enable, set = set_enable  # Enable or disable
+## Enable or disable
+@export var enable: bool = true: get = get_enable, set = set_enable
+## Target rope node.
 @export var rope_path: NodePath: set = set_rope_path
-@export var rope_position = 1.0  # Position on the rope between 0 and 1. # (float, 0, 1)
-@export var smoothing: bool = false  # Whether to smoothly snap to RopeHandle's position instead of instantly.
-@export var position_smoothing_speed: float = 0.5  # Smoothing speed
+## Position on the rope between 0 and 1.
+@export_range(0.0, 1.0) var rope_position: float = 1.0
+## Whether to smoothly snap to RopeHandle's position instead of instantly.
+@export var smoothing: bool = false
+## Smoothing speed
+@export var position_smoothing_speed: float = 0.5
 ## If false, only affect the nearest vertex on the rope. Otherwise, affect both surrounding points when applicable.
 @export var precise: bool = false
+
 var _helper: RopeToolHelper
 
 
@@ -27,7 +33,7 @@ func _ready() -> void:
 
 
 func _on_pre_update() -> void:
-    emit_signal("on_before_update")
+    on_before_update.emit()
     var rope: Rope = _helper.target_rope
     var point_index: int = rope.get_point_index(rope_position)
 
@@ -53,13 +59,13 @@ func _move_point(idx: int, from: Vector2, to: Vector2) -> void:
     _helper.target_rope.set_point(idx, to)
 
 
-func set_rope_path(value: NodePath):
+func set_rope_path(value: NodePath) -> void:
     rope_path = value
     if is_inside_tree():
         _helper.target_rope = get_node(rope_path) as Rope
 
 
-func set_enable(value: bool):
+func set_enable(value: bool) -> void:
     enable = value
     _helper.enable = value
 

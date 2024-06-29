@@ -132,27 +132,27 @@ func _start_stop_rendering() -> void:
     queue_redraw()
 
 
-func _register_server():
+func _register_server() -> void:
     if not _registered:
         NativeRopeServer.register_rope(self)
-        emit_signal("on_registered")
+        on_registered.emit()
         if render_debug or render_line:
-            NativeRopeServer.connect("on_post_update", Callable(self, "_on_post_update"))  # warning-ignore: return_value_discarded
+            NativeRopeServer.on_post_update.connect(_on_post_update)
         _registered = true
 
 
-func _unregister_server():
+func _unregister_server() -> void:
     if _registered:
         NativeRopeServer.unregister_rope(self)
-        emit_signal("on_unregistered")
-        if NativeRopeServer.is_connected("on_post_update", Callable(self, "_on_post_update")):
-            NativeRopeServer.disconnect("on_post_update", Callable(self, "_on_post_update"))
+        on_unregistered.emit()
+        if NativeRopeServer.on_post_update.is_connected(_on_post_update):
+            NativeRopeServer.on_post_update.disconnect(_on_post_update)
         _registered = false
 
 
 # Cache line colors according to color and color_gradient.
 # Usually, you should not need to call this manually.
-func update_colors():
+func update_colors() -> void:
     if not color_gradient:
         return
 
@@ -167,23 +167,23 @@ func update_colors():
 
 # Recompute segment lengths according to rope_length, num_segments and segment_length_distribution curve.
 # Usually, you should not need to call this manually.
-func update_segments():
+func update_segments() -> void:
     if _seg_lengths.size() != num_segments:
         _seg_lengths.resize(num_segments)
 
     if segment_length_distribution:
-        var length = 0.0
+        var length := 0.0
 
         for i in _seg_lengths.size():
             _seg_lengths[i] = segment_length_distribution.sample(get_point_perc(i + 1))
             length += _seg_lengths[i]
 
-        var scaling = rope_length / length
+        var scaling := rope_length / length
 
         for i in _seg_lengths.size():
             _seg_lengths[i] *= scaling
     else:
-        var base_seg_length = rope_length / num_segments
+        var base_seg_length := rope_length / num_segments
         for i in _seg_lengths.size():
             _seg_lengths[i] = base_seg_length
 
@@ -196,7 +196,7 @@ func get_num_points() -> int:
 
 
 func get_point_index(position_percent: float) -> int:
-    return int((get_num_points() - 1) * clamp(position_percent, 0, 1))
+    return int((get_num_points() - 1) * clampf(position_percent, 0, 1))
 
 
 func get_point_perc(index: int) -> float:
@@ -214,11 +214,11 @@ func get_point_interpolate(position_perc: float) -> Vector2:
 
 
 func get_nearest_point_index(pos: Vector2) -> int:
-    var min_dist = 1e10
-    var idx = 0
+    var min_dist := 1e10
+    var idx := 0
 
     for i in _points.size():
-        var dist = pos.distance_squared_to(_points[i])
+        var dist := pos.distance_squared_to(_points[i])
         if dist < min_dist:
             min_dist = dist
             idx = i
@@ -280,35 +280,35 @@ func get_segment_lengths() -> PackedFloat32Array:
 
 # Setters
 
-func _set_num_segs(value: int):
+func _set_num_segs(value: int) -> void:
     num_segments = value
     _setup(false)
 
-func _set_length(value: float):
+func _set_length(value: float) -> void:
     rope_length = value
     _setup(false)
 
-func _set_draw_debug(value: bool):
+func _set_draw_debug(value: bool) -> void:
     render_debug = value
     _start_stop_rendering()
 
-func _set_render_line(value: bool):
+func _set_render_line(value: bool) -> void:
     render_line = value
     _start_stop_rendering()
 
-func _set_line_width(value: float):
+func _set_line_width(value: float) -> void:
     line_width = value
     queue_redraw()
 
-func _set_color(value: Color):
+func _set_color(value: Color) -> void:
     color = value
     update_colors()
 
-func _set_pause(value: bool):
+func _set_pause(value: bool) -> void:
     pause = value
     _start_stop_process()
 
-func _set_gradient(value: Gradient):
+func _set_gradient(value: Gradient) -> void:
     if color_gradient:
         color_gradient.disconnect("changed", Callable(self, "update_colors"))
     color_gradient = value
@@ -316,11 +316,10 @@ func _set_gradient(value: Gradient):
         color_gradient.connect("changed", Callable(self, "update_colors"))  # warning-ignore: return_value_discarded
     update_colors()
 
-func _set_seg_dist(value: Curve):
+func _set_seg_dist(value: Curve) -> void:
     if segment_length_distribution:
         segment_length_distribution.disconnect("changed", Callable(self, "update_segments"))
     segment_length_distribution = value
     if segment_length_distribution:
         segment_length_distribution.connect("changed", Callable(self, "update_segments"))  # warning-ignore: return_value_discarded
     update_segments()
-
