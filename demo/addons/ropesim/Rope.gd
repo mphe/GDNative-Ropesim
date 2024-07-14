@@ -196,7 +196,7 @@ func update_segments() -> void:
     if _seg_lengths.size() != num_segments:
         _seg_lengths.resize(num_segments)
 
-    if segment_length_distribution:
+    if segment_length_distribution and segment_length_distribution.point_count > 0:
         var length := 0.0
 
         for i in _seg_lengths.size():

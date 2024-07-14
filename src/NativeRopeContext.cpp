@@ -92,10 +92,11 @@ void NativeRopeContext::_simulate_velocities(double delta)
 
     // Apply velocity and damping
     const float frame_gravity = (float)(gravity * delta);
+    const bool use_damping_curve = damping_curve.is_valid() && damping_curve->get_point_count() > 0;
 
     for (int i = first_idx; i < size; ++i)
     {
-        const float dampmult = damping_curve.is_valid() ? (float)damping_curve->sample_baked(get_point_perc(i, points)) : 1.0f;
+        const float dampmult = use_damping_curve ? (float)damping_curve->sample_baked(get_point_perc(i, points)) : 1.0f;
         const Vector2 final_vel = simulation_weights[i] * (
                 damp_vec(velocities[i], damping * dampmult, delta)
                 + gravity_direction * frame_gravity
