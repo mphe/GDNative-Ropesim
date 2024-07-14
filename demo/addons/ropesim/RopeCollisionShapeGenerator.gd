@@ -9,7 +9,7 @@ class_name RopeCollisionShapeGenerator
 ## Enable or disable.
 @export var enable: bool = true: get = get_enable, set = set_enable
 ## Target rope node.
-@export var rope_path: NodePath: set = set_rope_path
+@export_node_path("Rope") var rope_path: NodePath: set = set_rope_path
 
 var _helper: RopeToolHelper
 var _colliders: Array[CollisionShape2D] = []

@@ -48,7 +48,7 @@ signal on_point_count_changed()
 @export var damping_curve: Curve
 
 ## Constraints the rope to its intended length. Less constraint iterations effectively makes the rope more elastic.
-@export var num_constraint_iterations: int = 10
+@export_range(0, 1000) var num_constraint_iterations: int = 10
 
 ## Whether to fixate the first point at the rope's node position.
 @export var fixate_begin: bool = true

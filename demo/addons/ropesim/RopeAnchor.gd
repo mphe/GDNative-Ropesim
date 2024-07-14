@@ -9,7 +9,7 @@ signal on_after_update()
 ## Enable or disable.
 @export var enable: bool = true: get = get_enable, set = set_enable
 ## Target rope node.
-@export var rope_path: NodePath: set = set_rope_path
+@export_node_path("Rope") var rope_path: NodePath: set = set_rope_path
 ## Position on the rope between 0 and 1.
 @export_range(0.0, 1.0) var rope_position: float = 1.0
 ## Also apply rotation according to the rope curvature.
