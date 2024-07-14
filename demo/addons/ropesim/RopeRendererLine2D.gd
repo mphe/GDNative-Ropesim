@@ -48,7 +48,6 @@ func _init() -> void:
 func _ready() -> void:
     set_rope_path(target_rope_path)
     set_auto_update(auto_update)
-    refresh()
 
 
 func refresh() -> void:
@@ -79,7 +78,6 @@ func set_rope_path(value: NodePath) -> void:
     target_rope_path = value
     if is_inside_tree():
         _helper.target_rope = get_node(target_rope_path) as Rope
-        refresh()
 
 
 func _force_update(_value: bool) -> void:
@@ -88,7 +86,6 @@ func _force_update(_value: bool) -> void:
 
 func set_position_mode(value: PositionMode) -> void:
     position_mode = value
-    refresh()
 
 
 func set_auto_update(value: bool) -> void:
