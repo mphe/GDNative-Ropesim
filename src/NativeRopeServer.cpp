@@ -1,5 +1,7 @@
 #include "NativeRopeServer.hpp"
+#include "NativeRopeContext.hpp"
 #include "godot_cpp/classes/window.hpp"
+#include "godot_cpp/core/class_db.hpp"
 #include <godot_cpp/variant/vector2.hpp>
 #include <godot_cpp/variant/packed_vector2_array.hpp>
 #include <godot_cpp/variant/packed_float32_array.hpp>
@@ -10,22 +12,7 @@
 
 using namespace godot;
 
-const Vector2 VECTOR_ZERO = Vector2();
-const Vector2 VECTOR_DOWN = Vector2(0, 1);
-
-
 NativeRopeServer* NativeRopeServer::_singleton = nullptr;
-
-
-float get_point_perc(int index, const PackedVector2Array& points)
-{
-    return index / (points.size() > 0 ? float(points.size() - 1) : 0.f);
-}
-
-Vector2 damp_vec(Vector2 value, float damping_factor, float delta)
-{
-    return value.lerp(VECTOR_ZERO, 1.0 - exp(-damping_factor * delta));
-}
 
 
 NativeRopeServer::NativeRopeServer() :
@@ -113,7 +100,7 @@ void NativeRopeServer::_start_stop_process()
     }
 
     _last_time = 0.f;
-    bool should_run = !_ropes.is_empty() && (!Engine::get_singleton()->is_editor_hint() || _update_in_editor);
+    const bool should_run = !_ropes.is_empty() && (!Engine::get_singleton()->is_editor_hint() || _update_in_editor);
 
     if (should_run != _is_running)
     {
@@ -133,91 +120,26 @@ void NativeRopeServer::_start_stop_process()
 void NativeRopeServer::_on_physics_frame()
 {
     emit_signal("on_pre_update");
-    double delta = _tree->get_root()->get_physics_process_delta_time();
-    auto start = Time::get_singleton()->get_ticks_usec();
+    const double delta = _tree->get_root()->get_physics_process_delta_time();
+    NativeRopeContext context;
+
+    const uint64_t start = Time::get_singleton()->get_ticks_usec();
 
     for (Node2D* rope : _ropes)
-        _simulate(rope, delta);
+    {
+        context.load_context(rope);
 
-    _last_time = (Time::get_singleton()->get_ticks_usec() - start) / 1000.f;
+        if (!context.validate()) [[unlikely]]
+        {
+            UtilityFunctions::push_warning("Inconsistent rope data detected -> Skipped");
+            continue;
+        }
+
+        context.simulate(delta);
+    }
+
+    _last_time = (float)(Time::get_singleton()->get_ticks_usec() - start) / 1000.f;
     emit_signal("on_post_update");
-}
-
-void NativeRopeServer::_simulate(Node2D* rope, float delta)
-{
-    PackedVector2Array points = rope->call("get_points");
-    if (points.size() < 2)
-        return;
-
-    PackedVector2Array oldpoints = rope->call("get_old_points");
-    Ref<Curve> damping_curve = rope->get("damping_curve");
-    float gravity = rope->get("gravity");
-    Vector2 gravity_direction = rope->get("gravity_direction");
-    float damping = rope->get("damping");
-    float stiffness = rope->get("stiffness");
-    int num_constraint_iterations = rope->get("num_constraint_iterations");
-    PackedFloat32Array seg_lengths = rope->call("get_segment_lengths");
-    Vector2 parent_seg_dir = rope->get_global_transform().basis_xform(VECTOR_DOWN).normalized();
-    Vector2 last_stiffness_force;
-
-    // Simulate
-    for (size_t i = 1; i < points.size(); ++i)
-    {
-        Vector2 vel = points[i] - oldpoints[i];
-        float dampmult = damping_curve.is_valid() ? damping_curve->sample_baked(get_point_perc(i, points)) : 1.0;
-
-        // NOTE: Asked a physicist to confirm this computation is physically accurate.
-        // He mentioned that, while it is technically correct, there is a material-dependent limit
-        // how far an object can bend before bending properties (stiffness) changes.
-        // E.g. a material might be less inclined to snap back into place at smaller bend angles, or
-        // a material might stop bending at some point, i.e. when it breaks.
-        // This implementation should probably suffice in most cases, but a more advanced
-        // implementation would include curves for stiffness in relation to segment position and
-        // for stiffness in relation to bend angle.
-        if (stiffness > 0)
-        {
-            //  |  parent_seg_dir     --->  parent_seg_dir.orthogonal()
-            //  |                     \
-            //  V                      \   seg_dir
-            //  \  seg_dir              V
-            //   \
-            //    V
-            Vector2 seg_dir = (points[i] - points[i - 1]).normalized();
-            float angle = seg_dir.angle_to(parent_seg_dir);
-
-            // The force directs orthogonal to the current segment
-            Vector2 force_dir = seg_dir.orthogonal();
-
-            // Scale the force the further the segment bends.
-            // angle is signed and can be used to determine the force direction
-            last_stiffness_force += force_dir * (-angle / 3.1415) * stiffness;
-            vel += last_stiffness_force;
-            parent_seg_dir = seg_dir;
-        }
-
-        oldpoints.set(i, points[i]);
-        points.set(i, points[i] + damp_vec(vel, damping * dampmult, delta) + gravity_direction * gravity * delta);
-    }
-
-    // Constraint
-    for (int _ = 0; _ < num_constraint_iterations; ++_)
-    {
-        points.set(0, rope->get_global_position());
-        points.set(1, points[0] + (points[1] - points[0]).normalized() * seg_lengths[0]);
-
-        for (size_t i = 1; i < points.size() - 1; ++i)
-        {
-            Vector2 diff = points[i + 1] - points[i];
-            float distance = diff.length();
-            Vector2 dir = diff / distance;
-            float error = (seg_lengths[i] - distance) * 0.5;
-            points.set(i, points[i] - error * dir);
-            points.set(i + 1, points[i + 1] + error * dir);
-        }
-    }
-
-    rope->call("set_points", points);
-    rope->call("set_old_points", oldpoints);
 }
 
 float NativeRopeServer::get_computation_time() const

@@ -46,6 +46,9 @@ signal on_unregistered()
 ## Constraints the rope to its intended length. Less constraint iterations effectively makes the rope more elastic.
 @export var num_constraint_iterations: int = 10
 
+## Whether to fixate the first point at the rope's node position.
+@export var fixate_begin: bool = true
+
 ## Render rope points for debugging purposes.
 @export var render_debug: bool = false: set = _set_draw_debug
 
@@ -66,6 +69,8 @@ var _colors := PackedColorArray()
 var _seg_lengths := PackedFloat32Array()
 var _points := PackedVector2Array()
 var _oldpoints := PackedVector2Array()
+# NOTE: Not @exported on purpose to prevent accidentally saving a scene with unintended weights, e.g. due to bugs or user errors.
+var _simulation_weights := PackedFloat32Array()
 
 
 # General
@@ -108,6 +113,8 @@ func _setup(run_reset: bool = true) -> void:
 
     _points.resize(num_segments + 1)
     _oldpoints.resize(num_segments + 1)
+    _resize_with_default(_simulation_weights, num_segments + 1, 1.0)
+
     update_colors()
     update_segments()
 
@@ -300,6 +307,17 @@ func get_segment_lengths() -> PackedFloat32Array:
     return _seg_lengths
 
 
+## The simulation weight determines how much a point can be moved during the simulation/constraint phase.
+## 0.0 means no movement at all, i.e. the point is fixed.
+## 1.0 allows full movement.
+func set_point_simulation_weight(index: int, weight: float) -> void:
+    _simulation_weights[index] = weight
+
+
+func get_point_simulation_weight(index: int) -> float:
+    return _simulation_weights[index]
+
+
 # Setters
 
 func _set_num_segs(value: int) -> void:
@@ -345,3 +363,11 @@ func _set_seg_dist(value: Curve) -> void:
     if segment_length_distribution:
         segment_length_distribution.changed.connect(update_segments)
     update_segments()
+
+
+func _resize_with_default(arr: PackedFloat32Array, new_size: int, default: float) -> void:
+    var oldsize := arr.size()
+    arr.resize(new_size)
+
+    for i in range(oldsize, new_size):
+        arr[i] = default
