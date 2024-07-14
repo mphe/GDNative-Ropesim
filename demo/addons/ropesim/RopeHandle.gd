@@ -8,7 +8,7 @@ signal on_before_update()
 ## Enable or disable
 @export var enable: bool = true: get = get_enable, set = set_enable
 ## Target rope node.
-@export var rope_path: NodePath: set = set_rope_path
+@export_node_path("Rope") var rope_path: NodePath: set = set_rope_path
 ## Position on the rope between 0 and 1.
 @export_range(0.0, 1.0) var rope_position: float = 1.0 : set = set_rope_position
 ## Whether to smoothly snap to RopeHandle's position instead of instantly.
@@ -36,6 +36,14 @@ func _init() -> void:
 func _ready() -> void:
     set_rope_path(rope_path)
     set_enable(enable)
+
+
+func _enter_tree() -> void:
+    _update_state(null)
+
+
+func _exit_tree() -> void:
+    _restore_state(_helper.target_rope)
 
 
 func _on_pre_update() -> void:
@@ -90,19 +98,19 @@ func get_enable() -> bool:
 
 func set_strength(value: float) -> void:
     strength = value
-    _update_state_self()
+    _update_state_current_rope()
 
 
 func set_rope_position(value: float) -> void:
     rope_position = value
-    _update_state_self()
+    _update_state_current_rope()
 
 
 func _on_rope_assigned(old: Rope) -> void:
     _update_state(old)
 
 
-func _update_state_self() -> void:
+func _update_state_current_rope() -> void:
     _update_state(_helper.target_rope)
 
 
