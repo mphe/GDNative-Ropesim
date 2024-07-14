@@ -2,6 +2,19 @@
 extends Line2D
 class_name RopeRendererLine2D
 
+enum PositionMode {
+    ## Render the rope at this node's position, regardless of where the rope actually resides.
+    UseLineRendererPosition,
+
+    ## Render the rope at the rope node's position. If the rope's beginning endpoint is not fixed,
+    ## the rope could actually reside somewhere else than its node.
+    UseRopeNodePosition,
+
+    ## Render the rope at the position of the rope's first point. This is the most accurate
+    ## positioning method and will always correspond to the ropes true global position.
+    UseRopeFirstPointPosition,
+}
+
 const UPDATE_HOOK = "on_post_update"
 const HOOK_FUNC = "refresh"
 
@@ -10,6 +23,9 @@ const HOOK_FUNC = "refresh"
 
 ## Target rope.
 @export_node_path("Rope") var target_rope_path: NodePath = "..": set = set_rope_path
+
+## Determines at which position to render the rope.
+@export var position_mode: PositionMode = PositionMode.UseRopeFirstPointPosition : set = set_position_mode
 
 ## Update automatically. If disabled, a manual call to [method RopeRendererLine2D.refresh] is needed
 ## to update the line rendering.
@@ -41,13 +57,13 @@ func refresh() -> void:
     if target and target.get_num_points() > 0 and visible:
         var xform: Transform2D
 
-        if keep_rope_position:
-            if Engine.is_editor_hint():
+        match position_mode:
+            PositionMode.UseLineRendererPosition:
+                xform = Transform2D(0, -target.get_point(0))
+            PositionMode.UseRopeNodePosition:
                 xform = Transform2D(0, -global_position - target.get_point(0) + target.global_position)
-            else:
+            PositionMode.UseRopeFirstPointPosition:
                 xform = Transform2D(0, -global_position)
-        else:
-            xform = Transform2D(0, -target.get_point(0))
 
         xform = xform.scaled(scale)
         var p: PackedVector2Array = xform * target.get_points()
@@ -70,8 +86,8 @@ func _force_update(_value: bool) -> void:
     refresh()
 
 
-func _set_keep_pos(value: bool) -> void:
-    keep_rope_position = value
+func set_position_mode(value: PositionMode) -> void:
+    position_mode = value
     refresh()
 
 

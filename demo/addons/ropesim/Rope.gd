@@ -90,7 +90,6 @@ func _draw() -> void:
     draw_set_transform_matrix(get_global_transform().affine_inverse())
 
     if render_line and _points.size() > 1:
-        _points[0] = global_position
         if color_gradient:
             draw_polyline_colors(_points, _colors, line_width)
         else:
