@@ -4,7 +4,10 @@ class_name Rope
 
 # TODO: Split line rendering into a separate node
 
+## Triggered when the rope has been registered at the NativeRopeServer.
 signal on_registered()
+
+## Triggered when the rope has been unregistered from the NativeRopeServer.
 signal on_unregistered()
 
 ## Pause the simulation.
@@ -24,8 +27,11 @@ signal on_unregistered()
 @export var segment_length_distribution: Curve: set = _set_seg_dist
 
 ## Stiffness forces the rope to return to its resting position.
+## The resting direction is downwards and affected by the the node's rotation.
+## Might not produce 100% realistic results with fixed points.
 @export var stiffness: float = 0.0
 
+## Gravity
 @export var gravity: float = 100
 
 ## Gravity direction. Will not be normalized.
@@ -40,17 +46,26 @@ signal on_unregistered()
 ## Constraints the rope to its intended length. Less constraint iterations effectively makes the rope more elastic.
 @export var num_constraint_iterations: int = 10
 
+## Render rope points for debugging purposes.
 @export var render_debug: bool = false: set = _set_draw_debug
+
+## Render the rope as line.
 @export var render_line: bool = true: set = _set_render_line
+
+## Rendered line width.
 @export var line_width: float = 2: set = _set_line_width
+
+## Rendered line color.
 @export var color: Color = Color.WHITE: set = _set_color
+
+## Color gradient along the rendered line.
 @export var color_gradient: Gradient: set = _set_gradient
 
+var _registered: bool = false
 var _colors := PackedColorArray()
 var _seg_lengths := PackedFloat32Array()
 var _points := PackedVector2Array()
 var _oldpoints := PackedVector2Array()
-var _registered: bool = false
 
 
 # General
@@ -195,14 +210,22 @@ func get_num_points() -> int:
     return _points.size()
 
 
+## Returns the point index at the given percentage (0.0 - 1.0) in related to the total amount of points of the rope.
+## Does not incorporate segment lengths. If there is a rope with 10 points and the last segment
+## spans 50% of the whole rope, then get_point_index(0.5) returns 4, not 9.
 func get_point_index(position_percent: float) -> int:
     return int((get_num_points() - 1) * clampf(position_percent, 0, 1))
 
 
+## Inverse of get_point_index(). Returns at which percentage the index is located.
+## Does not incorporate segment lengths.
 func get_point_perc(index: int) -> float:
     return index / float(_points.size() - 1) if _points.size() > 0 else 0.0
 
 
+## Similar to get_point_index() but returns the coordinates of the point at the given position fraction.
+## If the target position lies between two points, the result will be interpolated.
+## Does not incorporate segment lengths.
 func get_point_interpolate(position_perc: float) -> Vector2:
     var idx := get_point_index(position_perc)
     if idx == _points.size() - 1:
@@ -213,6 +236,7 @@ func get_point_interpolate(position_perc: float) -> Vector2:
     return lerp(_points[idx], _points[next], (position_perc - perc) / (next_perc - perc))
 
 
+## Returns the point index nearest to the given coordinates.
 func get_nearest_point_index(pos: Vector2) -> int:
     var min_dist := 1e10
     var idx := 0
@@ -224,6 +248,7 @@ func get_nearest_point_index(pos: Vector2) -> int:
             idx = i
 
     return idx
+
 
 func get_point(index: int) -> Vector2:
     return _points[index]
@@ -237,12 +262,10 @@ func move_point(index: int, vec: Vector2) -> void:
     _points[index] += vec
 
 
-# Makes a copy! PoolVector2Array is pass-by-value.
 func get_points() -> PackedVector2Array:
     return _points
 
 
-# Makes a copy! PoolVector2Array is pass-by-value.
 func get_old_points() -> PackedVector2Array:
     return _oldpoints
 
@@ -252,7 +275,7 @@ func get_segment_length(segment_index: int) -> float:
 
 
 func reset(dir: Vector2 = Vector2.DOWN) -> void:
-    # TODO: Reset in global_transform direction
+    # TODO: Reset in global_transform or gravity_direction direction
     _points[0] = (global_position if is_inside_tree() else position)
     for i in range(1, _points.size()):
         _points[i] = _points[i - 1] + dir * get_segment_length(i - 1)
@@ -310,16 +333,16 @@ func _set_pause(value: bool) -> void:
 
 func _set_gradient(value: Gradient) -> void:
     if color_gradient:
-        color_gradient.disconnect("changed", Callable(self, "update_colors"))
+        color_gradient.changed.disconnect(update_colors)
     color_gradient = value
     if color_gradient:
-        color_gradient.connect("changed", Callable(self, "update_colors"))  # warning-ignore: return_value_discarded
+        color_gradient.changed.connect(update_colors)
     update_colors()
 
 func _set_seg_dist(value: Curve) -> void:
     if segment_length_distribution:
-        segment_length_distribution.disconnect("changed", Callable(self, "update_segments"))
+        segment_length_distribution.changed.disconnect(update_segments)
     segment_length_distribution = value
     if segment_length_distribution:
-        segment_length_distribution.connect("changed", Callable(self, "update_segments"))  # warning-ignore: return_value_discarded
+        segment_length_distribution.changed.connect(update_segments)
     update_segments()
