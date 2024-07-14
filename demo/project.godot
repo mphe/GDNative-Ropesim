@@ -12,7 +12,7 @@ config_version=5
 
 config/name="ropesim example"
 run/main_scene="res://ropesim_demo.tscn"
-config/features=PackedStringArray("4.2")
+config/features=PackedStringArray("4.3")
 config/icon="res://icon.png"
 
 [debug]
@@ -25,7 +25,7 @@ gdscript/warnings/unsafe_call_argument=1
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/ropesim/plugin.cfg")
+enabled=PackedStringArray("res://addons/diagnosticlist/plugin.cfg", "res://addons/ropesim/plugin.cfg")
 
 [gui]
 
