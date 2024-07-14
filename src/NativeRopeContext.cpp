@@ -156,13 +156,24 @@ void NativeRopeContext::_constraint()
     {
         for (int i = 0; i < points.size() - 1; ++i)
         {
-            // TODO: compensate weights
             const Vector2 diff = points[i + 1] - points[i];
             const float distance = diff.length();
             const float error = (seg_lengths[i] - distance) * 0.5f;
             const Vector2 dir = error * (diff / distance);
-            points[i] -= simulation_weights[i] * dir;
-            points[i + 1] += simulation_weights[i + 1] * dir;
+            const float weight = simulation_weights[i];
+            const float next_weight = simulation_weights[i + 1];
+
+            // If one point has a weight < 1.0, the other point must compensate the difference in
+            // relation to its own weight.
+            // This is especially relevant with fixate_begin = true or with arbitrary weights = 0.0.
+            // In that case non-fixed point should be constrained by the whole error distance, not
+            // just half of it, because the other one can obviously not move.
+            // It actually works quite fine without this compensation, but this is more correct and
+            // produces better results.
+            // points[i] -= weight * dir;
+            // points[i + 1] += next_weight * dir;
+            points[i] -= (weight + weight * (1.0 - next_weight)) * dir;
+            points[i + 1] += (next_weight + next_weight * (1.0 - weight)) * dir;
         }
     }
 }

@@ -315,7 +315,7 @@ func get_segment_lengths() -> PackedFloat32Array:
 ## 0.0 means no movement at all, i.e. the point is fixed.
 ## 1.0 allows full movement.
 func set_point_simulation_weight(index: int, weight: float) -> void:
-    _simulation_weights[index] = weight
+    _simulation_weights[index] = clampf(weight, 0.0, 1.0)
 
 
 func get_point_simulation_weight(index: int) -> float:
