@@ -10,6 +10,10 @@ signal on_registered()
 ## Triggered when the rope has been unregistered from the NativeRopeServer.
 signal on_unregistered()
 
+## Triggered when the point count changes, i.e. when the number of segments changes.
+signal on_point_count_changed()
+
+
 ## Pause the simulation.
 @export var pause: bool = false: set = _set_pause
 
@@ -321,8 +325,11 @@ func get_point_simulation_weight(index: int) -> float:
 # Setters
 
 func _set_num_segs(value: int) -> void:
+    if value == num_segments:
+        return
     num_segments = value
     _setup(false)
+    on_point_count_changed.emit()
 
 func _set_length(value: float) -> void:
     rope_length = value

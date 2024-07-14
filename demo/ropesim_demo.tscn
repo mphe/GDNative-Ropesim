@@ -8,17 +8,33 @@
 
 [node name="main" type="Node2D"]
 
-[node name="RopeHandle" type="Marker2D" parent="."]
-position = Vector2(161, 15)
+[node name="RopeHandleBegin" type="Marker2D" parent="."]
+position = Vector2(-215, -550)
 script = ExtResource("1_3v13b")
 rope_path = NodePath("../Rope")
-rope_position = 0.62
+rope_position = 0.0
+strength = 1.0
+
+[node name="RopeHandleMid" type="Marker2D" parent="."]
+position = Vector2(-143, -454)
+script = ExtResource("1_3v13b")
+enable = false
+rope_path = NodePath("../Rope")
+rope_position = 0.5
+strength = 1.0
+
+[node name="RopeHandleEnd" type="Marker2D" parent="."]
+position = Vector2(-51, -533)
+rotation = 1.56586
+script = ExtResource("1_3v13b")
+rope_path = NodePath("../Rope")
+strength = 1.0
 
 [node name="RopeAnchor" type="Marker2D" parent="."]
-position = Vector2(93.0733, 72.1881)
+position = Vector2(-185.575, -490.163)
 script = ExtResource("2_60osf")
 rope_path = NodePath("../Rope")
-rope_position = 0.25
+rope_position = 0.322
 
 [node name="Icon" type="Sprite2D" parent="RopeAnchor"]
 position = Vector2(0, 32)
@@ -26,7 +42,7 @@ scale = Vector2(0.5, 0.5)
 texture = ExtResource("3_t3x7v")
 
 [node name="RopeAnchor2" type="Marker2D" parent="."]
-position = Vector2(155.257, 122.217)
+position = Vector2(-51, -533)
 script = ExtResource("2_60osf")
 rope_path = NodePath("../Rope")
 
@@ -37,17 +53,20 @@ texture = ExtResource("3_t3x7v")
 
 [node name="Rope" type="Node2D" parent="."]
 texture_repeat = 2
-position = Vector2(295, 46)
+position = Vector2(-165, -502)
 script = ExtResource("4_ytdbs")
 num_segments = 20
 rope_length = 200.0
 damping = 10.0
-render_line = false
+num_constraint_iterations = 20
+fixate_begin = false
+render_debug = true
 metadata/_edit_group_ = true
 
 [node name="RopeRendererLine2D" type="Line2D" parent="Rope"]
 show_behind_parent = true
-points = PackedVector2Array(0, 0, 0, 10, 0, 20, 0, 30, 0, 40, 0, 50, 0, 60, 0, 70, 0, 80, 0, 90, 0, 100, 0, 110, 0, 120, 0, 130, 0, 140, 0, 150, 0, 160, 0, 170, 0, 180, 0, 190, 0, 200)
+position = Vector2(25, 8)
+points = PackedVector2Array(-75, -56, -71.2279, -44.3514, -67.4925, -33.9256, -63.2293, -23.7484, -58.2605, -13.9436, -52.426, -4.67346, -45.5752, 3.8371, -37.591, 11.2812, -28.4462, 17.2774, -18.27, 21.4325, -7.36705, 23.4593, 3.85805, 23.2815, 15.0281, 21.0386, 25.8775, 17.0005, 36.2603, 11.4706, 46.1188, 4.73132, 55.4535, -2.96701, 64.3095, -11.3978, 72.771, -20.3478, 80.9552, -29.613, 89, -39.0001)
 texture = ExtResource("3_t3x7v")
 texture_mode = 1
 script = ExtResource("5_8a6rj")
