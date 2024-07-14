@@ -1,0 +1,301 @@
+[gd_scene load_steps=7 format=3 uid="uid://clyutgr2fativ"]
+
+[ext_resource type="Script" path="res://rope_examples/scripts/animation_player.gd" id="1_mv383"]
+[ext_resource type="Script" path="res://addons/ropesim/Rope.gd" id="4_rnvio"]
+
+[sub_resource type="Animation" id="Animation_t4gml"]
+length = 0.001
+
+[sub_resource type="Animation" id="Animation_c3bfa"]
+resource_name = "moving"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Node2D2:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(199, 113), Vector2(140, 150)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_13y75"]
+_data = {
+"RESET": SubResource("Animation_t4gml"),
+"moving": SubResource("Animation_c3bfa")
+}
+
+[sub_resource type="Curve" id="Curve_2i72k"]
+_data = [Vector2(0.134615, 1), 0.0, 0.0, 0, 0, Vector2(0.485577, 0.484536), 0.0, -0.0200405, 0, 1, Vector2(1, 0.474227), 0.231403, 0.0, 0, 0]
+point_count = 3
+
+[node name="main" type="Node2D"]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_13y75")
+}
+script = ExtResource("1_mv383")
+
+[node name="Node2D2" type="Node2D" parent="."]
+position = Vector2(153.374, 141.613)
+
+[node name="Rope3" type="Node2D" parent="Node2D2"]
+position = Vector2(-88.3748, -22.2188)
+script = ExtResource("4_rnvio")
+num_segments = 5
+rope_length = 200.0
+gravity = 39.41
+render_debug = true
+metadata/_edit_group_ = true
+
+[node name="Rope" type="Node2D" parent="Node2D2"]
+position = Vector2(114.151, -22.2188)
+script = ExtResource("4_rnvio")
+rope_length = 200.0
+gravity = 39.41
+render_debug = true
+metadata/_edit_group_ = true
+
+[node name="Rope2" type="Node2D" parent="Node2D2"]
+position = Vector2(308.625, -22.2188)
+script = ExtResource("4_rnvio")
+num_segments = 20
+rope_length = 200.0
+gravity = 39.41
+render_debug = true
+metadata/_edit_group_ = true
+
+[node name="Rope12" type="Node2D" parent="Node2D2"]
+position = Vector2(687.625, -15.2188)
+script = ExtResource("4_rnvio")
+num_segments = 5
+rope_length = 200.0
+gravity = 39.41
+render_debug = true
+metadata/_edit_group_ = true
+
+[node name="Rope13" type="Node2D" parent="Node2D2"]
+position = Vector2(890.151, -15.2188)
+script = ExtResource("4_rnvio")
+num_segments = 5
+rope_length = 200.0
+segment_length_distribution = SubResource("Curve_2i72k")
+gravity = 39.41
+render_debug = true
+metadata/_edit_group_ = true
+
+[node name="Rope4" type="Node2D" parent="Node2D2"]
+position = Vector2(-58.8187, 906.801)
+script = ExtResource("4_rnvio")
+rope_length = 200.0
+gravity = 39.41
+num_constraint_iterations = 1
+render_debug = true
+metadata/_edit_group_ = true
+
+[node name="Rope5" type="Node2D" parent="Node2D2"]
+position = Vector2(144.181, 906.801)
+script = ExtResource("4_rnvio")
+rope_length = 200.0
+gravity = 39.41
+num_constraint_iterations = 5
+render_debug = true
+metadata/_edit_group_ = true
+
+[node name="Rope6" type="Node2D" parent="Node2D2"]
+position = Vector2(338.181, 906.801)
+script = ExtResource("4_rnvio")
+rope_length = 200.0
+gravity = 39.41
+render_debug = true
+metadata/_edit_group_ = true
+
+[node name="Rope7" type="Node2D" parent="Node2D2"]
+position = Vector2(541.964, 906.801)
+script = ExtResource("4_rnvio")
+rope_length = 200.0
+gravity = 39.41
+num_constraint_iterations = 50
+render_debug = true
+metadata/_edit_group_ = true
+
+[node name="Rope8" type="Node2D" parent="Node2D2"]
+position = Vector2(-54.1407, 436.104)
+script = ExtResource("4_rnvio")
+rope_length = 200.0
+gravity = 20.0
+render_debug = true
+metadata/_edit_group_ = true
+
+[node name="Rope9" type="Node2D" parent="Node2D2"]
+position = Vector2(148.859, 436.104)
+script = ExtResource("4_rnvio")
+rope_length = 200.0
+num_constraint_iterations = 5
+render_debug = true
+metadata/_edit_group_ = true
+
+[node name="Rope14" type="Node2D" parent="Node2D2"]
+position = Vector2(377.859, 435.104)
+script = ExtResource("4_rnvio")
+rope_length = 200.0
+gravity_direction = Vector2(0, -1)
+num_constraint_iterations = 5
+render_debug = true
+metadata/_edit_group_ = true
+
+[node name="Rope10" type="Node2D" parent="Node2D2"]
+position = Vector2(846.707, 474.556)
+script = ExtResource("4_rnvio")
+rope_length = 200.0
+gravity = 40.0
+render_debug = true
+metadata/_edit_group_ = true
+
+[node name="Rope11" type="Node2D" parent="Node2D2"]
+position = Vector2(1049.71, 474.556)
+script = ExtResource("4_rnvio")
+rope_length = 200.0
+gravity = 40.0
+damping = 3.0
+num_constraint_iterations = 5
+render_debug = true
+metadata/_edit_group_ = true
+
+[node name="Label3" type="Label" parent="."]
+offset_left = 35.0
+offset_top = 40.0
+offset_right = 134.0
+offset_bottom = 63.0
+text = "5 Segments"
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="."]
+offset_left = 238.0
+offset_top = 40.0
+offset_right = 337.0
+offset_bottom = 63.0
+text = "10 Segments"
+metadata/_edit_use_anchors_ = true
+
+[node name="Label2" type="Label" parent="."]
+offset_left = 432.0
+offset_top = 40.0
+offset_right = 531.0
+offset_bottom = 63.0
+text = "20 Segments"
+metadata/_edit_use_anchors_ = true
+
+[node name="Label14" type="Label" parent="."]
+offset_left = 811.0
+offset_top = 47.0
+offset_right = 910.0
+offset_bottom = 70.0
+text = "Default"
+metadata/_edit_use_anchors_ = true
+
+[node name="Label17" type="Label" parent="."]
+offset_left = 788.0
+offset_top = -67.0
+offset_right = 1602.0
+offset_bottom = 8.0
+text = "Segment length distribution curve allows changing the length of rope segments.
+Useful to increase quality in specific areas, while keeping the same segment count.
+However, it can alter the physical behavior."
+metadata/_edit_use_anchors_ = true
+
+[node name="Label15" type="Label" parent="."]
+offset_left = 1014.0
+offset_top = 47.0
+offset_right = 1113.0
+offset_bottom = 70.0
+text = "With segment length distribution curve.
+More segments towards the end, less at the beginning."
+metadata/_edit_use_anchors_ = true
+
+[node name="Label4" type="Label" parent="."]
+offset_left = 32.0
+offset_top = 974.0
+offset_right = 215.0
+offset_bottom = 997.0
+text = "1 Constraint iteration"
+
+[node name="Label13" type="Label" parent="."]
+offset_left = 280.783
+offset_top = 929.0
+offset_right = 803.783
+offset_bottom = 978.0
+text = "The more constraint iterations the less the rope stretches.
+Less constraint iterations can be used to make a rope more bouncy."
+
+[node name="Label5" type="Label" parent="."]
+offset_left = 282.0
+offset_top = 974.0
+offset_right = 381.0
+offset_bottom = 997.0
+text = "5
+"
+
+[node name="Label6" type="Label" parent="."]
+offset_left = 465.0
+offset_top = 975.0
+offset_right = 564.0
+offset_bottom = 998.0
+text = "10
+"
+
+[node name="Label7" type="Label" parent="."]
+offset_left = 668.783
+offset_top = 975.0
+offset_right = 767.783
+offset_bottom = 998.0
+text = "50"
+
+[node name="Label8" type="Label" parent="."]
+offset_left = 26.0
+offset_top = 510.0
+offset_right = 209.0
+offset_bottom = 533.0
+text = "Gravity 20"
+
+[node name="Label9" type="Label" parent="."]
+offset_left = 276.0
+offset_top = 510.0
+offset_right = 375.0
+offset_bottom = 533.0
+text = "Gravity 100
+"
+
+[node name="Label16" type="Label" parent="."]
+offset_left = 499.0
+offset_top = 610.0
+offset_right = 658.0
+offset_bottom = 633.0
+text = "Gravity 100 upwards
+"
+
+[node name="Label10" type="Label" parent="."]
+offset_left = 949.0
+offset_top = 517.0
+offset_right = 1132.0
+offset_bottom = 540.0
+text = "Damping 0.0"
+
+[node name="Label12" type="Label" parent="."]
+offset_left = 1028.0
+offset_top = 477.0
+offset_right = 1252.0
+offset_bottom = 500.0
+text = "Damping is similar to friction"
+
+[node name="Label11" type="Label" parent="."]
+offset_left = 1199.0
+offset_top = 517.0
+offset_right = 1298.0
+offset_bottom = 540.0
+text = "Damping 3.0
+"

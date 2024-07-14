@@ -1,0 +1,92 @@
+[gd_scene load_steps=6 format=3 uid="uid://g4jonp46a2qd"]
+
+[ext_resource type="Script" path="res://addons/ropesim/RopeHandle.gd" id="1_1x8kc"]
+[ext_resource type="Texture2D" uid="uid://criwv6nuivcxy" path="res://rope_examples/icon.svg" id="3_dh00w"]
+[ext_resource type="Script" path="res://addons/ropesim/Rope.gd" id="4_5xugj"]
+[ext_resource type="Script" path="res://addons/ropesim/RopeRendererLine2D.gd" id="5_rievp"]
+[ext_resource type="Script" path="res://rope_examples/scripts/PerformanceLabel.gd" id="6_8rk6k"]
+
+[node name="main" type="Node2D"]
+
+[node name="Rope" type="Node2D" parent="."]
+position = Vector2(107, 86)
+script = ExtResource("4_5xugj")
+num_segments = 20
+rope_length = 200.0
+render_line = false
+metadata/_edit_group_ = true
+
+[node name="RopeRendererLine2D" type="Line2D" parent="Rope"]
+show_behind_parent = true
+texture_repeat = 2
+position = Vector2(25, 8)
+points = PackedVector2Array(-25, -8, -25, 5.69852, -25, 19.3136, -25, 32.8128, -25, 46.1707, -25, 59.3672, -25, 72.3871, -25, 85.219, -25, 97.8542, -25, 110.286, -25, 122.509, -25, 134.52, -25, 146.314, -25, 157.889, -25, 169.244, -25, 180.374, -25, 191.281, -25, 201.961, -25, 212.415, -25, 222.642, -25, 232.642)
+texture = ExtResource("3_dh00w")
+texture_mode = 1
+script = ExtResource("5_rievp")
+
+[node name="RopeRendererLine2D" type="Line2D" parent="."]
+show_behind_parent = true
+texture_repeat = 2
+position = Vector2(371, 96)
+points = PackedVector2Array(-25, -8, -20.7475, 1.44524, -15.687, 10.4419, -9.18967, 18.3892, -0.636871, 23.9551, 9.50717, 24.7611, 18.6586, 20.3429, 25.7304, 13.1054, 31.1967, 4.66277, 35.1485, -4.52231, 45.1295, -4.63291, 44.6916, 5.83709, 44.575, 16.4508, 44.5429, 27.1293, 44.5313, 37.8096, 44.5235, 48.4408, 44.5157, 58.9835, 44.5077, 69.4093, 44.4992, 79.6994, 44.4905, 89.8445, 44.4813, 99.8445)
+texture = ExtResource("3_dh00w")
+texture_mode = 1
+script = ExtResource("5_rievp")
+target_rope_path = NodePath("")
+
+[node name="paused_rope" type="Node2D" parent="."]
+position = Vector2(259, 342)
+script = ExtResource("4_5xugj")
+pause = true
+num_segments = 20
+rope_length = 200.0
+render_line = false
+metadata/_edit_group_ = true
+
+[node name="RopeRendererLine2D" type="Line2D" parent="paused_rope"]
+show_behind_parent = true
+texture_repeat = 2
+position = Vector2(25, 8)
+points = PackedVector2Array(-25, -8, -22.7762, 3.04263, -20.4138, 13.9832, -17.8192, 24.771, -14.9128, 35.3586, -11.5991, 45.6908, -7.74203, 55.6878, -3.13376, 65.2097, 2.54843, 73.9766, 9.77274, 81.366, 18.9411, 86.0076, 29.2663, 85.9136, 38.5399, 81.0415, 45.9161, 73.3553, 51.7538, 64.2748, 56.4952, 54.5067, 60.4478, 44.4342, 63.8161, 34.2926, 66.7439, 24.2285, 69.3381, 14.3219, 71.6804, 4.6001)
+texture = ExtResource("3_dh00w")
+texture_mode = 1
+script = ExtResource("5_rievp")
+
+[node name="RopeHandle" type="Marker2D" parent="paused_rope"]
+position = Vector2(100, -4)
+script = ExtResource("1_1x8kc")
+rope_path = NodePath("..")
+
+[node name="Label" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "The RopeRenderLine2D node can be used to render the rope with a texture.
+It is based on Line2D."
+
+[node name="Label2" type="Label" parent="."]
+offset_left = 304.0
+offset_top = 221.0
+offset_right = 775.0
+offset_bottom = 270.0
+text = "The rope renderer node can be removed from the rope to effectively \"bake\" the rope into static geometry.
+Useful when no live simulation is required."
+autowrap_mode = 2
+
+[node name="Label3" type="Label" parent="."]
+offset_left = 114.0
+offset_top = 451.0
+offset_right = 585.0
+offset_bottom = 526.0
+text = "Alternatively, the rope can be paused to stop simulation.
+The rope renderer will keep the last known position."
+autowrap_mode = 2
+
+[node name="PerformanceLabel" type="Label" parent="."]
+offset_left = 742.0
+offset_top = 6.0
+offset_right = 803.0
+offset_bottom = 55.0
+text = "1 Ropes
+0.03 ms"
+script = ExtResource("6_8rk6k")

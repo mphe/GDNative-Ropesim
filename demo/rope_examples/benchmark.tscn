@@ -1,0 +1,1015 @@
+[gd_scene load_steps=3 format=3 uid="uid://dwdcelii43tt4"]
+
+[ext_resource type="Script" path="res://addons/ropesim/Rope.gd" id="1_6c85y"]
+[ext_resource type="Script" path="res://rope_examples/scripts/PerformanceLabel.gd" id="2_ms00a"]
+
+[node name="benchmark" type="Node2D"]
+
+[node name="PerformanceLabel" type="Label" parent="."]
+offset_left = 449.0
+offset_top = -1.0
+offset_right = 509.0
+offset_bottom = 22.0
+text = "192 Ropes
+2.43 ms"
+script = ExtResource("2_ms00a")
+
+[node name="Node2D9" type="Node2D" parent="."]
+
+[node name="Node2D" type="Node2D" parent="Node2D9"]
+
+[node name="Rope" type="Node2D" parent="Node2D9/Node2D"]
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope2" type="Node2D" parent="Node2D9/Node2D"]
+position = Vector2(35, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope3" type="Node2D" parent="Node2D9/Node2D"]
+position = Vector2(74, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope4" type="Node2D" parent="Node2D9/Node2D"]
+position = Vector2(113, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope5" type="Node2D" parent="Node2D9/Node2D"]
+position = Vector2(148, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope6" type="Node2D" parent="Node2D9/Node2D"]
+position = Vector2(187, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope7" type="Node2D" parent="Node2D9/Node2D"]
+position = Vector2(228, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope8" type="Node2D" parent="Node2D9/Node2D"]
+position = Vector2(263, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope9" type="Node2D" parent="Node2D9/Node2D"]
+position = Vector2(302, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope10" type="Node2D" parent="Node2D9/Node2D"]
+position = Vector2(341, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope11" type="Node2D" parent="Node2D9/Node2D"]
+position = Vector2(376, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope12" type="Node2D" parent="Node2D9/Node2D"]
+position = Vector2(415, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Node2D2" type="Node2D" parent="Node2D9"]
+position = Vector2(0, 118)
+
+[node name="Rope" type="Node2D" parent="Node2D9/Node2D2"]
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope2" type="Node2D" parent="Node2D9/Node2D2"]
+position = Vector2(35, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope3" type="Node2D" parent="Node2D9/Node2D2"]
+position = Vector2(74, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope4" type="Node2D" parent="Node2D9/Node2D2"]
+position = Vector2(113, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope5" type="Node2D" parent="Node2D9/Node2D2"]
+position = Vector2(148, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope6" type="Node2D" parent="Node2D9/Node2D2"]
+position = Vector2(187, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope7" type="Node2D" parent="Node2D9/Node2D2"]
+position = Vector2(228, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope8" type="Node2D" parent="Node2D9/Node2D2"]
+position = Vector2(263, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope9" type="Node2D" parent="Node2D9/Node2D2"]
+position = Vector2(302, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope10" type="Node2D" parent="Node2D9/Node2D2"]
+position = Vector2(341, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope11" type="Node2D" parent="Node2D9/Node2D2"]
+position = Vector2(376, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope12" type="Node2D" parent="Node2D9/Node2D2"]
+position = Vector2(415, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Node2D3" type="Node2D" parent="Node2D9"]
+position = Vector2(0, 239)
+
+[node name="Rope" type="Node2D" parent="Node2D9/Node2D3"]
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope2" type="Node2D" parent="Node2D9/Node2D3"]
+position = Vector2(35, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope3" type="Node2D" parent="Node2D9/Node2D3"]
+position = Vector2(74, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope4" type="Node2D" parent="Node2D9/Node2D3"]
+position = Vector2(113, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope5" type="Node2D" parent="Node2D9/Node2D3"]
+position = Vector2(148, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope6" type="Node2D" parent="Node2D9/Node2D3"]
+position = Vector2(187, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope7" type="Node2D" parent="Node2D9/Node2D3"]
+position = Vector2(228, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope8" type="Node2D" parent="Node2D9/Node2D3"]
+position = Vector2(263, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope9" type="Node2D" parent="Node2D9/Node2D3"]
+position = Vector2(302, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope10" type="Node2D" parent="Node2D9/Node2D3"]
+position = Vector2(341, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope11" type="Node2D" parent="Node2D9/Node2D3"]
+position = Vector2(376, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope12" type="Node2D" parent="Node2D9/Node2D3"]
+position = Vector2(415, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Node2D4" type="Node2D" parent="Node2D9"]
+position = Vector2(0, 351)
+
+[node name="Rope" type="Node2D" parent="Node2D9/Node2D4"]
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope2" type="Node2D" parent="Node2D9/Node2D4"]
+position = Vector2(35, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope3" type="Node2D" parent="Node2D9/Node2D4"]
+position = Vector2(74, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope4" type="Node2D" parent="Node2D9/Node2D4"]
+position = Vector2(113, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope5" type="Node2D" parent="Node2D9/Node2D4"]
+position = Vector2(148, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope6" type="Node2D" parent="Node2D9/Node2D4"]
+position = Vector2(187, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope7" type="Node2D" parent="Node2D9/Node2D4"]
+position = Vector2(228, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope8" type="Node2D" parent="Node2D9/Node2D4"]
+position = Vector2(263, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope9" type="Node2D" parent="Node2D9/Node2D4"]
+position = Vector2(302, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope10" type="Node2D" parent="Node2D9/Node2D4"]
+position = Vector2(341, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope11" type="Node2D" parent="Node2D9/Node2D4"]
+position = Vector2(376, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope12" type="Node2D" parent="Node2D9/Node2D4"]
+position = Vector2(415, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="Node2D5" type="Node2D" parent="Node2D"]
+position = Vector2(20, 0)
+
+[node name="Rope" type="Node2D" parent="Node2D/Node2D5"]
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope2" type="Node2D" parent="Node2D/Node2D5"]
+position = Vector2(35, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope3" type="Node2D" parent="Node2D/Node2D5"]
+position = Vector2(74, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope4" type="Node2D" parent="Node2D/Node2D5"]
+position = Vector2(113, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope5" type="Node2D" parent="Node2D/Node2D5"]
+position = Vector2(148, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope6" type="Node2D" parent="Node2D/Node2D5"]
+position = Vector2(187, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope7" type="Node2D" parent="Node2D/Node2D5"]
+position = Vector2(228, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope8" type="Node2D" parent="Node2D/Node2D5"]
+position = Vector2(263, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope9" type="Node2D" parent="Node2D/Node2D5"]
+position = Vector2(302, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope10" type="Node2D" parent="Node2D/Node2D5"]
+position = Vector2(341, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope11" type="Node2D" parent="Node2D/Node2D5"]
+position = Vector2(376, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope12" type="Node2D" parent="Node2D/Node2D5"]
+position = Vector2(415, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Node2D6" type="Node2D" parent="Node2D"]
+position = Vector2(20, 118)
+
+[node name="Rope" type="Node2D" parent="Node2D/Node2D6"]
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope2" type="Node2D" parent="Node2D/Node2D6"]
+position = Vector2(35, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope3" type="Node2D" parent="Node2D/Node2D6"]
+position = Vector2(74, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope4" type="Node2D" parent="Node2D/Node2D6"]
+position = Vector2(113, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope5" type="Node2D" parent="Node2D/Node2D6"]
+position = Vector2(148, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope6" type="Node2D" parent="Node2D/Node2D6"]
+position = Vector2(187, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope7" type="Node2D" parent="Node2D/Node2D6"]
+position = Vector2(228, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope8" type="Node2D" parent="Node2D/Node2D6"]
+position = Vector2(263, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope9" type="Node2D" parent="Node2D/Node2D6"]
+position = Vector2(302, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope10" type="Node2D" parent="Node2D/Node2D6"]
+position = Vector2(341, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope11" type="Node2D" parent="Node2D/Node2D6"]
+position = Vector2(376, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope12" type="Node2D" parent="Node2D/Node2D6"]
+position = Vector2(415, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Node2D7" type="Node2D" parent="Node2D"]
+position = Vector2(20, 239)
+
+[node name="Rope" type="Node2D" parent="Node2D/Node2D7"]
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope2" type="Node2D" parent="Node2D/Node2D7"]
+position = Vector2(35, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope3" type="Node2D" parent="Node2D/Node2D7"]
+position = Vector2(74, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope4" type="Node2D" parent="Node2D/Node2D7"]
+position = Vector2(113, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope5" type="Node2D" parent="Node2D/Node2D7"]
+position = Vector2(148, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope6" type="Node2D" parent="Node2D/Node2D7"]
+position = Vector2(187, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope7" type="Node2D" parent="Node2D/Node2D7"]
+position = Vector2(228, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope8" type="Node2D" parent="Node2D/Node2D7"]
+position = Vector2(263, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope9" type="Node2D" parent="Node2D/Node2D7"]
+position = Vector2(302, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope10" type="Node2D" parent="Node2D/Node2D7"]
+position = Vector2(341, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope11" type="Node2D" parent="Node2D/Node2D7"]
+position = Vector2(376, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope12" type="Node2D" parent="Node2D/Node2D7"]
+position = Vector2(415, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Node2D8" type="Node2D" parent="Node2D"]
+position = Vector2(20, 351)
+
+[node name="Rope" type="Node2D" parent="Node2D/Node2D8"]
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope2" type="Node2D" parent="Node2D/Node2D8"]
+position = Vector2(35, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope3" type="Node2D" parent="Node2D/Node2D8"]
+position = Vector2(74, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope4" type="Node2D" parent="Node2D/Node2D8"]
+position = Vector2(113, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope5" type="Node2D" parent="Node2D/Node2D8"]
+position = Vector2(148, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope6" type="Node2D" parent="Node2D/Node2D8"]
+position = Vector2(187, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope7" type="Node2D" parent="Node2D/Node2D8"]
+position = Vector2(228, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope8" type="Node2D" parent="Node2D/Node2D8"]
+position = Vector2(263, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope9" type="Node2D" parent="Node2D/Node2D8"]
+position = Vector2(302, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope10" type="Node2D" parent="Node2D/Node2D8"]
+position = Vector2(341, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope11" type="Node2D" parent="Node2D/Node2D8"]
+position = Vector2(376, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope12" type="Node2D" parent="Node2D/Node2D8"]
+position = Vector2(415, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Node2D10" type="Node2D" parent="."]
+position = Vector2(-11, -78)
+
+[node name="Node2D" type="Node2D" parent="Node2D10"]
+
+[node name="Rope" type="Node2D" parent="Node2D10/Node2D"]
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope2" type="Node2D" parent="Node2D10/Node2D"]
+position = Vector2(35, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope3" type="Node2D" parent="Node2D10/Node2D"]
+position = Vector2(74, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope4" type="Node2D" parent="Node2D10/Node2D"]
+position = Vector2(113, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope5" type="Node2D" parent="Node2D10/Node2D"]
+position = Vector2(148, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope6" type="Node2D" parent="Node2D10/Node2D"]
+position = Vector2(187, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope7" type="Node2D" parent="Node2D10/Node2D"]
+position = Vector2(228, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope8" type="Node2D" parent="Node2D10/Node2D"]
+position = Vector2(263, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope9" type="Node2D" parent="Node2D10/Node2D"]
+position = Vector2(302, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope10" type="Node2D" parent="Node2D10/Node2D"]
+position = Vector2(341, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope11" type="Node2D" parent="Node2D10/Node2D"]
+position = Vector2(376, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope12" type="Node2D" parent="Node2D10/Node2D"]
+position = Vector2(415, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Node2D2" type="Node2D" parent="Node2D10"]
+position = Vector2(0, 118)
+
+[node name="Rope" type="Node2D" parent="Node2D10/Node2D2"]
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope2" type="Node2D" parent="Node2D10/Node2D2"]
+position = Vector2(35, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope3" type="Node2D" parent="Node2D10/Node2D2"]
+position = Vector2(74, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope4" type="Node2D" parent="Node2D10/Node2D2"]
+position = Vector2(113, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope5" type="Node2D" parent="Node2D10/Node2D2"]
+position = Vector2(148, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope6" type="Node2D" parent="Node2D10/Node2D2"]
+position = Vector2(187, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope7" type="Node2D" parent="Node2D10/Node2D2"]
+position = Vector2(228, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope8" type="Node2D" parent="Node2D10/Node2D2"]
+position = Vector2(263, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope9" type="Node2D" parent="Node2D10/Node2D2"]
+position = Vector2(302, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope10" type="Node2D" parent="Node2D10/Node2D2"]
+position = Vector2(341, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope11" type="Node2D" parent="Node2D10/Node2D2"]
+position = Vector2(376, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope12" type="Node2D" parent="Node2D10/Node2D2"]
+position = Vector2(415, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Node2D3" type="Node2D" parent="Node2D10"]
+position = Vector2(0, 239)
+
+[node name="Rope" type="Node2D" parent="Node2D10/Node2D3"]
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope2" type="Node2D" parent="Node2D10/Node2D3"]
+position = Vector2(35, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope3" type="Node2D" parent="Node2D10/Node2D3"]
+position = Vector2(74, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope4" type="Node2D" parent="Node2D10/Node2D3"]
+position = Vector2(113, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope5" type="Node2D" parent="Node2D10/Node2D3"]
+position = Vector2(148, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope6" type="Node2D" parent="Node2D10/Node2D3"]
+position = Vector2(187, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope7" type="Node2D" parent="Node2D10/Node2D3"]
+position = Vector2(228, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope8" type="Node2D" parent="Node2D10/Node2D3"]
+position = Vector2(263, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope9" type="Node2D" parent="Node2D10/Node2D3"]
+position = Vector2(302, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope10" type="Node2D" parent="Node2D10/Node2D3"]
+position = Vector2(341, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope11" type="Node2D" parent="Node2D10/Node2D3"]
+position = Vector2(376, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope12" type="Node2D" parent="Node2D10/Node2D3"]
+position = Vector2(415, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Node2D4" type="Node2D" parent="Node2D10"]
+position = Vector2(0, 351)
+
+[node name="Rope" type="Node2D" parent="Node2D10/Node2D4"]
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope2" type="Node2D" parent="Node2D10/Node2D4"]
+position = Vector2(35, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope3" type="Node2D" parent="Node2D10/Node2D4"]
+position = Vector2(74, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope4" type="Node2D" parent="Node2D10/Node2D4"]
+position = Vector2(113, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope5" type="Node2D" parent="Node2D10/Node2D4"]
+position = Vector2(148, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope6" type="Node2D" parent="Node2D10/Node2D4"]
+position = Vector2(187, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope7" type="Node2D" parent="Node2D10/Node2D4"]
+position = Vector2(228, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope8" type="Node2D" parent="Node2D10/Node2D4"]
+position = Vector2(263, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope9" type="Node2D" parent="Node2D10/Node2D4"]
+position = Vector2(302, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope10" type="Node2D" parent="Node2D10/Node2D4"]
+position = Vector2(341, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope11" type="Node2D" parent="Node2D10/Node2D4"]
+position = Vector2(376, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope12" type="Node2D" parent="Node2D10/Node2D4"]
+position = Vector2(415, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Node2D2" type="Node2D" parent="."]
+position = Vector2(-11, -78)
+
+[node name="Node2D5" type="Node2D" parent="Node2D2"]
+position = Vector2(20, 0)
+
+[node name="Rope" type="Node2D" parent="Node2D2/Node2D5"]
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope2" type="Node2D" parent="Node2D2/Node2D5"]
+position = Vector2(35, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope3" type="Node2D" parent="Node2D2/Node2D5"]
+position = Vector2(74, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope4" type="Node2D" parent="Node2D2/Node2D5"]
+position = Vector2(113, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope5" type="Node2D" parent="Node2D2/Node2D5"]
+position = Vector2(148, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope6" type="Node2D" parent="Node2D2/Node2D5"]
+position = Vector2(187, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope7" type="Node2D" parent="Node2D2/Node2D5"]
+position = Vector2(228, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope8" type="Node2D" parent="Node2D2/Node2D5"]
+position = Vector2(263, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope9" type="Node2D" parent="Node2D2/Node2D5"]
+position = Vector2(302, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope10" type="Node2D" parent="Node2D2/Node2D5"]
+position = Vector2(341, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope11" type="Node2D" parent="Node2D2/Node2D5"]
+position = Vector2(376, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope12" type="Node2D" parent="Node2D2/Node2D5"]
+position = Vector2(415, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Node2D6" type="Node2D" parent="Node2D2"]
+position = Vector2(20, 118)
+
+[node name="Rope" type="Node2D" parent="Node2D2/Node2D6"]
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope2" type="Node2D" parent="Node2D2/Node2D6"]
+position = Vector2(35, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope3" type="Node2D" parent="Node2D2/Node2D6"]
+position = Vector2(74, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope4" type="Node2D" parent="Node2D2/Node2D6"]
+position = Vector2(113, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope5" type="Node2D" parent="Node2D2/Node2D6"]
+position = Vector2(148, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope6" type="Node2D" parent="Node2D2/Node2D6"]
+position = Vector2(187, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope7" type="Node2D" parent="Node2D2/Node2D6"]
+position = Vector2(228, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope8" type="Node2D" parent="Node2D2/Node2D6"]
+position = Vector2(263, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope9" type="Node2D" parent="Node2D2/Node2D6"]
+position = Vector2(302, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope10" type="Node2D" parent="Node2D2/Node2D6"]
+position = Vector2(341, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope11" type="Node2D" parent="Node2D2/Node2D6"]
+position = Vector2(376, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope12" type="Node2D" parent="Node2D2/Node2D6"]
+position = Vector2(415, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Node2D7" type="Node2D" parent="Node2D2"]
+position = Vector2(20, 239)
+
+[node name="Rope" type="Node2D" parent="Node2D2/Node2D7"]
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope2" type="Node2D" parent="Node2D2/Node2D7"]
+position = Vector2(35, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope3" type="Node2D" parent="Node2D2/Node2D7"]
+position = Vector2(74, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope4" type="Node2D" parent="Node2D2/Node2D7"]
+position = Vector2(113, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope5" type="Node2D" parent="Node2D2/Node2D7"]
+position = Vector2(148, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope6" type="Node2D" parent="Node2D2/Node2D7"]
+position = Vector2(187, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope7" type="Node2D" parent="Node2D2/Node2D7"]
+position = Vector2(228, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope8" type="Node2D" parent="Node2D2/Node2D7"]
+position = Vector2(263, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope9" type="Node2D" parent="Node2D2/Node2D7"]
+position = Vector2(302, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope10" type="Node2D" parent="Node2D2/Node2D7"]
+position = Vector2(341, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope11" type="Node2D" parent="Node2D2/Node2D7"]
+position = Vector2(376, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope12" type="Node2D" parent="Node2D2/Node2D7"]
+position = Vector2(415, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Node2D8" type="Node2D" parent="Node2D2"]
+position = Vector2(20, 351)
+
+[node name="Rope" type="Node2D" parent="Node2D2/Node2D8"]
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope2" type="Node2D" parent="Node2D2/Node2D8"]
+position = Vector2(35, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope3" type="Node2D" parent="Node2D2/Node2D8"]
+position = Vector2(74, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope4" type="Node2D" parent="Node2D2/Node2D8"]
+position = Vector2(113, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope5" type="Node2D" parent="Node2D2/Node2D8"]
+position = Vector2(148, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope6" type="Node2D" parent="Node2D2/Node2D8"]
+position = Vector2(187, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope7" type="Node2D" parent="Node2D2/Node2D8"]
+position = Vector2(228, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope8" type="Node2D" parent="Node2D2/Node2D8"]
+position = Vector2(263, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope9" type="Node2D" parent="Node2D2/Node2D8"]
+position = Vector2(302, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope10" type="Node2D" parent="Node2D2/Node2D8"]
+position = Vector2(341, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope11" type="Node2D" parent="Node2D2/Node2D8"]
+position = Vector2(376, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30
+
+[node name="Rope12" type="Node2D" parent="Node2D2/Node2D8"]
+position = Vector2(415, 0)
+script = ExtResource("1_6c85y")
+num_segments = 30

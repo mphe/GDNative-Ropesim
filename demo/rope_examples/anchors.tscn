@@ -1,0 +1,92 @@
+[gd_scene load_steps=8 format=3 uid="uid://l03q4o7r2nuk"]
+
+[ext_resource type="Script" path="res://rope_examples/scripts/animation_player.gd" id="1_sodim"]
+[ext_resource type="Script" path="res://addons/ropesim/RopeAnchor.gd" id="2_hm10y"]
+[ext_resource type="Texture2D" uid="uid://criwv6nuivcxy" path="res://rope_examples/icon.svg" id="3_y0u5w"]
+[ext_resource type="Script" path="res://addons/ropesim/Rope.gd" id="4_jxxrc"]
+
+[sub_resource type="Animation" id="Animation_1pnxe"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Rope:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(199, 113)]
+}
+
+[sub_resource type="Animation" id="Animation_q02ig"]
+resource_name = "moving"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Rope:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(199, 113), Vector2(495, 113)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_agh7j"]
+_data = {
+"RESET": SubResource("Animation_1pnxe"),
+"moving": SubResource("Animation_q02ig")
+}
+
+[node name="main" type="Node2D"]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_agh7j")
+}
+script = ExtResource("1_sodim")
+
+[node name="RopeAnchor" type="Marker2D" parent="."]
+position = Vector2(358.629, 170.15)
+script = ExtResource("2_hm10y")
+rope_path = NodePath("../Rope")
+rope_position = 0.322
+
+[node name="Icon" type="Sprite2D" parent="RopeAnchor"]
+position = Vector2(0, 32)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_y0u5w")
+
+[node name="RopeAnchor2" type="Marker2D" parent="."]
+position = Vector2(252.384, 257.986)
+rotation = 2.85458
+script = ExtResource("2_hm10y")
+rope_path = NodePath("../Rope")
+apply_angle = true
+
+[node name="Icon" type="Sprite2D" parent="RopeAnchor2"]
+position = Vector2(32, 0)
+rotation = -1.5708
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_y0u5w")
+
+[node name="Rope" type="Node2D" parent="."]
+position = Vector2(199, 113)
+script = ExtResource("4_jxxrc")
+num_segments = 20
+rope_length = 200.0
+gravity = 39.41
+num_constraint_iterations = 15
+metadata/_edit_group_ = true
+
+[node name="Label" type="Label" parent="."]
+offset_left = 156.0
+offset_top = 37.0
+offset_right = 514.0
+offset_bottom = 60.0
+text = "Anchors can be used to attach nodes to a rope"
