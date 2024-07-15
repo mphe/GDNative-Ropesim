@@ -39,6 +39,7 @@ void NativeRopeContext::load_context(Node2D* rope)
     gravity_direction = rope->get("gravity_direction");
     damping = rope->get("damping");
     stiffness = rope->get("stiffness");
+    max_endpoint_distance = rope->get("max_endpoint_distance");
     num_constraint_iterations = rope->get("num_constraint_iterations");
     seg_lengths = rope->call("get_segment_lengths");
     simulation_weights = rope->get("_simulation_weights");
@@ -151,30 +152,51 @@ void NativeRopeContext::_simulate_stiffness(PackedVector2Array* velocities) cons
     }
 }
 
+static void constraint_segment(Vector2* point_a, Vector2* point_b, float weight_a, float weight_b, float seg_length)
+{
+    const Vector2 diff = *point_b - *point_a;
+    const float distance = diff.length();
+    const float error = (seg_length - distance) * 0.5f;
+    const Vector2 dir = error * (diff / distance);
+
+    // If one point has a weight < 1.0, the other point must compensate the difference in
+    // relation to its own weight.
+    // This is especially relevant with fixate_begin = true or with arbitrary weights = 0.0.
+    // In that case non-fixed point should be constrained by the whole error distance, not
+    // just half of it, because the other one can obviously not move.
+    // It actually works quite fine without this compensation, but this is more correct and
+    // produces better results.
+    *point_a -= (weight_a + weight_a * (1.0 - weight_b)) * dir;
+    *point_b += (weight_b + weight_b * (1.0 - weight_a)) * dir;
+}
+
 void NativeRopeContext::_constraint()
 {
+    const bool use_euclid_constraint = max_endpoint_distance > 0;
+    Vector2* first_point;
+    Vector2* last_point;
+    float euclid_constraint_first_weight;
+    float max_stretch_length_sqr;
+
+    if (use_euclid_constraint)
+    {
+        first_point = &points[0];
+        last_point = &points[(int)points.size() - 1];
+        euclid_constraint_first_weight = fixate_begin ? 0.0 : 1.0;
+        max_stretch_length_sqr = max_endpoint_distance * max_endpoint_distance;
+    }
+
     for (int _ = 0; _ < num_constraint_iterations; ++_)
     {
-        for (int i = 0; i < points.size() - 1; ++i)
+        if (use_euclid_constraint)
         {
-            const Vector2 diff = points[i + 1] - points[i];
-            const float distance = diff.length();
-            const float error = (seg_lengths[i] - distance) * 0.5f;
-            const Vector2 dir = error * (diff / distance);
-            const float weight = simulation_weights[i];
-            const float next_weight = simulation_weights[i + 1];
+            const float rope_length_sqr = first_point->distance_squared_to(*last_point);
 
-            // If one point has a weight < 1.0, the other point must compensate the difference in
-            // relation to its own weight.
-            // This is especially relevant with fixate_begin = true or with arbitrary weights = 0.0.
-            // In that case non-fixed point should be constrained by the whole error distance, not
-            // just half of it, because the other one can obviously not move.
-            // It actually works quite fine without this compensation, but this is more correct and
-            // produces better results.
-            // points[i] -= weight * dir;
-            // points[i + 1] += next_weight * dir;
-            points[i] -= (weight + weight * (1.0 - next_weight)) * dir;
-            points[i + 1] += (next_weight + next_weight * (1.0 - weight)) * dir;
+            if (rope_length_sqr > max_stretch_length_sqr)
+                constraint_segment(first_point, last_point, euclid_constraint_first_weight, 1.0, max_endpoint_distance);
         }
+
+        for (int i = 0; i < points.size() - 1; ++i)
+            constraint_segment(&points[i], &points[i + 1], simulation_weights[i], simulation_weights[i + 1], seg_lengths[i]);
     }
 }

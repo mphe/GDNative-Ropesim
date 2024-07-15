@@ -33,6 +33,7 @@ namespace godot
             Vector2 gravity_direction;
             float damping;
             float stiffness;
+            float max_endpoint_distance;
             int num_constraint_iterations;
             Ref<Curve> damping_curve;
             bool fixate_begin;

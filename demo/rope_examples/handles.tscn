@@ -150,3 +150,40 @@ script = ExtResource("3_h0p3k")
 num_segments = 20
 rope_length = 200.0
 metadata/_edit_group_ = true
+
+[node name="Label6" type="Label" parent="."]
+offset_left = 304.0
+offset_top = 511.0
+offset_right = 823.0
+offset_bottom = 534.0
+text = "max_endpoint_distance limits the distance between both rope endpoints."
+
+[node name="Rope5" type="Node2D" parent="."]
+position = Vector2(356, 591)
+script = ExtResource("3_h0p3k")
+max_endpoint_distance = 150.0
+fixate_begin = false
+
+[node name="RopeHandleBegin" type="Marker2D" parent="Rope5"]
+position = Vector2(-10, -4)
+script = ExtResource("1_n2oah")
+rope_path = NodePath("..")
+rope_position = 0.0
+strength = 1.0
+
+[node name="RopeHandleEnd" type="Marker2D" parent="Rope5"]
+position = Vector2(204, 22)
+script = ExtResource("1_n2oah")
+rope_path = NodePath("..")
+strength = 1.0
+
+[node name="Rope6" type="Node2D" parent="."]
+position = Vector2(636, 564)
+script = ExtResource("3_h0p3k")
+max_endpoint_distance = 150.0
+
+[node name="RopeHandleEnd" type="Marker2D" parent="Rope6"]
+position = Vector2(160, 86)
+script = ExtResource("1_n2oah")
+rope_path = NodePath("..")
+strength = 1.0

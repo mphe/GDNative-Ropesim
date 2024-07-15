@@ -23,6 +23,13 @@ signal on_point_count_changed()
 ## Overall rope length. Will be distributed uniformly among all segments.
 @export var rope_length: float = 100: set = _set_length
 
+## Maximum euclidean distance between rope endpoints. Zero or negative for no limitation.
+## This is an approximation and not 100% accurate.
+## It is intended as a simple way to constraint the rope length when both endpoints are fixed by a RopeHandle.
+## The actual length of the rope might differ depending on the number of constraint iterations.
+## Fixed points in between are not taken into account.
+@export var max_endpoint_distance: float = -1
+
 ## (Optional) Allows to distribute the length of rope segment in a non-uniform manner.
 ## Useful when certain parts of the rope should be more detailed than the rest.
 ## For example, if it is known that most movement happens at the beginning of the rope, a curve with
