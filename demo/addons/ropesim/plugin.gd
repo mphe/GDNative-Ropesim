@@ -23,7 +23,8 @@ func _handles(object: Object) -> bool:
         object is RopeAnchor or
         object is RopeHandle or
         object is RopeCollisionShapeGenerator or
-        object is RopeRendererLine2D
+        object is RopeRendererLine2D or
+        object is RopeInteraction
     )
 
 

@@ -2,7 +2,9 @@
 extends Marker2D
 class_name RopeHandle
 
-## Gets emitted just before applying the position.
+## Can be used to control, animate or fixate points on a target rope.
+
+## Gets emitted just before applying the position. This happens always during _physics_process().
 signal on_before_update()
 
 ## Enable or disable
@@ -76,7 +78,7 @@ func set_rope_path(value: NodePath) -> void:
     rope_path = value
 
     if is_inside_tree():
-        _helper.target_rope = get_node(rope_path) as Rope
+        _helper.set_target_rope_path(rope_path, self)
 
 
 func set_enable(value: bool) -> void:

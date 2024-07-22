@@ -1,12 +1,13 @@
 extends Node
 class_name RopeToolHelper
 
-# This node should be used programmatically as helper in other rope tools.
-# It contains boilerplate for registering/unregistering to/from NativeRopeServer when needed.
+## This node should be used programmatically as helper in other rope tools.
+## It contains boilerplate for registering/unregistering to/from NativeRopeServer when needed.
 
 const UPDATE_HOOK_POST = "on_post_update"
 const UPDATE_HOOK_PRE = "on_pre_update"
 
+## Emitted when the assigned rope has been changed, i.e. to a new rope or null.
 signal on_rope_assigned(old: Rope)
 
 @export var enable: bool = true: set = set_enable
@@ -77,3 +78,21 @@ func set_target_rope(value: Rope) -> void:
 
     start_stop_process()
     on_rope_assigned.emit(old)
+
+
+## Set the target rope using a NodePath. Allows empty paths and treats them as null.
+## If [param path_relative_node] is given, the path will be resolved relative to that node.
+func set_target_rope_path(rope_path: NodePath, path_relative_node: Node = null) -> void:
+    if not is_inside_tree():
+        push_warning("RopeToolHelper: Trying to assign rope but not added to tree")
+        return
+
+    var node: Rope = null
+
+    if rope_path:
+        if path_relative_node:
+            node = path_relative_node.get_node(rope_path) as Rope
+        else:
+            node = get_node(rope_path) as Rope
+
+    set_target_rope(node)

@@ -2,7 +2,9 @@
 extends Marker2D
 class_name RopeAnchor
 
-## Gets emitted just after applying the position.
+## Can be used to attach nodes at certain positions on a target rope.
+
+## Gets emitted just after applying the position. This happens always during _physics_process().
 signal on_after_update()
 
 @export var force_update: bool: set = _set_force_update
@@ -18,6 +20,7 @@ signal on_after_update()
 @export var precise: bool = false
 
 var _helper: RopeToolHelper
+var _last_pos: Vector2
 
 
 func _init() -> void:
@@ -38,8 +41,9 @@ func _on_post_update() -> void:
 
 func set_rope_path(value: NodePath) -> void:
     rope_path = value
+
     if is_inside_tree():
-        _helper.target_rope = get_node(rope_path) as Rope
+        _helper.set_target_rope_path(rope_path, self)
 
 
 func set_enable(value: bool) -> void:
@@ -51,8 +55,15 @@ func get_enable() -> bool:
     return _helper.enable
 
 
+## Returns the difference between the last and current position.
+func get_velocity() -> Vector2:
+    return global_position - _last_pos
+
+
 func _update() -> void:
     var rope: Rope = _helper.target_rope
+
+    _last_pos = global_position
 
     if precise:
         global_position = rope.get_point_interpolate(rope_position)
@@ -66,5 +77,5 @@ func _update() -> void:
 
 
 func _set_force_update(_val: bool) -> void:
-    if Engine.is_editor_hint() and _helper.target_rope:
+    if _helper.target_rope:
         _update()

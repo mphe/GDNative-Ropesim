@@ -1,6 +1,6 @@
 @tool
 extends Label
-class_name PerformanceLabel
+
 
 func _enter_tree() -> void:
     NativeRopeServer.on_post_update.connect(_on_post_update)
