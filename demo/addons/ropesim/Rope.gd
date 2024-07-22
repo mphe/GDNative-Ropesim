@@ -335,12 +335,12 @@ func _set_num_segs(value: int) -> void:
     if value == num_segments:
         return
     num_segments = value
-    _setup(false)
+    _setup(Engine.is_editor_hint())
     on_point_count_changed.emit()
 
 func _set_length(value: float) -> void:
     rope_length = value
-    _setup(false)
+    _setup(Engine.is_editor_hint())
 
 func _set_draw_debug(value: bool) -> void:
     render_debug = value
@@ -357,6 +357,7 @@ func _set_line_width(value: float) -> void:
 func _set_color(value: Color) -> void:
     color = value
     update_colors()
+    queue_redraw()
 
 func _set_pause(value: bool) -> void:
     pause = value
