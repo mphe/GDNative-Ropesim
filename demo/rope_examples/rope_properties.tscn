@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://clyutgr2fativ"]
+[gd_scene load_steps=8 format=3 uid="uid://clyutgr2fativ"]
 
 [ext_resource type="Script" path="res://rope_examples/scripts/animation_player.gd" id="1_mv383"]
+[ext_resource type="Script" path="res://addons/ropesim/RopeHandle.gd" id="3_mb3ny"]
 [ext_resource type="Script" path="res://addons/ropesim/Rope.gd" id="4_rnvio"]
 
 [sub_resource type="Animation" id="Animation_t4gml"]
@@ -40,8 +41,95 @@ libraries = {
 }
 script = ExtResource("1_mv383")
 
+[node name="Rope15" type="Node2D" parent="."]
+position = Vector2(140.181, 1438)
+script = ExtResource("4_rnvio")
+rope_length = 200.0
+num_constraint_iterations = 1
+fixate_begin = false
+render_debug = true
+metadata/_edit_group_ = true
+
+[node name="RopeHandle" type="Marker2D" parent="Rope15"]
+position = Vector2(-106.181, 0)
+script = ExtResource("3_mb3ny")
+rope_path = NodePath("..")
+rope_position = 0.0
+strength = 1.0
+
+[node name="RopeHandle2" type="Marker2D" parent="Rope15"]
+position = Vector2(93.8187, 0)
+script = ExtResource("3_mb3ny")
+rope_path = NodePath("..")
+strength = 1.0
+
+[node name="Rope16" type="Node2D" parent="."]
+position = Vector2(365, 1438)
+script = ExtResource("4_rnvio")
+rope_length = 200.0
+num_constraint_iterations = 5
+fixate_begin = false
+render_debug = true
+metadata/_edit_group_ = true
+
+[node name="RopeHandle" type="Marker2D" parent="Rope16"]
+position = Vector2(-106.181, 0)
+script = ExtResource("3_mb3ny")
+rope_path = NodePath("..")
+rope_position = 0.0
+strength = 1.0
+
+[node name="RopeHandle2" type="Marker2D" parent="Rope16"]
+position = Vector2(93.8187, 0)
+script = ExtResource("3_mb3ny")
+rope_path = NodePath("..")
+strength = 1.0
+
+[node name="Rope17" type="Node2D" parent="."]
+position = Vector2(583, 1438)
+script = ExtResource("4_rnvio")
+rope_length = 200.0
+fixate_begin = false
+render_debug = true
+metadata/_edit_group_ = true
+
+[node name="RopeHandle" type="Marker2D" parent="Rope17"]
+position = Vector2(-106.181, 0)
+script = ExtResource("3_mb3ny")
+rope_path = NodePath("..")
+rope_position = 0.0
+strength = 1.0
+
+[node name="RopeHandle2" type="Marker2D" parent="Rope17"]
+position = Vector2(93.819, 0)
+script = ExtResource("3_mb3ny")
+rope_path = NodePath("..")
+strength = 1.0
+
+[node name="Rope18" type="Node2D" parent="."]
+position = Vector2(807, 1438)
+script = ExtResource("4_rnvio")
+rope_length = 200.0
+num_constraint_iterations = 50
+fixate_begin = false
+render_debug = true
+metadata/_edit_group_ = true
+
+[node name="RopeHandle" type="Marker2D" parent="Rope18"]
+position = Vector2(-106.181, 0)
+script = ExtResource("3_mb3ny")
+rope_path = NodePath("..")
+rope_position = 0.0
+strength = 1.0
+
+[node name="RopeHandle2" type="Marker2D" parent="Rope18"]
+position = Vector2(93.819, 0)
+script = ExtResource("3_mb3ny")
+rope_path = NodePath("..")
+strength = 1.0
+
 [node name="Node2D2" type="Node2D" parent="."]
-position = Vector2(153.374, 141.613)
+position = Vector2(148.074, 144.936)
 
 [node name="Rope3" type="Node2D" parent="Node2D2"]
 position = Vector2(-88.3748, -22.2188)
@@ -92,33 +180,29 @@ metadata/_edit_group_ = true
 position = Vector2(-58.8187, 906.801)
 script = ExtResource("4_rnvio")
 rope_length = 200.0
-gravity = 39.41
 num_constraint_iterations = 1
 render_debug = true
 metadata/_edit_group_ = true
 
 [node name="Rope5" type="Node2D" parent="Node2D2"]
-position = Vector2(144.181, 906.801)
+position = Vector2(166.181, 906.801)
 script = ExtResource("4_rnvio")
 rope_length = 200.0
-gravity = 39.41
 num_constraint_iterations = 5
 render_debug = true
 metadata/_edit_group_ = true
 
 [node name="Rope6" type="Node2D" parent="Node2D2"]
-position = Vector2(338.181, 906.801)
+position = Vector2(377.181, 906.801)
 script = ExtResource("4_rnvio")
 rope_length = 200.0
-gravity = 39.41
 render_debug = true
 metadata/_edit_group_ = true
 
 [node name="Rope7" type="Node2D" parent="Node2D2"]
-position = Vector2(541.964, 906.801)
+position = Vector2(603, 906.801)
 script = ExtResource("4_rnvio")
 rope_length = 200.0
-gravity = 39.41
 num_constraint_iterations = 50
 render_debug = true
 metadata/_edit_group_ = true
@@ -225,33 +309,43 @@ offset_bottom = 997.0
 text = "1 Constraint iteration"
 
 [node name="Label13" type="Label" parent="."]
-offset_left = 280.783
-offset_top = 929.0
-offset_right = 803.783
-offset_bottom = 978.0
+offset_left = 31.0
+offset_top = 878.0
+offset_right = 976.0
+offset_bottom = 953.0
 text = "The more constraint iterations the less the rope stretches.
+Depending on the forces applied to the rope, more or less constraint iterations may be necessary to properly constrain it.q
 Less constraint iterations can be used to make a rope more bouncy."
 
+[node name="Label18" type="Label" parent="."]
+offset_left = 31.0
+offset_top = 1327.0
+offset_right = 1020.0
+offset_bottom = 1402.0
+text = "The ropes below all have the same gravity and are fixated on both ends.
+Lower constraint iteration have difficulties to properly contract the rope.
+Unlike above, the effect is much more visible, which shows that the amount of constraint iterations needed is highly dependent on the use case."
+
 [node name="Label5" type="Label" parent="."]
-offset_left = 282.0
+offset_left = 361.0
 offset_top = 974.0
-offset_right = 381.0
+offset_right = 460.0
 offset_bottom = 997.0
 text = "5
 "
 
 [node name="Label6" type="Label" parent="."]
-offset_left = 465.0
+offset_left = 565.0
 offset_top = 975.0
-offset_right = 564.0
+offset_right = 664.0
 offset_bottom = 998.0
 text = "10
 "
 
 [node name="Label7" type="Label" parent="."]
-offset_left = 668.783
+offset_left = 795.0
 offset_top = 975.0
-offset_right = 767.783
+offset_right = 894.0
 offset_bottom = 998.0
 text = "50"
 

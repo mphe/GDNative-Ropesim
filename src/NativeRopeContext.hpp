@@ -7,7 +7,7 @@
 namespace godot
 {
     // Caches properties of a rope node and implements simulation functionality.
-    // TODO: Could be used in the future for a data driven approach where rope data is managed by NativeRopeServer and not in GDScript.
+    // TODO: Could be used as base class in the future to manage rope data in C++ and not in GDScript.
     class NativeRopeContext : public Object
     {
         GDCLASS(NativeRopeContext, Object)  // NOLINT
