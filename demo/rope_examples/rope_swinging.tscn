@@ -1,0 +1,127 @@
+[gd_scene load_steps=8 format=3 uid="uid://bdm3ftf6jghmq"]
+
+[ext_resource type="Script" path="res://rope_examples/scripts/character_body_2d_platformer.gd" id="1_kf7l7"]
+[ext_resource type="Texture2D" uid="uid://criwv6nuivcxy" path="res://rope_examples/icon.svg" id="2_3o1qr"]
+[ext_resource type="Script" path="res://addons/ropesim/Rope.gd" id="3_3cx2h"]
+[ext_resource type="Script" path="res://addons/ropesim/RopeInteraction.gd" id="4_q3ugd"]
+[ext_resource type="Script" path="res://addons/ropesim/RopeCollisionShapeGenerator.gd" id="5_wx3wk"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fdqy7"]
+size = Vector2(64, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7w0sw"]
+size = Vector2(128, 128)
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Label" type="Label" parent="."]
+offset_left = 683.0
+offset_top = 14.0
+offset_right = 1132.0
+offset_bottom = 89.0
+text = "Simple example for swinging on a rope in a 2D platformer.
+Not perfect but demonstrates a basic setup."
+
+[node name="Label2" type="Label" parent="."]
+offset_left = 17.0
+offset_top = 14.0
+offset_right = 126.0
+offset_bottom = 89.0
+text = "A/D: Walk
+Space: Jump
+W/S: Climb"
+
+[node name="PlayerA" type="CharacterBody2D" parent="."]
+process_physics_priority = -100
+position = Vector2(128, 210)
+collision_layer = 0
+script = ExtResource("1_kf7l7")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerA"]
+shape = SubResource("RectangleShape2D_fdqy7")
+
+[node name="Icon" type="Sprite2D" parent="PlayerA"]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_3o1qr")
+
+[node name="Area2D" type="Area2D" parent="PlayerA"]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerA/Area2D"]
+shape = SubResource("RectangleShape2D_fdqy7")
+
+[node name="RopeInteraction" type="Node" parent="PlayerA" node_paths=PackedStringArray("target_node")]
+script = ExtResource("4_q3ugd")
+enable = false
+position_update_mode = 1
+target_node = NodePath("..")
+
+[node name="Rope" type="Node2D" parent="."]
+position = Vector2(464, 4)
+script = ExtResource("3_3cx2h")
+num_segments = 15
+rope_length = 250.0
+max_endpoint_distance = 270.0
+num_constraint_iterations = 30
+line_width = 6.0
+color = Color(0.535156, 0.382734, 0.258426, 1)
+
+[node name="Area2D" type="Area2D" parent="Rope"]
+collision_layer = 2
+collision_mask = 0
+monitoring = false
+
+[node name="RopeCollisionShapeGenerator" type="Node" parent="Rope/Area2D"]
+script = ExtResource("5_wx3wk")
+rope_path = NodePath("../..")
+
+[node name="wall" type="StaticBody2D" parent="."]
+z_index = -1
+position = Vector2(146, 330)
+scale = Vector2(2.2, 0.519999)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="wall"]
+shape = SubResource("RectangleShape2D_7w0sw")
+
+[node name="Icon" type="Sprite2D" parent="wall"]
+texture = ExtResource("2_3o1qr")
+
+[node name="wall4" type="StaticBody2D" parent="."]
+z_index = -1
+position = Vector2(219, 422)
+scale = Vector2(2.2, 0.519999)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="wall4"]
+shape = SubResource("RectangleShape2D_7w0sw")
+
+[node name="Icon" type="Sprite2D" parent="wall4"]
+texture = ExtResource("2_3o1qr")
+
+[node name="wall3" type="StaticBody2D" parent="."]
+z_index = -1
+position = Vector2(538, 521)
+scale = Vector2(10.88, 0.519999)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="wall3"]
+shape = SubResource("RectangleShape2D_7w0sw")
+
+[node name="Icon" type="Sprite2D" parent="wall3"]
+texture = ExtResource("2_3o1qr")
+
+[node name="wall2" type="StaticBody2D" parent="."]
+z_index = -1
+position = Vector2(829, 330)
+scale = Vector2(2.2, 0.519999)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="wall2"]
+shape = SubResource("RectangleShape2D_7w0sw")
+
+[node name="Icon" type="Sprite2D" parent="wall2"]
+texture = ExtResource("2_3o1qr")

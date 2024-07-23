@@ -2,7 +2,7 @@
 
 <img src="https://github.com/mphe/GDNative-Ropesim/assets/7116001/272f4f65-cb79-4798-97ba-f0d43589caef" width=128px align="right"/>
 
-A 2D verlet integration based rope simulation for Godot 4.2.
+A 2D verlet integration based rope simulation for Godot 4.2+.
 
 The computation-heavy simulation part is written in C++ using GDExtension, the rest in GDScript. This allows for fast processing and easy extendability, while keeping the code readable.
 
@@ -15,9 +15,9 @@ The last Godot 3.x version can be found on the [3.x branch](https://github.com/m
     * [Download](https://github.com/mphe/GDNative-Ropesim/releases/latest) the latest release from the release page, or
     * [Download](https://github.com/mphe/GDNative-Ropesim/actions) it from the latest GitHub Actions run, or
     * [Compile](#building) it yourself.
-3. Copy or symlink `addons/ropesim` to your project's `addons/` directory
-4. Enable the addon in the project settings
-5. Restart Godot
+2. Copy or symlink `addons/ropesim` to your project's `addons/` directory
+3. Enable the addon in the project settings
+4. Restart Godot
 
 # Building
 
@@ -29,7 +29,7 @@ To compile for Linux, run the following commands.
 Compiling for other platforms works analogously.
 
 ```sh
-$ scons target=template_release platform=linux arch=x86_64 -j8
+$ scons target=template_release platform=linux optimize=speed arch=x86_64 -j8
 $ scons target=template_debug platform=linux arch=x86_64 -j8
 ```
 
@@ -43,14 +43,16 @@ Following nodes exist:
 * `RopeHandle`: A handle that can be used to control, animate, or fixate parts of the rope.
 * `RopeRendererLine2D`: Renders a target rope using `Line2D`.
 * `RopeCollisionShapeGenerator`: Can be used e.g. in an `Area2D` to detect collisions with the target rope.
-
-See inline comments for further information and documentation of node properties.
-
-The included demo project and the showcase video below provide some usage examples.
+* `RopeInteraction`: Handles mutual interaction of a target node with a rope. Useful for rope grabbing or pulling mechanics where an object should be able to affect the rope and vice-versa.
 
 When one of these nodes is selected, a "Ropesim" menu appears in the editor toolbar that can be used to toggle live preview in the editor on and off.
 
 All rope related tools, automatically pause themselves when their target rope is paused to save performance.
+
+Use the in-engine help to view the full documentation for each node.
+
+The project also includes various example scenes that demonstrate the features of this plugin.
+See also the [showcase video](#showcase) for a basic usage example.
 
 # Showcase
 

@@ -1,0 +1,189 @@
+[gd_scene load_steps=7 format=3 uid="uid://bajrq5fmp5squ"]
+
+[ext_resource type="Script" path="res://addons/ropesim/RopeHandle.gd" id="1_n2oah"]
+[ext_resource type="Script" path="res://rope_examples/scripts/animation_player.gd" id="3_g6662"]
+[ext_resource type="Script" path="res://addons/ropesim/Rope.gd" id="3_h0p3k"]
+
+[sub_resource type="Animation" id="Animation_1pnxe"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RopeHandle3:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(873, 301)]
+}
+
+[sub_resource type="Animation" id="Animation_q02ig"]
+resource_name = "moving"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RopeHandle3:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(833, 334), Vector2(842, 276), Vector2(919, 283), Vector2(863, 350)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_agh7j"]
+_data = {
+"RESET": SubResource("Animation_1pnxe"),
+"moving": SubResource("Animation_q02ig")
+}
+
+[node name="main" type="Node2D"]
+
+[node name="Label" type="Label" parent="."]
+offset_left = 31.0
+offset_top = 15.0
+offset_right = 720.0
+offset_bottom = 64.0
+text = "Handles can be used to control parts of the rope.
+The \"strength\" property determines how strong a point will be constrained to the handle."
+
+[node name="Label2" type="Label" parent="."]
+offset_left = 108.0
+offset_top = 128.0
+offset_right = 214.0
+offset_bottom = 151.0
+text = "strength = 0.0"
+
+[node name="Rope" type="Node2D" parent="."]
+position = Vector2(96, 191)
+script = ExtResource("3_h0p3k")
+num_segments = 20
+rope_length = 200.0
+metadata/_edit_group_ = true
+
+[node name="RopeHandle" type="Marker2D" parent="."]
+position = Vector2(206, 165)
+script = ExtResource("1_n2oah")
+rope_path = NodePath("../Rope")
+rope_position = 0.582
+
+[node name="Label4" type="Label" parent="."]
+offset_left = 319.0
+offset_top = 123.0
+offset_right = 425.0
+offset_bottom = 146.0
+text = "strength = 1.0"
+
+[node name="Rope3" type="Node2D" parent="."]
+position = Vector2(311, 187)
+script = ExtResource("3_h0p3k")
+num_segments = 20
+rope_length = 200.0
+metadata/_edit_group_ = true
+
+[node name="RopeHandle2" type="Marker2D" parent="."]
+position = Vector2(417, 160)
+script = ExtResource("1_n2oah")
+rope_path = NodePath("../Rope3")
+rope_position = 0.582
+strength = 1.0
+
+[node name="Label3" type="Label" parent="."]
+offset_left = 31.0
+offset_top = 340.0
+offset_right = 550.0
+offset_bottom = 363.0
+text = "A free hanging rope (fixate_begin = false) controlled by two handles"
+
+[node name="RopeHandleBegin" type="Marker2D" parent="."]
+position = Vector2(114, 428)
+script = ExtResource("1_n2oah")
+rope_path = NodePath("../Rope2")
+rope_position = 0.207
+strength = 1.0
+
+[node name="RopeHandleEnd" type="Marker2D" parent="."]
+position = Vector2(203, 415)
+script = ExtResource("1_n2oah")
+rope_path = NodePath("../Rope2")
+rope_position = 0.775
+strength = 1.0
+
+[node name="Rope2" type="Node2D" parent="."]
+position = Vector2(168, 403)
+script = ExtResource("3_h0p3k")
+num_segments = 20
+rope_length = 200.0
+fixate_begin = false
+metadata/_edit_group_ = true
+
+[node name="Label5" type="Label" parent="."]
+offset_left = 700.0
+offset_top = 241.0
+offset_right = 1219.0
+offset_bottom = 264.0
+text = "Smoothed handle transition enabled"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_agh7j")
+}
+script = ExtResource("3_g6662")
+
+[node name="RopeHandle3" type="Marker2D" parent="."]
+position = Vector2(873, 301)
+script = ExtResource("1_n2oah")
+rope_path = NodePath("../Rope4")
+rope_position = 0.531
+smoothing = true
+position_smoothing_speed = 3.705
+strength = 1.0
+
+[node name="Rope4" type="Node2D" parent="."]
+position = Vector2(799, 297)
+script = ExtResource("3_h0p3k")
+num_segments = 20
+rope_length = 200.0
+metadata/_edit_group_ = true
+
+[node name="Label6" type="Label" parent="."]
+offset_left = 304.0
+offset_top = 511.0
+offset_right = 823.0
+offset_bottom = 534.0
+text = "max_endpoint_distance limits the distance between both rope endpoints."
+
+[node name="Rope5" type="Node2D" parent="."]
+position = Vector2(356, 591)
+script = ExtResource("3_h0p3k")
+max_endpoint_distance = 150.0
+fixate_begin = false
+
+[node name="RopeHandleBegin" type="Marker2D" parent="Rope5"]
+position = Vector2(-10, -4)
+script = ExtResource("1_n2oah")
+rope_path = NodePath("..")
+rope_position = 0.0
+strength = 1.0
+
+[node name="RopeHandleEnd" type="Marker2D" parent="Rope5"]
+position = Vector2(204, 22)
+script = ExtResource("1_n2oah")
+rope_path = NodePath("..")
+strength = 1.0
+
+[node name="Rope6" type="Node2D" parent="."]
+position = Vector2(636, 564)
+script = ExtResource("3_h0p3k")
+max_endpoint_distance = 150.0
+
+[node name="RopeHandleEnd" type="Marker2D" parent="Rope6"]
+position = Vector2(160, 86)
+script = ExtResource("1_n2oah")
+rope_path = NodePath("..")
+strength = 1.0

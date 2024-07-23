@@ -26,6 +26,8 @@ opts.Update(env)
 # - CPPDEFINES are for pre-processor defines
 # - LINKFLAGS are for linking flags
 
+env.Append(CCFLAGS="-fdiagnostics-color")
+
 
 # Sources
 env.Append(CPPPATH=["src/"])

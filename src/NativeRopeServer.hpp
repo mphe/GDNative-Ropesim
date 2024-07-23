@@ -3,13 +3,14 @@
 
 #include <godot_cpp/classes/node2d.hpp>
 #include <godot_cpp/classes/scene_tree.hpp>
-#include "godot_cpp/templates/vector.hpp"
+#include <godot_cpp/templates/vector.hpp>
+#include <godot_cpp/classes/curve.hpp>
 
 namespace godot
 {
     class NativeRopeServer : public Object
     {
-        GDCLASS(NativeRopeServer, Object)
+        GDCLASS(NativeRopeServer, Object)  // NOLINT
 
         public:
             NativeRopeServer();
@@ -31,7 +32,6 @@ namespace godot
 
         private:
             void _start_stop_process();
-            void _simulate(Node2D* rope, float delta);
             void _on_physics_frame();
 
         private:

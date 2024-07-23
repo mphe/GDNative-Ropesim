@@ -1,0 +1,59 @@
+[gd_scene load_steps=3 format=3 uid="uid://c7p2vp6s5nvem"]
+
+[ext_resource type="Script" path="res://addons/ropesim/RopeHandle.gd" id="1_flav6"]
+[ext_resource type="Script" path="res://addons/ropesim/Rope.gd" id="4_ty6wv"]
+
+[node name="main" type="Node2D"]
+
+[node name="Without stiffness" type="Label" parent="."]
+offset_left = 62.0
+offset_top = 160.0
+offset_right = 199.0
+offset_bottom = 183.0
+text = "Without stiffness:"
+
+[node name="RopeHandle" type="Marker2D" parent="."]
+position = Vector2(117.049, 203.049)
+rotation = 1.56586
+script = ExtResource("1_flav6")
+rope_path = NodePath("../Rope")
+strength = 1.0
+
+[node name="Rope" type="Node2D" parent="."]
+position = Vector2(96, 198.049)
+rotation = -1.0472
+script = ExtResource("4_ty6wv")
+num_segments = 20
+rope_length = 200.0
+metadata/_edit_group_ = true
+
+[node name="With stiffness" type="Label" parent="."]
+offset_left = 288.0
+offset_top = 160.0
+offset_right = 398.0
+offset_bottom = 183.0
+text = "With stiffness:"
+
+[node name="Label" type="Label" parent="."]
+offset_left = 18.0
+offset_top = 85.0
+offset_right = 599.0
+offset_bottom = 134.0
+text = "Stiffness forces the rope to return to its resting position.
+The resting direction is downwards and affected by the the node's rotation."
+
+[node name="RopeHandle2" type="Marker2D" parent="."]
+position = Vector2(343.049, 201.049)
+rotation = 1.56586
+script = ExtResource("1_flav6")
+rope_path = NodePath("../Rope2")
+strength = 1.0
+
+[node name="Rope2" type="Node2D" parent="."]
+position = Vector2(322, 196.049)
+rotation = -1.0472
+script = ExtResource("4_ty6wv")
+num_segments = 20
+rope_length = 200.0
+stiffness = 12.145
+metadata/_edit_group_ = true

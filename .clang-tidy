@@ -1,0 +1,22 @@
+Checks:
+  - bugprone-*
+  - -bugprone-easily-swappable-parameters
+  - cert-*
+  - clang-analyzer-*
+  - concurrency-*
+  - cppcoreguidelines-*
+  - -cppcoreguidelines-init-variables  # Produces false positves when initialization happens later
+  - -cppcoreguidelines-avoid-magic-numbers  # This also triggers with literals like 3.1415
+  - -cppcoreguidelines-avoid-non-const-global-variables
+  - misc-*
+  - -misc-non-private-member-variables-in-classes
+  - -misc-use-anonymous-namespace
+  - -misc-include-cleaner
+  - performance-*
+  - portability-*
+  - readability-*
+  - -readability-braces-around-statements
+  - -readability-uppercase-literal-suffix
+  - -readability-magic-numbers  # This also triggers with literals like 3.1415
+  - -readability-redundant-access-specifiers
+  - -readability-implicit-bool-conversion

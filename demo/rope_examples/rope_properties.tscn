@@ -1,0 +1,534 @@
+[gd_scene load_steps=10 format=3 uid="uid://clyutgr2fativ"]
+
+[ext_resource type="Script" path="res://rope_examples/scripts/animation_player.gd" id="1_mv383"]
+[ext_resource type="Script" path="res://addons/ropesim/RopeHandle.gd" id="3_mb3ny"]
+[ext_resource type="Script" path="res://addons/ropesim/Rope.gd" id="4_rnvio"]
+
+[sub_resource type="Animation" id="Animation_t4gml"]
+length = 0.001
+
+[sub_resource type="Animation" id="Animation_c3bfa"]
+resource_name = "moving"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Node2D2:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(199, 113), Vector2(140, 150)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_13y75"]
+_data = {
+"RESET": SubResource("Animation_t4gml"),
+"moving": SubResource("Animation_c3bfa")
+}
+
+[sub_resource type="Curve" id="Curve_2i72k"]
+_data = [Vector2(0.134615, 1), 0.0, 0.0, 0, 0, Vector2(0.485577, 0.484536), 0.0, -0.0200405, 0, 1, Vector2(1, 0.474227), 0.231403, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_uwde6"]
+color = Color(1, 1, 1, 1)
+thickness = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f4u3w"]
+bg_color = Color(1, 1, 1, 1)
+border_color = Color(1, 1, 1, 1)
+expand_margin_left = 2.0
+expand_margin_right = 2.0
+
+[node name="main" type="Node2D"]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_13y75")
+}
+script = ExtResource("1_mv383")
+
+[node name="Rope15" type="Node2D" parent="."]
+position = Vector2(140.181, 1438)
+script = ExtResource("4_rnvio")
+rope_length = 200.0
+num_constraint_iterations = 1
+fixate_begin = false
+render_debug = true
+metadata/_edit_group_ = true
+
+[node name="RopeHandle" type="Marker2D" parent="Rope15"]
+position = Vector2(-106.181, 0)
+script = ExtResource("3_mb3ny")
+rope_path = NodePath("..")
+rope_position = 0.0
+strength = 1.0
+
+[node name="RopeHandle2" type="Marker2D" parent="Rope15"]
+position = Vector2(93.8187, 0)
+script = ExtResource("3_mb3ny")
+rope_path = NodePath("..")
+strength = 1.0
+
+[node name="Rope16" type="Node2D" parent="."]
+position = Vector2(365, 1438)
+script = ExtResource("4_rnvio")
+rope_length = 200.0
+num_constraint_iterations = 5
+fixate_begin = false
+render_debug = true
+metadata/_edit_group_ = true
+
+[node name="RopeHandle" type="Marker2D" parent="Rope16"]
+position = Vector2(-106.181, 0)
+script = ExtResource("3_mb3ny")
+rope_path = NodePath("..")
+rope_position = 0.0
+strength = 1.0
+
+[node name="RopeHandle2" type="Marker2D" parent="Rope16"]
+position = Vector2(93.8187, 0)
+script = ExtResource("3_mb3ny")
+rope_path = NodePath("..")
+strength = 1.0
+
+[node name="Rope17" type="Node2D" parent="."]
+position = Vector2(583, 1438)
+script = ExtResource("4_rnvio")
+rope_length = 200.0
+fixate_begin = false
+render_debug = true
+metadata/_edit_group_ = true
+
+[node name="RopeHandle" type="Marker2D" parent="Rope17"]
+position = Vector2(-106.181, 0)
+script = ExtResource("3_mb3ny")
+rope_path = NodePath("..")
+rope_position = 0.0
+strength = 1.0
+
+[node name="RopeHandle2" type="Marker2D" parent="Rope17"]
+position = Vector2(93.819, 0)
+script = ExtResource("3_mb3ny")
+rope_path = NodePath("..")
+strength = 1.0
+
+[node name="Rope18" type="Node2D" parent="."]
+position = Vector2(807, 1438)
+script = ExtResource("4_rnvio")
+rope_length = 200.0
+num_constraint_iterations = 50
+fixate_begin = false
+render_debug = true
+metadata/_edit_group_ = true
+
+[node name="RopeHandle" type="Marker2D" parent="Rope18"]
+position = Vector2(-106.181, 0)
+script = ExtResource("3_mb3ny")
+rope_path = NodePath("..")
+rope_position = 0.0
+strength = 1.0
+
+[node name="RopeHandle2" type="Marker2D" parent="Rope18"]
+position = Vector2(93.819, 0)
+script = ExtResource("3_mb3ny")
+rope_path = NodePath("..")
+strength = 1.0
+
+[node name="Node2D2" type="Node2D" parent="."]
+position = Vector2(180.7, 124.476)
+
+[node name="Rope3" type="Node2D" parent="Node2D2"]
+position = Vector2(-88.3748, -22.2188)
+script = ExtResource("4_rnvio")
+num_segments = 5
+rope_length = 200.0
+gravity = 39.41
+render_debug = true
+metadata/_edit_group_ = true
+
+[node name="Rope" type="Node2D" parent="Node2D2"]
+position = Vector2(114.151, -22.2188)
+script = ExtResource("4_rnvio")
+rope_length = 200.0
+gravity = 39.41
+render_debug = true
+metadata/_edit_group_ = true
+
+[node name="Rope2" type="Node2D" parent="Node2D2"]
+position = Vector2(308.625, -22.2188)
+script = ExtResource("4_rnvio")
+num_segments = 20
+rope_length = 200.0
+gravity = 39.41
+render_debug = true
+metadata/_edit_group_ = true
+
+[node name="Rope12" type="Node2D" parent="Node2D2"]
+position = Vector2(687.625, -15.2188)
+script = ExtResource("4_rnvio")
+num_segments = 5
+rope_length = 200.0
+gravity = 39.41
+render_debug = true
+metadata/_edit_group_ = true
+
+[node name="Rope13" type="Node2D" parent="Node2D2"]
+position = Vector2(890.151, -15.2188)
+script = ExtResource("4_rnvio")
+num_segments = 5
+rope_length = 200.0
+segment_length_distribution = SubResource("Curve_2i72k")
+gravity = 39.41
+render_debug = true
+metadata/_edit_group_ = true
+
+[node name="Rope4" type="Node2D" parent="Node2D2"]
+position = Vector2(-58.8187, 906.801)
+script = ExtResource("4_rnvio")
+rope_length = 200.0
+num_constraint_iterations = 1
+render_debug = true
+metadata/_edit_group_ = true
+
+[node name="Rope5" type="Node2D" parent="Node2D2"]
+position = Vector2(166.181, 906.801)
+script = ExtResource("4_rnvio")
+rope_length = 200.0
+num_constraint_iterations = 5
+render_debug = true
+metadata/_edit_group_ = true
+
+[node name="Rope6" type="Node2D" parent="Node2D2"]
+position = Vector2(377.181, 906.801)
+script = ExtResource("4_rnvio")
+rope_length = 200.0
+render_debug = true
+metadata/_edit_group_ = true
+
+[node name="Rope7" type="Node2D" parent="Node2D2"]
+position = Vector2(603, 906.801)
+script = ExtResource("4_rnvio")
+rope_length = 200.0
+num_constraint_iterations = 50
+render_debug = true
+metadata/_edit_group_ = true
+
+[node name="Rope8" type="Node2D" parent="Node2D2"]
+position = Vector2(-54.1407, 436.104)
+script = ExtResource("4_rnvio")
+rope_length = 200.0
+gravity = 20.0
+render_debug = true
+metadata/_edit_group_ = true
+
+[node name="Rope9" type="Node2D" parent="Node2D2"]
+position = Vector2(148.859, 436.104)
+script = ExtResource("4_rnvio")
+rope_length = 200.0
+num_constraint_iterations = 5
+render_debug = true
+metadata/_edit_group_ = true
+
+[node name="Rope14" type="Node2D" parent="Node2D2"]
+position = Vector2(377.859, 435.104)
+script = ExtResource("4_rnvio")
+rope_length = 200.0
+gravity_direction = Vector2(0, -1)
+num_constraint_iterations = 5
+render_debug = true
+metadata/_edit_group_ = true
+
+[node name="Rope10" type="Node2D" parent="Node2D2"]
+position = Vector2(846.707, 474.556)
+script = ExtResource("4_rnvio")
+rope_length = 200.0
+gravity = 40.0
+render_debug = true
+metadata/_edit_group_ = true
+
+[node name="Rope11" type="Node2D" parent="Node2D2"]
+position = Vector2(1049.71, 474.556)
+script = ExtResource("4_rnvio")
+rope_length = 200.0
+gravity = 40.0
+damping = 3.0
+num_constraint_iterations = 5
+render_debug = true
+metadata/_edit_group_ = true
+
+[node name="Label3" type="Label" parent="."]
+offset_left = 35.0
+offset_top = 40.0
+offset_right = 134.0
+offset_bottom = 63.0
+text = "5 Segments"
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="."]
+offset_left = 238.0
+offset_top = 40.0
+offset_right = 337.0
+offset_bottom = 63.0
+text = "10 Segments"
+metadata/_edit_use_anchors_ = true
+
+[node name="Label2" type="Label" parent="."]
+offset_left = 432.0
+offset_top = 40.0
+offset_right = 531.0
+offset_bottom = 63.0
+text = "20 Segments"
+metadata/_edit_use_anchors_ = true
+
+[node name="Label14" type="Label" parent="."]
+offset_left = 811.0
+offset_top = 47.0
+offset_right = 910.0
+offset_bottom = 70.0
+text = "Default"
+metadata/_edit_use_anchors_ = true
+
+[node name="Label17" type="Label" parent="."]
+offset_left = 788.0
+offset_top = -67.0
+offset_right = 1602.0
+offset_bottom = 8.0
+text = "Segment length distribution curve allows changing the length of rope segments.
+Useful to increase quality in specific areas, while keeping the same segment count.
+However, it can alter the physical behavior."
+metadata/_edit_use_anchors_ = true
+
+[node name="Label15" type="Label" parent="."]
+offset_left = 1014.0
+offset_top = 47.0
+offset_right = 1113.0
+offset_bottom = 70.0
+text = "With segment length distribution curve.
+More segments towards the end, less at the beginning."
+metadata/_edit_use_anchors_ = true
+
+[node name="Label4" type="Label" parent="."]
+offset_left = 32.0
+offset_top = 974.0
+offset_right = 215.0
+offset_bottom = 997.0
+text = "1 Constraint iteration"
+
+[node name="Label13" type="Label" parent="."]
+offset_left = 31.0
+offset_top = 878.0
+offset_right = 976.0
+offset_bottom = 953.0
+text = "The more constraint iterations the less the rope stretches.
+Depending on the forces applied to the rope, more or less constraint iterations may be necessary to properly constrain it.q
+Less constraint iterations can be used to make a rope more bouncy."
+
+[node name="Label18" type="Label" parent="."]
+offset_left = 31.0
+offset_top = 1327.0
+offset_right = 1020.0
+offset_bottom = 1402.0
+text = "The ropes below all have the same gravity and are fixated on both ends.
+Lower constraint iteration have difficulties to properly contract the rope.
+Unlike above, the effect is much more visible, which shows that the amount of constraint iterations needed is highly dependent on the use case."
+
+[node name="Label5" type="Label" parent="."]
+offset_left = 361.0
+offset_top = 974.0
+offset_right = 460.0
+offset_bottom = 997.0
+text = "5
+"
+
+[node name="Label6" type="Label" parent="."]
+offset_left = 565.0
+offset_top = 975.0
+offset_right = 664.0
+offset_bottom = 998.0
+text = "10
+"
+
+[node name="Label7" type="Label" parent="."]
+offset_left = 795.0
+offset_top = 975.0
+offset_right = 894.0
+offset_bottom = 998.0
+text = "50"
+
+[node name="Label8" type="Label" parent="."]
+offset_left = 26.0
+offset_top = 510.0
+offset_right = 209.0
+offset_bottom = 533.0
+text = "Gravity 20"
+
+[node name="Label9" type="Label" parent="."]
+offset_left = 276.0
+offset_top = 510.0
+offset_right = 375.0
+offset_bottom = 533.0
+text = "Gravity 100
+"
+
+[node name="Label16" type="Label" parent="."]
+offset_left = 499.0
+offset_top = 610.0
+offset_right = 658.0
+offset_bottom = 633.0
+text = "Gravity 100 upwards
+"
+
+[node name="Label10" type="Label" parent="."]
+offset_left = 949.0
+offset_top = 517.0
+offset_right = 1132.0
+offset_bottom = 540.0
+text = "Damping 0.0"
+
+[node name="Label12" type="Label" parent="."]
+offset_left = 1028.0
+offset_top = 477.0
+offset_right = 1252.0
+offset_bottom = 500.0
+text = "Damping is similar to friction"
+
+[node name="Label11" type="Label" parent="."]
+offset_left = 1199.0
+offset_top = 517.0
+offset_right = 1298.0
+offset_bottom = 540.0
+text = "Damping 3.0
+"
+
+[node name="Label19" type="Label" parent="."]
+offset_left = 1267.0
+offset_top = 905.0
+offset_right = 1366.0
+offset_bottom = 928.0
+text = "max_endpoint_distance provides an easy way to constraint the rope length when using handles.
+"
+
+[node name="Label22" type="Label" parent="."]
+offset_left = 1267.0
+offset_top = 1328.0
+offset_right = 2007.0
+offset_bottom = 1351.0
+text = "max_endpoint_distance only considers the distance between both endpoints.
+Does not consider the actual rope length.
+"
+
+[node name="Label20" type="Label" parent="."]
+offset_left = 1236.0
+offset_top = 956.0
+offset_right = 1460.0
+offset_bottom = 979.0
+text = "max_endpoint_distance = -1"
+
+[node name="Label21" type="Label" parent="."]
+offset_left = 1609.0
+offset_top = 956.0
+offset_right = 1837.0
+offset_bottom = 979.0
+text = "max_endpoint_distance = 100"
+
+[node name="HSeparator" type="HSeparator" parent="."]
+offset_left = 24.0
+offset_top = 417.0
+offset_right = 1697.0
+offset_bottom = 421.0
+theme_override_styles/separator = SubResource("StyleBoxLine_uwde6")
+
+[node name="HSeparator2" type="HSeparator" parent="."]
+offset_left = 2.0
+offset_top = 848.0
+offset_right = 1675.0
+offset_bottom = 852.0
+theme_override_styles/separator = SubResource("StyleBoxLine_uwde6")
+
+[node name="VSeparator" type="VSeparator" parent="."]
+offset_left = 648.0
+offset_top = -77.0
+offset_right = 852.0
+offset_bottom = 848.0
+theme_override_styles/separator = SubResource("StyleBoxFlat_f4u3w")
+
+[node name="VSeparator2" type="VSeparator" parent="."]
+offset_left = 1105.0
+offset_top = 854.0
+offset_right = 1309.0
+offset_bottom = 1771.0
+theme_override_styles/separator = SubResource("StyleBoxFlat_f4u3w")
+
+[node name="Rope" type="Node2D" parent="."]
+position = Vector2(1317, 996)
+script = ExtResource("4_rnvio")
+
+[node name="RopeHandle" type="Marker2D" parent="Rope"]
+position = Vector2(136, 257)
+script = ExtResource("3_mb3ny")
+rope_path = NodePath("..")
+strength = 1.0
+
+[node name="Rope2" type="Node2D" parent="."]
+position = Vector2(1697, 992)
+script = ExtResource("4_rnvio")
+max_endpoint_distance = 100.0
+
+[node name="RopeHandle" type="Marker2D" parent="Rope2"]
+position = Vector2(136, 257)
+script = ExtResource("3_mb3ny")
+rope_path = NodePath("..")
+strength = 1.0
+
+[node name="Label23" type="Label" parent="."]
+offset_left = 1236.0
+offset_top = 1406.0
+offset_right = 1460.0
+offset_bottom = 1429.0
+text = "max_endpoint_distance = -1"
+
+[node name="Label24" type="Label" parent="."]
+offset_left = 1609.0
+offset_top = 1406.0
+offset_right = 1837.0
+offset_bottom = 1429.0
+text = "max_endpoint_distance = 100"
+
+[node name="Rope4" type="Node2D" parent="."]
+position = Vector2(1697, 1442)
+script = ExtResource("4_rnvio")
+max_endpoint_distance = 100.0
+
+[node name="RopeHandle" type="Marker2D" parent="Rope4"]
+position = Vector2(250, 56)
+script = ExtResource("3_mb3ny")
+rope_path = NodePath("..")
+rope_position = 0.622
+strength = 1.0
+
+[node name="RopeHandle2" type="Marker2D" parent="Rope4"]
+position = Vector2(139, 249)
+script = ExtResource("3_mb3ny")
+rope_path = NodePath("..")
+strength = 1.0
+
+[node name="Rope5" type="Node2D" parent="."]
+position = Vector2(1318, 1446)
+script = ExtResource("4_rnvio")
+
+[node name="RopeHandle" type="Marker2D" parent="Rope5"]
+position = Vector2(250, 56)
+script = ExtResource("3_mb3ny")
+rope_path = NodePath("..")
+rope_position = 0.622
+strength = 1.0
+
+[node name="RopeHandle2" type="Marker2D" parent="Rope5"]
+position = Vector2(139, 249)
+script = ExtResource("3_mb3ny")
+rope_path = NodePath("..")
+strength = 1.0

@@ -1,97 +1,67 @@
 # Adapted from https://github.com/nathanfranke/gdextension/blob/main/.github/workflows/build.yml
 name: Builds
 on:
-  push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+  workflow_dispatch:
+    inputs:
+      git-ref:
+        description: A commit, branch or tag to build.
+        type: string
+        required: true
+  workflow_call:
+    inputs:
+      git-ref:
+        description: A commit, branch or tag to build.
+        type: string
+        required: true
 
 jobs:
   build:
     runs-on: ${{ matrix.runner }}
-    name: ${{ matrix.name }}
+    name: ${{ matrix.platform }} ${{ matrix.target }} ${{ matrix.arch }} ${{ matrix.optimize }}
     strategy:
       fail-fast: false
       matrix:
+        target: [ template_debug, template_release ]
+        identifier: [ windows, linux, macos, android, android_arm64 ]
+
         include:
-          # Linux
-          - identifier: linux-debug
-            name: Linux Debug
-            runner: ubuntu-20.04
-            target: template_debug
-            platform: linux
-            arch: x86_64
+          # Defaults
+          - runner: ubuntu-latest
+          - optimize: speed
+          - arch: x86_64
 
-          - identifier: linux-release
-            name: Linux Release
-            runner: ubuntu-20.04
-            target: template_release
-            platform: linux
-            arch: x86_64
+          # Debug build settings
+          - target: template_debug
+            optimize: speed_trace
 
-          # Windows
-          - identifier: windows-debug
-            name: Windows Debug
-            runner: ubuntu-20.04
-            target: template_debug
+          # Map identifiers to platforms + special settings
+          - identifier: windows
             platform: windows
-            arch: x86_64
 
-          - identifier: windows-release
-            name: Windows Release
-            runner: ubuntu-20.04
-            target: template_release
-            platform: windows
-            arch: x86_64
-
-          # Android Arm64
-          - identifier: android-release
-            name: Android Release Arm64
-            runner: ubuntu-20.04
-            target: template_release
-            platform: android
-            arch: arm64
-
-          - identifier: android-debug
-            name: Android Debug Arm64
-            runner: ubuntu-20.04
-            target: template_debug
-            platform: android
-            arch: arm64
-
-          # Android x86_64
-          - identifier: android-release
-            name: Android Release x86_64
-            runner: ubuntu-20.04
-            target: template_release
-            platform: android
-            arch: x86_64
-
-          - identifier: android-debug
-            name: Android Debug x86_64
-            runner: ubuntu-20.04
-            target: template_debug
-            platform: android
-            arch: x86_64
-
-          # Mac
-          - identifier: macos-debug
-            name: macOS (universal) Debug
-            runner: macos-latest
-            target: template_debug
+          - identifier: macos
             platform: macos
+            runner: macos-latest
             arch: universal
 
-          - identifier: macos-release
-            name: macOS (universal) Release
-            runner: macos-latest
-            target: template_release
-            platform: macos
-            arch: universal
+          - identifier: linux
+            platform: linux
+
+          - identifier: android
+            platform: android
+
+          - identifier: android_arm64
+            platform: android
+            arch: arm64
 
     steps:
+      - name: Check settings
+        if: ${{ matrix.platform == '' || matrix.target == '' || matrix.runner == '' || matrix.optimize == '' || matrix.arch == ''}}
+        run: |
+          echo "One of the matrix values is not set."
+          exit 1
+
       - name: (Windows) Install mingw64
-        if: ${{ startsWith(matrix.identifier, 'windows-') }}
+        if: ${{ matrix.platform == 'windows' }}
         shell: sh
         run: |
           sudo apt-get install mingw-w64
@@ -99,19 +69,19 @@ jobs:
           sudo update-alternatives --set x86_64-w64-mingw32-g++ /usr/bin/x86_64-w64-mingw32-g++-posix
 
       - name: (Android) Install JDK 17
-        if: ${{ startsWith(matrix.identifier, 'android-') }}
+        if: ${{ matrix.platform == 'android' }}
         uses: actions/setup-java@v3
         with:
           java-version: 17
           distribution: temurin
 
       - name: (Android) Install Android SDK
-        if: ${{ startsWith(matrix.identifier, 'android-') }}
+        if: ${{ matrix.platform == 'android' }}
         uses: android-actions/setup-android@v3
 
       # From Godot docs, might not be necessary.
       #- name: (Android) Install Android Tools
-      #  if: ${{ startsWith(matrix.identifier, 'android-') }}
+      #  if: ${{ matrix.platform == 'android' }}
       #  shell: sh
       #  run: |
       #    "$ANDROID_SDK_ROOT"/cmdline-tools/latest/bin/sdkmanager --sdk_root="$ANDROID_SDK_ROOT" "platform-tools" "build-tools;30.0.3" "platforms;android-29" "cmdline-tools;latest" "cmake;3.10.2.4988404"
@@ -124,19 +94,22 @@ jobs:
           link-to-sdk: true
 
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
 
       - name: Set up SCons
         shell: bash
         run: |
           python -c "import sys; print(sys.version)"
-          python -m pip install scons
+          python -m pip install scons==4.7.0
           scons --version
 
       - name: Checkout project
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           submodules: recursive
+          ref: ${{ inputs.git-ref }}
 
 #       TODO: Cache doesn't work yet. SCons rebuilds the objects even if they already exist. Could be caused by modification dates or extension_api.json.
 #             fetch-depth: 0 May be needed for cache. See: <https://github.com/actions/checkout/issues/468>.
@@ -147,11 +120,11 @@ jobs:
 #            ${{ github.workspace }}/.scons-cache/
 #            ${{ github.workspace }}/**/.sconsign.dblite
 #            ${{ github.workspace }}/godot-cpp/gen/
-#          key: ${{ matrix.identifier }}-${{ github.ref }}-${{ github.sha }}
+#          key: ${{ matrix.platform }}-${{ github.ref }}-${{ github.sha }}
 #          restore-keys: |
-#            ${{ matrix.identifier }}-${{ github.ref }}-${{ github.sha }}
-#            ${{ matrix.identifier }}-${{ github.ref }}
-#            ${{ matrix.identifier }}
+#            ${{ matrix.platform }}-${{ github.ref }}-${{ github.sha }}
+#            ${{ matrix.platform }}-${{ github.ref }}
+#            ${{ matrix.platform }}
 
       - name: Compile extension
         shell: sh
@@ -159,18 +132,18 @@ jobs:
 #          SCONS_CACHE: '${{ github.workspace }}/.scons-cache/'
 #          SCONS_CACHE_LIMIT: 8192
         run: |
-          scons target='${{ matrix.target }}' platform='${{ matrix.platform }}' arch='${{ matrix.arch }}' -j2
+          scons target='${{ matrix.target }}' platform='${{ matrix.platform }}' arch='${{ matrix.arch }}' optimize=${{ matrix.optimize }} -j2
           ls -l demo/addons/*/bin/
 
-      - name: Copy extra files to addon
+      - name: Prepare files for publish
         shell: sh
         run: |
-          for addon in ${{ github.workspace }}/demo/addons/*/; do
-            cp -n '${{ github.workspace }}/README.md' '${{ github.workspace }}/LICENSE' "$addon"
-          done
+            cp -n '${{ github.workspace }}/README.md' '${{ github.workspace }}/LICENSE' '${{ github.workspace }}/demo/addons/ropesim/'
+            rm -rf '${{ github.workspace }}/demo/addons/diagnosticlist'
+            rm '${{ github.workspace }}/demo/project.godot'
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: ${{ github.event.repository.name }}
           path: |

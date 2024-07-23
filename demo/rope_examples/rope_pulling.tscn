@@ -1,0 +1,106 @@
+[gd_scene load_steps=7 format=3 uid="uid://ba2ll2csfyo28"]
+
+[ext_resource type="Script" path="res://addons/ropesim/Rope.gd" id="1_ayj28"]
+[ext_resource type="Script" path="res://rope_examples/scripts/character_body_2d.gd" id="2_nvbmc"]
+[ext_resource type="Texture2D" uid="uid://criwv6nuivcxy" path="res://rope_examples/icon.svg" id="3_8uo3w"]
+[ext_resource type="Script" path="res://addons/ropesim/RopeInteraction.gd" id="6_qu4ri"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fdqy7"]
+size = Vector2(64, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7w0sw"]
+size = Vector2(128, 128)
+
+[node name="Node2D" type="Node2D"]
+
+[node name="PlayerA" type="CharacterBody2D" parent="."]
+process_physics_priority = -100
+position = Vector2(332, 155)
+collision_layer = 0
+motion_mode = 1
+script = ExtResource("2_nvbmc")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerA"]
+shape = SubResource("RectangleShape2D_fdqy7")
+
+[node name="Icon" type="Sprite2D" parent="PlayerA"]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_8uo3w")
+
+[node name="Label2" type="Label" parent="PlayerA"]
+offset_left = -46.0
+offset_top = 36.0
+offset_right = 42.0
+offset_bottom = 59.0
+text = "WSAD"
+horizontal_alignment = 1
+
+[node name="PlayerB" type="CharacterBody2D" parent="."]
+process_physics_priority = -100
+position = Vector2(128, 153)
+collision_layer = 0
+motion_mode = 1
+script = ExtResource("2_nvbmc")
+use_arrow_keys = true
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerB"]
+shape = SubResource("RectangleShape2D_fdqy7")
+
+[node name="Icon2" type="Sprite2D" parent="PlayerB"]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_8uo3w")
+
+[node name="Label" type="Label" parent="PlayerB"]
+offset_left = -41.0
+offset_top = 35.0
+offset_right = 47.0
+offset_bottom = 58.0
+text = "Arrow Keys"
+horizontal_alignment = 1
+
+[node name="Rope" type="Node2D" parent="."]
+position = Vector2(38, 156)
+script = ExtResource("1_ayj28")
+rope_length = 200.0
+max_endpoint_distance = 270.0
+num_constraint_iterations = 20
+fixate_begin = false
+line_width = 6.0
+color = Color(0.533333, 0.384314, 0.258824, 1)
+
+[node name="RopeInteractionBegin" type="Node" parent="Rope" node_paths=PackedStringArray("target_node", "rope")]
+script = ExtResource("6_qu4ri")
+position_update_mode = 1
+target_node = NodePath("../../PlayerA")
+rope = NodePath("..")
+rope_position = 0.0
+strength = 1.0
+
+[node name="RopeInteractionEnd" type="Node" parent="Rope" node_paths=PackedStringArray("target_node", "rope")]
+script = ExtResource("6_qu4ri")
+position_update_mode = 1
+target_node = NodePath("../../PlayerB")
+rope = NodePath("..")
+strength = 1.0
+
+[node name="wall" type="StaticBody2D" parent="."]
+z_index = -1
+position = Vector2(339, 330)
+scale = Vector2(4.6, 0.519999)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="wall"]
+shape = SubResource("RectangleShape2D_7w0sw")
+
+[node name="Icon" type="Sprite2D" parent="wall"]
+texture = ExtResource("3_8uo3w")
+
+[node name="Label2" type="Label" parent="."]
+offset_left = 295.0
+offset_top = 366.0
+offset_right = 383.0
+offset_bottom = 389.0
+text = "Wall"
+horizontal_alignment = 1

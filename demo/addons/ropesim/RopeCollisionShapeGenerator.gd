@@ -2,15 +2,17 @@
 extends Node
 class_name RopeCollisionShapeGenerator
 
-# Populates the parent with CollisionShape2Ds with a SegmentShape2D to fit the target rope.
-# It can be added as child to an Area2D for example, to detect if something collides with the rope.
-# It does _not_ make the rope interact with other physics objects.
+## Populates the parent with CollisionShape2Ds with a SegmentShape2D to fit the target rope.
+## It can be added as child to an Area2D for example, to detect if something collides with the rope.
+## It does _not_ make the rope interact with other physics objects.
 
-@export var enable: bool = true: get = get_enable, set = set_enable  # Enable or disable.
-@export var rope_path: NodePath: set = set_rope_path
+## Enable or disable.
+@export var enable: bool = true: get = get_enable, set = set_enable
+## Target rope node.
+@export_node_path("Rope") var rope_path: NodePath: set = set_rope_path
 
 var _helper: RopeToolHelper
-var _colliders := []  # Array[CollisionShape2D]
+var _colliders: Array[CollisionShape2D] = []
 
 
 func _init() -> void:
@@ -32,14 +34,14 @@ func _on_post_update() -> void:
     _update_shapes()
 
 
-func set_rope_path(value: NodePath):
+func set_rope_path(value: NodePath) -> void:
     rope_path = value
     if is_inside_tree():
         _helper.target_rope = get_node(rope_path) as Rope
         _build()
 
 
-func set_enable(value: bool):
+func set_enable(value: bool) -> void:
     enable = value
     _helper.enable = value
 
@@ -63,7 +65,7 @@ func _build() -> void:
 
 
 func _enable_shapes(num: int) -> void:
-    var diff = num - _colliders.size()
+    var diff := num - _colliders.size()
 
     if diff > 0:
         for i in diff:
@@ -72,12 +74,13 @@ func _enable_shapes(num: int) -> void:
             _colliders.append(shape)
             get_parent().call_deferred("add_child", shape)
     elif diff < 0:
-        for i in abs(diff):
+        for i in absi(diff):
+            @warning_ignore("unsafe_method_access")
             _colliders.pop_back().queue_free()
 
 
 func _update_shapes() -> void:
-    var points = _helper.target_rope.get_points()
+    var points := _helper.target_rope.get_points()
 
     for i in _colliders.size():
         var shape: CollisionShape2D = _colliders[i]
