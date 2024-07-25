@@ -1,0 +1,99 @@
+[gd_scene load_steps=8 format=3 uid="uid://dosr2p68fwd6p"]
+
+[ext_resource type="Script" path="res://addons/ropesim/Rope.gd" id="1_le2ut"]
+[ext_resource type="Script" path="res://addons/ropesim/RopeHandle.gd" id="2_0q18d"]
+[ext_resource type="Script" path="res://addons/ropesim/RopeCollisionShapeGenerator.gd" id="3_4yuxp"]
+[ext_resource type="Script" path="res://rope_examples/scripts/character_body_2d_platformer_walk_on_rope.gd" id="4_x28hd"]
+[ext_resource type="Texture2D" uid="uid://criwv6nuivcxy" path="res://rope_examples/icon.svg" id="5_mv4mo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fetoc"]
+size = Vector2(64, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vjdut"]
+size = Vector2(64, 12)
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Label" type="Label" parent="."]
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 104.0
+offset_bottom = 59.0
+text = "A/D: Walk
+Space: Jump"
+
+[node name="Label2" type="Label" parent="."]
+offset_left = 16.0
+offset_top = 562.0
+offset_right = 1146.0
+offset_bottom = 689.0
+text = "There is no real mutual physics interaction going on. The player CharacterBody just collides with the rope CharacterBody.
+To bulge the rope at the player's position, a RopeHandle is used.
+The further down the handle is positioned, the further the rope will bend."
+autowrap_mode = 2
+
+[node name="Label3" type="Label" parent="."]
+offset_left = 467.0
+offset_top = 14.0
+offset_right = 1142.0
+offset_bottom = 63.0
+text = "Demonstrates a simple setup to let a player walk on a rope while deforming the rope.
+For an actual game, it still needs some fine-tuning."
+autowrap_mode = 2
+
+[node name="Rope" type="Node2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(4, 333)
+script = ExtResource("1_le2ut")
+num_segments = 40
+rope_length = 900.0
+num_constraint_iterations = 20
+line_width = 6.0
+color = Color(0.533333, 0.384314, 0.258824, 1)
+
+[node name="RopeHandle" type="Marker2D" parent="Rope"]
+position = Vector2(1149, -7)
+script = ExtResource("2_0q18d")
+rope_path = NodePath("..")
+strength = 1.0
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+position = Vector2(112, 128)
+collision_layer = 3
+
+[node name="RopeCollisionShapeGenerator" type="Node" parent="CharacterBody2D"]
+script = ExtResource("3_4yuxp")
+rope_path = NodePath("../../Rope")
+
+[node name="PlayerA" type="CharacterBody2D" parent="."]
+process_physics_priority = -100
+position = Vector2(157, 156)
+collision_layer = 0
+script = ExtResource("4_x28hd")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerA"]
+position = Vector2(0, -32)
+shape = SubResource("RectangleShape2D_fetoc")
+
+[node name="Icon" type="Sprite2D" parent="PlayerA"]
+position = Vector2(0, -32)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("5_mv4mo")
+
+[node name="Area2D" type="Area2D" parent="PlayerA"]
+position = Vector2(0, -32)
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerA/Area2D"]
+position = Vector2(0, 28)
+shape = SubResource("RectangleShape2D_vjdut")
+
+[node name="RopeHandle" type="Marker2D" parent="PlayerA"]
+position = Vector2(0, 23)
+script = ExtResource("2_0q18d")
+enable = false
+rope_position = 0.55
+precise = true

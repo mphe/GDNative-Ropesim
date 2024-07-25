@@ -10,11 +10,10 @@ var _rope_interaction: RopeInteraction
 
 
 func _ready() -> void:
-    _rope_interaction = get_node_or_null("RopeInteraction")
+    _rope_interaction = $RopeInteraction
 
-    var area: Area2D = get_node_or_null("Area2D")
-    if area:
-        area.area_entered.connect(_rope_area_entered)
+    var area: Area2D = $Area2D
+    area.area_entered.connect(_rope_area_entered)
 
 
 func _physics_process(delta: float) -> void:
