@@ -52,6 +52,10 @@ func _on_pre_update() -> void:
     on_before_update.emit()
     var rope: Rope = _helper.target_rope
 
+    # The point weight is set here instead of _update_state() to ensure that handles do not
+    # overwrite each other's strength values if they coincidentally target the same point index.
+    rope.set_point_simulation_weight(_target_idx, 1.0 - strength)
+
     # Only use this method if this is not the last point.
     if precise and _target_idx < rope.get_num_points() - 1:
         # TODO: Consider creating a corresponding function in Rope.gd for universal access, e.g. set_point_interpolated().
@@ -99,7 +103,7 @@ func get_enable() -> bool:
 
 
 func set_strength(value: float) -> void:
-    strength = value
+    strength = clampf(value, 0.0, 1.0)
     _update_state_current_rope()
 
 
@@ -108,8 +112,29 @@ func set_rope_position(value: float) -> void:
     _update_state_current_rope()
 
 
+## Determine the nearest position on the rope and use it as [member RopeHandle.rope_position].
+func use_nearest_position() -> void:
+    use_nearest_position_to_point(global_position)
+
+
+## Determine the nearest position on the rope to the given point and use it as [member RopeHandle.rope_position].
+func use_nearest_position_to_point(point: Vector2) -> void:
+    var rope := _helper.target_rope
+    if rope:
+        # TODO: Determine precise percentage, not just nearest index
+        var idx := rope.get_nearest_point_index(point)
+        var perc := rope.get_point_perc(idx)
+        rope_position = perc
+
+
 func _on_rope_assigned(old: Rope) -> void:
     _update_state(old)
+
+    if old:
+        old.on_point_count_changed.disconnect(_on_point_count_changed)
+
+    if _helper.target_rope:
+        _helper.target_rope.on_point_count_changed.connect(_on_point_count_changed)
 
 
 func _update_state_current_rope() -> void:
@@ -124,14 +149,14 @@ func _update_state(old_rope: Rope) -> void:
 
     var rope := _helper.target_rope
 
-    # Compute and apply new state
     if rope:
         _target_idx = rope.get_point_index(rope_position)
-        # TODO: Maybe set this value in _on_pre_update() so if it gets overwritten by another
-        # handle, it will be automatically restored when the other handle targets a different position again.
-        rope.set_point_simulation_weight(_target_idx, 1.0 - clampf(strength, 0.0, 1.0))
 
 
 func _restore_state(rope: Rope) -> void:
     if rope:
         rope.set_point_simulation_weight(_target_idx, 1.0)
+
+
+func _on_point_count_changed() -> void:
+    _update_state_current_rope()

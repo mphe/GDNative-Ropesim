@@ -94,10 +94,8 @@ func _on_after_update() -> void:
 
 ## Determine the nearest position on the rope to the target node and use it as [member RopeInteraction.rope_position].
 func use_nearest_position() -> void:
-    # TODO: Determine precise percentage, not just nearest index
-    var idx := rope.get_nearest_point_index(target_node.global_position)
-    var perc := rope.get_point_perc(idx)
-    rope_position = perc
+    _handle.use_nearest_position_to_point(target_node.global_position)
+    rope_position = _handle.rope_position
 
 
 ## Snaps the target node to the current position on the rope.

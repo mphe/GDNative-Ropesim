@@ -157,7 +157,7 @@ static void constraint_segment(Vector2* point_a, Vector2* point_b, float weight_
     const Vector2 diff = *point_b - *point_a;
     const float distance = diff.length();
     const float error = (seg_length - distance) * 0.5f;
-    const Vector2 dir = error * (diff / distance);
+    const Vector2 dir = error * (diff / Math::max(distance, 0.001f));
 
     // If one point has a weight < 1.0, the other point must compensate the difference in
     // relation to its own weight.
