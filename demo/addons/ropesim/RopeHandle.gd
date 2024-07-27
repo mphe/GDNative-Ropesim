@@ -1,5 +1,5 @@
 @tool
-extends Marker2D
+extends BaseRopeTool2D
 class_name RopeHandle
 
 ## Can be used to control, animate or fixate points on a target rope.
@@ -7,37 +7,24 @@ class_name RopeHandle
 ## Gets emitted just before applying the position. This happens always during _physics_process().
 signal on_before_update()
 
-## Enable or disable
-@export var enable: bool = true: get = get_enable, set = set_enable
-## Target rope node.
-@export_node_path("Rope") var rope_path: NodePath: set = set_rope_path
-## Position on the rope between 0 and 1.
-@export_range(0.0, 1.0) var rope_position: float = 1.0 : set = set_rope_position
+
 ## Whether to smoothly snap to RopeHandle's position instead of instantly.
 @export var smoothing: bool = false
+
 ## Smoothing speed
 @export var position_smoothing_speed: float = 0.5
-## If false, only affect the nearest vertex on the rope. Otherwise, affect both surrounding points when applicable.
-@export var precise: bool = false
+
 ## Determines how much the target point is allowed to move. A value of 0.0 sets the point's position
 ## but it is still fully affected by simulation and constraining.
 ## A value of 1.0 completely fixates the point at the handle's position and allows no further movement.
 @export_range(0.0, 1.0) var strength: float = 0.0 : set = set_strength
 
-var _helper: RopeToolHelper
 var _target_idx: int = 0
 
 
 func _init() -> void:
-    if not _helper:
-        _helper = RopeToolHelper.new(RopeToolHelper.UPDATE_HOOK_PRE, self, "_on_pre_update")
-        _helper.on_rope_assigned.connect(_on_rope_assigned)
-        add_child(_helper)
-
-
-func _ready() -> void:
-    set_rope_path(rope_path)
-    set_enable(enable)
+    super._init(RopeToolHelper.new(RopeToolHelper.UPDATE_HOOK_PRE, self, "_on_pre_update"))
+    _helper.on_rope_assigned.connect(_on_rope_assigned)
 
 
 func _enter_tree() -> void:
@@ -50,6 +37,10 @@ func _exit_tree() -> void:
 
 func _on_pre_update() -> void:
     on_before_update.emit()
+    _update()
+
+
+func _update() -> void:
     var rope: Rope = _helper.target_rope
 
     # The point weight is set here instead of _update_state() to ensure that handles do not
@@ -78,28 +69,13 @@ func _move_point(idx: int, from: Vector2, to: Vector2) -> void:
     _helper.target_rope.set_point(idx, to)
 
 
-func set_rope_path(value: NodePath) -> void:
-    rope_path = value
-
-    if is_inside_tree():
-        _helper.set_target_rope_path(rope_path, self)
-
-
 func set_enable(value: bool) -> void:
-    if enable == value:
-        return
+    super.set_enable(value)
 
-    enable = value
-    _helper.enable = value
-
-    if not enable:
-        _restore_state(_helper.target_rope)
-    else:
+    if enable:
         _update_state(null)
-
-
-func get_enable() -> bool:
-    return _helper.enable
+    else:
+        _restore_state(_helper.target_rope)
 
 
 func set_strength(value: float) -> void:
@@ -108,23 +84,8 @@ func set_strength(value: float) -> void:
 
 
 func set_rope_position(value: float) -> void:
-    rope_position = value
+    super.set_rope_position(value)
     _update_state_current_rope()
-
-
-## Determine the nearest position on the rope and use it as [member RopeHandle.rope_position].
-func use_nearest_position() -> void:
-    use_nearest_position_to_point(global_position)
-
-
-## Determine the nearest position on the rope to the given point and use it as [member RopeHandle.rope_position].
-func use_nearest_position_to_point(point: Vector2) -> void:
-    var rope := _helper.target_rope
-    if rope:
-        # TODO: Determine precise percentage, not just nearest index
-        var idx := rope.get_nearest_point_index(point)
-        var perc := rope.get_point_perc(idx)
-        rope_position = perc
 
 
 func _on_rope_assigned(old: Rope) -> void:
@@ -135,6 +96,10 @@ func _on_rope_assigned(old: Rope) -> void:
 
     if _helper.target_rope:
         _helper.target_rope.on_point_count_changed.connect(_on_point_count_changed)
+
+
+func _on_point_count_changed() -> void:
+    _update_state_current_rope()
 
 
 func _update_state_current_rope() -> void:
@@ -156,7 +121,3 @@ func _update_state(old_rope: Rope) -> void:
 func _restore_state(rope: Rope) -> void:
     if rope:
         rope.set_point_simulation_weight(_target_idx, 1.0)
-
-
-func _on_point_count_changed() -> void:
-    _update_state_current_rope()
