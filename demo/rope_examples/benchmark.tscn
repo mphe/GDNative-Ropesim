@@ -10,8 +10,8 @@ offset_left = 449.0
 offset_top = -1.0
 offset_right = 509.0
 offset_bottom = 22.0
-text = "192 Ropes
-2.82 ms"
+text = "384 Ropes
+3.99 ms"
 script = ExtResource("2_ms00a")
 
 [node name="Node2D9" type="Node2D" parent="."]

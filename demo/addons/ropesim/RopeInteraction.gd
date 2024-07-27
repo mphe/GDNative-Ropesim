@@ -4,8 +4,14 @@ class_name RopeInteraction
 
 ## Handles mutual interaction of a target node with a rope.
 ## Useful for rope grabbing or pulling mechanics where an object should be able to affect the rope
-## while also being constrained by it.
-## Uses [RopeHandle] and [RopeAnchor] internally.
+## while also being constrained by it.[br]
+## [br]
+## Internally, a [RopeHandle] and a [RopeAnchor] is used to update the rope and retrieve the new
+## position afterwards.[br]
+## It essentially works by running the following three steps every frame:[br]
+## 1. Set [RopeHandle] position to target node position.[br]
+## 2. Wait for rope simulation to be finished.[br]
+## 3. Set target node position to [RopeAnchor] position.
 
 ## Emitted when the target node should be moved and [member RopeInteraction.position_update_mode] is [enum RopeInteraction.Signal].
 signal on_movement_request(target: Node2D, anchor: RopeAnchor)
@@ -27,14 +33,17 @@ enum PositionUpdateMode {
 ## Enable or disable.
 @export var enable: bool = true : set = set_enable
 
-## Determines how the position of the target node is updated.
+## Determines how the position of the target node should be updated.
 @export var position_update_mode: PositionUpdateMode = PositionUpdateMode.EmitSignal
 
 ## Target node that should be attached to the rope.
 @export var target_node: Node2D
 
+## (Optional) Use the given node instead of the target node to update the rope point's position.
+## If set, the target node will only be snapped to the rope, but it will not affect it.
+@export var input_node_override: Node2D
+
 ## Target rope.
-# @export_node_path("Rope") var rope: NodePath : set = set_rope
 @export var rope: Rope : set = set_rope
 
 ## Position on the rope between 0 and 1.
@@ -61,9 +70,13 @@ func _init() -> void:
 func _enter_tree() -> void:
     set_rope(rope)
 
+    if not target_node:
+        push_warning("RopeInteraction: No target node selected -> Disabling")
+        enable = false
+
 
 func _on_before_update() -> void:
-    _handle.global_position = target_node.global_position
+    _handle.global_position = (input_node_override if input_node_override else target_node).global_position
 
 
 func _on_after_update() -> void:

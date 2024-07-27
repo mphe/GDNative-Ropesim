@@ -1,0 +1,50 @@
+[gd_scene load_steps=6 format=3 uid="uid://beuu34gtk2nhm"]
+
+[ext_resource type="Script" path="res://addons/ropesim/Rope.gd" id="1_4r73y"]
+[ext_resource type="Script" path="res://addons/ropesim/RopeInteraction.gd" id="2_1yts0"]
+[ext_resource type="Texture2D" uid="uid://criwv6nuivcxy" path="res://rope_examples/icon.svg" id="3_uwcl5"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_nwm6u"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3g7xa"]
+size = Vector2(64, 64)
+
+[node name="rope_with_body" type="Node2D"]
+position = Vector2(408, 0)
+
+[node name="Rope" type="Node2D" parent="."]
+script = ExtResource("1_4r73y")
+num_segments = 15
+rope_length = 250.0
+gravity = 75.0
+num_constraint_iterations = 20
+
+[node name="RopeInteraction" type="Node" parent="." node_paths=PackedStringArray("target_node", "input_node_override", "rope")]
+script = ExtResource("2_1yts0")
+position_update_mode = 0
+target_node = NodePath("../pin_point")
+input_node_override = NodePath("../hanging_rigidbody")
+rope = NodePath("../Rope")
+
+[node name="pin_point" type="CharacterBody2D" parent="."]
+position = Vector2(0, 250)
+collision_layer = 0
+collision_mask = 0
+motion_mode = 1
+
+[node name="PinJoint2D" type="PinJoint2D" parent="pin_point"]
+node_a = NodePath("../../hanging_rigidbody")
+node_b = NodePath("..")
+
+[node name="hanging_rigidbody" type="RigidBody2D" parent="."]
+position = Vector2(0, 250)
+mass = 5.0
+physics_material_override = SubResource("PhysicsMaterial_nwm6u")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hanging_rigidbody"]
+shape = SubResource("RectangleShape2D_3g7xa")
+
+[node name="Icon" type="Sprite2D" parent="hanging_rigidbody"]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_uwcl5")

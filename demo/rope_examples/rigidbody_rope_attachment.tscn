@@ -1,0 +1,51 @@
+[gd_scene load_steps=5 format=3 uid="uid://gex7loccj42u"]
+
+[ext_resource type="PackedScene" uid="uid://beuu34gtk2nhm" path="res://rope_examples/scripts/rope_with_rigidbody.tscn" id="1_aij5x"]
+[ext_resource type="Texture2D" uid="uid://criwv6nuivcxy" path="res://rope_examples/icon.svg" id="3_xivx8"]
+[ext_resource type="Script" path="res://rope_examples/scripts/character_body_2d.gd" id="5_du4tb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6gqpg"]
+size = Vector2(64, 64)
+
+[node name="Node2D" type="Node2D"]
+
+[node name="rope_with_body" parent="." instance=ExtResource("1_aij5x")]
+
+[node name="rope_with_body2" parent="." instance=ExtResource("1_aij5x")]
+position = Vector2(498, 0)
+
+[node name="rope_with_body3" parent="." instance=ExtResource("1_aij5x")]
+position = Vector2(589, 0)
+
+[node name="Player" type="CharacterBody2D" parent="."]
+process_physics_priority = -100
+position = Vector2(227, 253)
+collision_mask = 0
+motion_mode = 1
+script = ExtResource("5_du4tb")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+shape = SubResource("RectangleShape2D_6gqpg")
+
+[node name="Icon" type="Sprite2D" parent="Player"]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_xivx8")
+
+[node name="Label2" type="Label" parent="Player"]
+offset_left = -46.0
+offset_top = 36.0
+offset_right = 42.0
+offset_bottom = 59.0
+text = "WSAD"
+horizontal_alignment = 1
+
+[node name="Label" type="Label" parent="."]
+offset_left = 10.0
+offset_top = 481.0
+offset_right = 852.0
+offset_bottom = 504.0
+text = "Basic example on how to attach a RigidBody to a rope and enabling corresponding physics reactions.
+
+A PinJoint2D fixates the RigidBody to the rope.
+A RopeInteraction uses the RigidBody to control the rope and updates the PinJoint2D respectively."
