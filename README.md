@@ -71,3 +71,11 @@ https://user-images.githubusercontent.com/7116001/216790870-4e57fce0-7981-44f5-9
 Jellyfish with rope simulated tentacles.
 
 https://user-images.githubusercontent.com/7116001/216791913-35321ddb-ee35-44e2-85ba-0632a1123fda.mp4
+
+
+
+More advanced usage examples.
+
+https://github.com/user-attachments/assets/28e3dda1-6929-4ddf-8afa-041f66a5849b
+
+
