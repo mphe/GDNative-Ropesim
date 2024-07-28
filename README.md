@@ -8,7 +8,7 @@ The computation-heavy simulation part is written in C++ using GDExtension, the r
 
 The last Godot 3.x version can be found on the [3.x branch](https://github.com/mphe/GDNative-Ropesim/tree/3.x), however, this branch will no longer receive updates.
 
-# Setup
+## Setup
 
 1. Get the addon
     * [Download](https://godotengine.org/asset-library/asset/2334) from the asset store, or
@@ -19,7 +19,7 @@ The last Godot 3.x version can be found on the [3.x branch](https://github.com/m
 3. Enable the addon in the project settings
 4. Restart Godot
 
-# Building
+## Building
 
 First, clone or download the repository and run `git submodule update --init --recursive`.
 
@@ -35,9 +35,11 @@ $ scons target=template_debug platform=linux arch=x86_64 -j8
 
 Output files are saved to `demo/addons/ropesim/bin/`.
 
-# Documentation
+## Documentation and Usage
 
-Following nodes exist:
+### Nodes
+
+The following nodes exist:
 * `Rope`: The basic rope node. Optionally renders the rope using `draw_polyline()`.
 * `RopeAnchor`: Always snaps to the specified position on the target rope. Optionally, also adapts to the rope's curvature. Can be used to attach objects to a rope.
 * `RopeHandle`: A handle that can be used to control, animate, or fixate parts of the rope.
@@ -45,16 +47,20 @@ Following nodes exist:
 * `RopeCollisionShapeGenerator`: Can be used e.g. in an `Area2D` to detect collisions with the target rope.
 * `RopeInteraction`: Handles mutual interaction of a target node with a rope. Useful for rope grabbing or pulling mechanics where an object should be able to affect the rope and vice-versa.
 
-When one of these nodes is selected, a "Ropesim" menu appears in the editor toolbar that can be used to toggle live preview in the editor on and off.
-
-All rope related tools, automatically pause themselves when their target rope is paused to save performance.
+**NOTE:** All rope related tools automatically pause themselves when their target rope is paused to reduce computation costs and improve performance.
 
 Use the in-engine help to view the full documentation for each node.
 
-The project also includes various example scenes that demonstrate the features of this plugin.
+### Editor Menu
+When one of the above nodes is selected, a "*Ropesim*" menu appears in the editor toolbar with the following options:
+* `Preview in Editor`: Toggle live preview in the editor on or off.
+* `Reset Rope`: Reset the selected rope to its resting position.
+
+### Examples
+The project includes various example scenes that demonstrate the features of this plugin.
 See also the [showcase video](#showcase) for a basic usage example.
 
-# Showcase
+## Showcase
 
 A quick overview of how to use each node.
 
