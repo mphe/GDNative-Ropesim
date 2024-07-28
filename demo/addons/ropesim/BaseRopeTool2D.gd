@@ -49,9 +49,6 @@ func use_nearest_position_to_point(point: Vector2) -> void:
 
 
 func set_rope_path(value: NodePath) -> void:
-    if value == rope_path:
-        return
-
     rope_path = value
 
     if is_inside_tree():
@@ -59,9 +56,6 @@ func set_rope_path(value: NodePath) -> void:
 
 
 func set_enable(value: bool) -> void:
-    if enable == value:
-        return
-
     enable = value
     _helper.enable = value
 

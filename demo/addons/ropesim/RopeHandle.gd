@@ -70,6 +70,9 @@ func _move_point(idx: int, from: Vector2, to: Vector2) -> void:
 
 
 func set_enable(value: bool) -> void:
+    if enable == value:
+        return
+
     super.set_enable(value)
 
     if enable:
