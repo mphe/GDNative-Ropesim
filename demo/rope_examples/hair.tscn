@@ -1,0 +1,525 @@
+[gd_scene load_steps=8 format=3 uid="uid://meudxbssctd7"]
+
+[ext_resource type="Script" path="res://rope_examples/scripts/animation_player.gd" id="1_hhfs1"]
+[ext_resource type="Texture2D" uid="uid://criwv6nuivcxy" path="res://rope_examples/icon.svg" id="2_3mr5p"]
+[ext_resource type="PackedScene" uid="uid://das2x73tumbrb" path="res://rope_examples/scripts/hair.tscn" id="3_xmkdr"]
+[ext_resource type="Script" path="res://addons/ropesim/RopeHandle.gd" id="4_r73xa"]
+
+[sub_resource type="Animation" id="Animation_rnorx"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Node2D/arm/arm6:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Node2D/arm2/Icon5:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Node2D/arm2:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Node2D/arm:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.57079]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Node2D:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-3, 89)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Node2D:rotation")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Node2D/head:rotation")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.261799]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Node2D/leg/leg2:rotation")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.523598]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Node2D/leg:rotation")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [2.35619]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("Node2D/leg2:rotation")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [4.71238]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("Node2D/leg2/leg2:rotation")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-1.0472]
+}
+
+[sub_resource type="Animation" id="Animation_sbles"]
+resource_name = "moving"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Node2D/arm/arm6:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.28319]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Node2D/arm2/Icon5:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.28319]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Node2D/arm2:rotation")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, -0.785397]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Node2D/arm:rotation")
+tracks/3/interp = 2
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.57079, 0.785397]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = false
+tracks/4/path = NodePath("Node2D:position")
+tracks/4/interp = 2
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-3, 89), Vector2(37.44, 60.22)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Node2D:rotation")
+tracks/5/interp = 2
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [-0.261799, 0.261799]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Node2D/head:rotation")
+tracks/6/interp = 2
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.261799, -0.261799]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Node2D/leg/leg2:rotation")
+tracks/7/interp = 2
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.523598]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Node2D/leg:rotation")
+tracks/8/interp = 2
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [2.35619]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("Node2D/leg2:rotation")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [4.71238, 3.14159]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("Node2D/leg2/leg2:rotation")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [-1.0472, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vgrqo"]
+_data = {
+"RESET": SubResource("Animation_rnorx"),
+"moving": SubResource("Animation_sbles")
+}
+
+[node name="Node2D" type="Node2D"]
+position = Vector2(246, 121)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_vgrqo")
+}
+autoplay = "moving"
+script = ExtResource("1_hhfs1")
+
+[node name="Node2D" type="Node2D" parent="."]
+position = Vector2(-3, 89)
+
+[node name="body" type="Sprite2D" parent="Node2D"]
+position = Vector2(1, -4.1875)
+scale = Vector2(0.287109, 0.84668)
+texture = ExtResource("2_3mr5p")
+
+[node name="arm" type="Node2D" parent="Node2D"]
+position = Vector2(16, -47)
+rotation = 1.57079
+
+[node name="arm5" type="Sprite2D" parent="Node2D/arm"]
+position = Vector2(7.80821e-06, 3.13916e-07)
+scale = Vector2(0.125226, 0.506219)
+texture = ExtResource("2_3mr5p")
+offset = Vector2(0, -64)
+
+[node name="arm6" type="Sprite2D" parent="Node2D/arm"]
+position = Vector2(0.000147748, -63)
+scale = Vector2(0.125226, 0.506219)
+texture = ExtResource("2_3mr5p")
+offset = Vector2(0, -64)
+
+[node name="arm2" type="Node2D" parent="Node2D"]
+position = Vector2(-17, -47)
+
+[node name="arm2" type="Sprite2D" parent="Node2D/arm2"]
+rotation = -1.57079
+scale = Vector2(0.125226, 0.506219)
+texture = ExtResource("2_3mr5p")
+offset = Vector2(0, -64)
+
+[node name="Icon5" type="Sprite2D" parent="Node2D/arm2"]
+position = Vector2(-65, 0)
+scale = Vector2(0.125226, 0.506219)
+texture = ExtResource("2_3mr5p")
+offset = Vector2(0, -64)
+
+[node name="neck" type="Sprite2D" parent="Node2D"]
+position = Vector2(1, -73)
+scale = Vector2(0.195313, 0.289062)
+texture = ExtResource("2_3mr5p")
+
+[node name="head" type="Sprite2D" parent="Node2D"]
+position = Vector2(0, -96)
+rotation = 0.261799
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_3mr5p")
+
+[node name="hair_behind" type="Node2D" parent="Node2D/head"]
+modulate = Color(0.851562, 0.851562, 0.851562, 1)
+z_index = -140
+scale = Vector2(2, 2)
+
+[node name="hair" parent="Node2D/head/hair_behind" instance=ExtResource("3_xmkdr")]
+position = Vector2(2, -25)
+rope_length = 86.0
+line_width = 14.0
+
+[node name="hair2" parent="Node2D/head/hair_behind" instance=ExtResource("3_xmkdr")]
+position = Vector2(1, -20)
+line_width = 8.0
+
+[node name="RopeHandle" type="Marker2D" parent="Node2D/head/hair_behind/hair2"]
+position = Vector2(31, -20)
+script = ExtResource("4_r73xa")
+rope_path = NodePath("..")
+rope_position = 0.445
+
+[node name="hair3" parent="Node2D/head/hair_behind" instance=ExtResource("3_xmkdr")]
+position = Vector2(1, -20)
+line_width = 8.0
+
+[node name="RopeHandle" type="Marker2D" parent="Node2D/head/hair_behind/hair3"]
+position = Vector2(-28, -20)
+script = ExtResource("4_r73xa")
+rope_path = NodePath("..")
+rope_position = 0.445
+
+[node name="hair4" parent="Node2D/head/hair_behind" instance=ExtResource("3_xmkdr")]
+position = Vector2(3, -13)
+line_width = 12.0
+
+[node name="RopeHandle" type="Marker2D" parent="Node2D/head/hair_behind/hair4"]
+position = Vector2(13, -20)
+script = ExtResource("4_r73xa")
+rope_path = NodePath("..")
+rope_position = 0.445
+
+[node name="hair5" parent="Node2D/head/hair_behind" instance=ExtResource("3_xmkdr")]
+position = Vector2(3, -13)
+line_width = 12.0
+
+[node name="RopeHandle" type="Marker2D" parent="Node2D/head/hair_behind/hair5"]
+position = Vector2(-14, -20)
+script = ExtResource("4_r73xa")
+rope_path = NodePath("..")
+rope_position = 0.445
+
+[node name="hair" type="Node2D" parent="Node2D/head"]
+scale = Vector2(2, 2)
+
+[node name="hair4" parent="Node2D/head/hair" instance=ExtResource("3_xmkdr")]
+position = Vector2(1, -30)
+
+[node name="RopeHandle" type="Marker2D" parent="Node2D/head/hair/hair4"]
+position = Vector2(72, -26)
+script = ExtResource("4_r73xa")
+rope_path = NodePath("..")
+rope_position = 0.445
+
+[node name="hair3" parent="Node2D/head/hair" instance=ExtResource("3_xmkdr")]
+position = Vector2(1, -30)
+
+[node name="RopeHandle" type="Marker2D" parent="Node2D/head/hair/hair3"]
+position = Vector2(-66, -29)
+script = ExtResource("4_r73xa")
+rope_path = NodePath("..")
+rope_position = 0.445
+
+[node name="hair6" parent="Node2D/head/hair" instance=ExtResource("3_xmkdr")]
+position = Vector2(3, -25)
+
+[node name="RopeHandle" type="Marker2D" parent="Node2D/head/hair/hair6"]
+position = Vector2(-56, -31)
+script = ExtResource("4_r73xa")
+rope_path = NodePath("..")
+rope_position = 0.445
+
+[node name="hair5" parent="Node2D/head/hair" instance=ExtResource("3_xmkdr")]
+position = Vector2(1, -25)
+
+[node name="RopeHandle" type="Marker2D" parent="Node2D/head/hair/hair5"]
+position = Vector2(55, -29)
+script = ExtResource("4_r73xa")
+rope_path = NodePath("..")
+rope_position = 0.445
+
+[node name="hair" parent="Node2D/head/hair" instance=ExtResource("3_xmkdr")]
+position = Vector2(1, -21)
+
+[node name="RopeHandle" type="Marker2D" parent="Node2D/head/hair/hair"]
+position = Vector2(78, -62)
+script = ExtResource("4_r73xa")
+rope_path = NodePath("..")
+rope_position = 0.27
+
+[node name="hair2" parent="Node2D/head/hair" instance=ExtResource("3_xmkdr")]
+position = Vector2(1, -21)
+
+[node name="RopeHandle" type="Marker2D" parent="Node2D/head/hair/hair2"]
+position = Vector2(-49, -38)
+script = ExtResource("4_r73xa")
+rope_path = NodePath("..")
+rope_position = 0.375
+
+[node name="hair2" parent="Node2D/head" instance=ExtResource("3_xmkdr")]
+position = Vector2(5.69318, 15.4578)
+rotation = -1.57079
+num_segments = 5
+rope_length = 18.85
+segment_length_distribution = null
+stiffness = 4.555
+gravity = 26.78
+line_width = 3.26
+
+[node name="RopeHandle" type="Marker2D" parent="Node2D/head/hair2"]
+position = Vector2(14.2923, 22.8913)
+script = ExtResource("4_r73xa")
+rope_path = NodePath("..")
+
+[node name="hair3" parent="Node2D/head" instance=ExtResource("3_xmkdr")]
+position = Vector2(-5.41547, 15.1655)
+rotation = -4.71238
+num_segments = 5
+rope_length = 18.85
+segment_length_distribution = null
+stiffness = 4.555
+gravity = 26.78
+line_width = 3.26
+
+[node name="RopeHandle" type="Marker2D" parent="Node2D/head/hair3"]
+position = Vector2(-10.9885, 29.6655)
+script = ExtResource("4_r73xa")
+rope_path = NodePath("..")
+
+[node name="leg" type="Node2D" parent="Node2D"]
+position = Vector2(12, 43)
+rotation = 2.35619
+
+[node name="leg" type="Sprite2D" parent="Node2D/leg"]
+position = Vector2(7.80821e-06, 3.13916e-07)
+scale = Vector2(0.125226, 0.506219)
+texture = ExtResource("2_3mr5p")
+offset = Vector2(0, -64)
+
+[node name="leg2" type="Sprite2D" parent="Node2D/leg"]
+position = Vector2(0.000147748, -63)
+rotation = 0.523598
+scale = Vector2(0.125226, 0.506219)
+texture = ExtResource("2_3mr5p")
+offset = Vector2(0, -64)
+
+[node name="leg2" type="Node2D" parent="Node2D"]
+position = Vector2(-13.3892, 46.1056)
+rotation = 4.71238
+
+[node name="leg" type="Sprite2D" parent="Node2D/leg2"]
+position = Vector2(7.80821e-06, 3.13916e-07)
+scale = Vector2(0.125226, 0.506219)
+texture = ExtResource("2_3mr5p")
+offset = Vector2(0, -64)
+
+[node name="leg2" type="Sprite2D" parent="Node2D/leg2"]
+position = Vector2(0.000147748, -63)
+rotation = -1.0472
+scale = Vector2(0.125226, 0.506219)
+texture = ExtResource("2_3mr5p")
+offset = Vector2(0, -64)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(13, 74)
+zoom = Vector2(1.84, 1.84)
+
+[node name="Label" type="Label" parent="."]
+offset_left = 173.0
+offset_top = -67.0
+offset_right = 280.0
+offset_bottom = -44.0
+text = "Fabulous Hair"
