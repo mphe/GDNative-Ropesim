@@ -44,6 +44,8 @@ void NativeRopeContext::load_context(Node2D* rope)
     seg_lengths = rope->call("get_segment_lengths");
     simulation_weights = rope->get("_simulation_weights");
     fixate_begin = rope->get("fixate_begin");
+    resolve_to_begin = rope->get("resolve_to_begin");
+    resolve_to_end = rope->get("resolve_to_end");
 }
 
 void NativeRopeContext::simulate(double delta)
@@ -173,29 +175,43 @@ static void constraint_segment(Vector2* point_a, Vector2* point_b, float weight_
 void NativeRopeContext::_constraint()
 {
     const bool use_euclid_constraint = max_endpoint_distance > 0;
-    Vector2* first_point;
-    Vector2* last_point;
-    float euclid_constraint_first_weight;
-    float max_stretch_length_sqr;
 
     if (use_euclid_constraint)
     {
-        first_point = &points[0];
-        last_point = &points[(int)points.size() - 1];
-        euclid_constraint_first_weight = fixate_begin ? 0.0 : 1.0;
-        max_stretch_length_sqr = max_endpoint_distance * max_endpoint_distance;
+        Vector2* const first_point = &points[0];
+        Vector2* const last_point = &points[(int)points.size() - 1];
+        const float max_stretch_length_sqr = max_endpoint_distance * max_endpoint_distance;
+        const float rope_length_sqr = first_point->distance_squared_to(*last_point);
+
+        if (rope_length_sqr > max_stretch_length_sqr)
+        {
+            float weight_a;
+            float weight_b;
+
+            // Always has priority
+            if (fixate_begin)
+            {
+                weight_a = 0.0;
+                weight_b = 1.0;
+            }
+            else if (resolve_to_begin == resolve_to_end)
+            {
+                weight_a = 1.0;
+                weight_b = 1.0;
+            }
+            else
+            {
+                weight_a = resolve_to_begin ? 0.0 : 1.0;
+                weight_b = resolve_to_end ? 0.0 : 1.0;
+            }
+
+            constraint_segment(first_point, last_point, weight_a, weight_b, max_endpoint_distance);
+        }
     }
+
 
     for (int _ = 0; _ < num_constraint_iterations; ++_)
     {
-        if (use_euclid_constraint)
-        {
-            const float rope_length_sqr = first_point->distance_squared_to(*last_point);
-
-            if (rope_length_sqr > max_stretch_length_sqr)
-                constraint_segment(first_point, last_point, euclid_constraint_first_weight, 1.0, max_endpoint_distance);
-        }
-
         for (int i = 0; i < points.size() - 1; ++i)
             constraint_segment(&points[i], &points[i + 1], simulation_weights[i], simulation_weights[i + 1], seg_lengths[i]);
     }

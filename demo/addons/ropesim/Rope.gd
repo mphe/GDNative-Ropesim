@@ -30,6 +30,18 @@ signal on_point_count_changed()
 ## Fixed points in between are not taken into account.
 @export var max_endpoint_distance: float = -1
 
+## If [member Rope.max_endpoint_distance] is set, contract the rope towards the first point.
+## If [member Rope.resolve_to_end] is set as well or if neither is set, the rope gets contracted
+## towards the center.
+## [member Rope.fixate_begin] will always take precedence over this property.
+@export var resolve_to_begin: bool = false
+
+## If [member Rope.max_endpoint_distance] is set, contract the rope towards the last point.
+## If [member Rope.resolve_to_begin] is set as well or if neither is set, the rope gets contracted
+## towards the center.
+## [member Rope.fixate_begin] will always take precedence over this property.
+@export var resolve_to_end: bool = false
+
 ## (Optional) Allows to distribute the length of rope segment in a non-uniform manner.
 ## Useful when certain parts of the rope should be more detailed than the rest.
 ## For example, if it is known that most movement happens at the beginning of the rope, a curve with

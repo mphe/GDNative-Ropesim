@@ -37,6 +37,8 @@ namespace godot
             int num_constraint_iterations;
             Ref<Curve> damping_curve;
             bool fixate_begin;
+            bool resolve_to_begin;
+            bool resolve_to_end;
     };
 }
 
