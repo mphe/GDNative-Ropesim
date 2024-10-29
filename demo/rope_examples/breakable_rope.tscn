@@ -1,0 +1,109 @@
+[gd_scene load_steps=7 format=3 uid="uid://dkkstr4acmsvu"]
+
+[ext_resource type="Script" path="res://rope_examples/scripts/split_controller.gd" id="1_34iqv"]
+[ext_resource type="Script" path="res://addons/ropesim/Rope.gd" id="2_dlb8k"]
+[ext_resource type="Script" path="res://addons/ropesim/RopeHandle.gd" id="3_nlat5"]
+[ext_resource type="Script" path="res://addons/ropesim/RopeAnchor.gd" id="4_2ql0w"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6bata"]
+bg_color = Color(1, 1, 1, 1)
+border_color = Color(1, 1, 1, 1)
+expand_margin_left = 2.0
+expand_margin_right = 2.0
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_p78q2"]
+color = Color(1, 1, 1, 1)
+thickness = 4
+
+[node name="rope_break_example" type="Node2D"]
+script = ExtResource("1_34iqv")
+
+[node name="main_rope" type="Node2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(537, 405)
+script = ExtResource("2_dlb8k")
+num_segments = 20
+rope_length = 200.0
+
+[node name="fixation" type="Marker2D" parent="main_rope"]
+unique_name_in_owner = true
+position = Vector2(118, 3)
+script = ExtResource("3_nlat5")
+strength = 1.0
+rope_path = NodePath("..")
+
+[node name="split_rope_right" type="Node2D" parent="main_rope/fixation"]
+unique_name_in_owner = true
+visible = false
+script = ExtResource("2_dlb8k")
+
+[node name="split_rope_left" type="Node2D" parent="main_rope"]
+unique_name_in_owner = true
+visible = false
+script = ExtResource("2_dlb8k")
+
+[node name="center" type="Marker2D" parent="main_rope"]
+position = Vector2(57.7058, 84.7856)
+script = ExtResource("4_2ql0w")
+rope_path = NodePath("..")
+rope_position = 0.5
+
+[node name="split_rope_left_handle" type="Marker2D" parent="main_rope/center"]
+unique_name_in_owner = true
+script = ExtResource("3_nlat5")
+strength = 1.0
+rope_path = NodePath("../../split_rope_left")
+
+[node name="split_rope_right_handle" type="Marker2D" parent="main_rope/center"]
+unique_name_in_owner = true
+script = ExtResource("3_nlat5")
+strength = 1.0
+rope_path = NodePath("../../fixation/split_rope_right")
+
+[node name="Label" type="Label" parent="."]
+offset_left = 17.0
+offset_top = 15.0
+offset_right = 504.0
+offset_bottom = 38.0
+text = "Demonstrates how to make a rope that breaks in two after being stretched for a certain distance.
+It works by layering two hidden ropes on top of a third rope.
+After the third rope exceeds a certain length, it is disabled and hidden, while the other two ropes are made visible and their constraints get
+disabled.
+This gives the illusion of a breakable rope.
+
+
+Left click to snap the right fixation point to the mouse position."
+metadata/_edit_use_anchors_ = true
+
+[node name="Label2" type="Label" parent="."]
+offset_left = 296.0
+offset_top = 294.0
+offset_right = 783.0
+offset_bottom = 317.0
+text = "The rope will break after this distance."
+horizontal_alignment = 1
+
+[node name="VSeparator" type="VSeparator" parent="."]
+offset_left = 822.0
+offset_top = 339.0
+offset_right = 845.0
+offset_bottom = 392.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_styles/separator = SubResource("StyleBoxFlat_6bata")
+
+[node name="VSeparator2" type="VSeparator" parent="."]
+offset_left = 233.0
+offset_top = 339.0
+offset_right = 256.0
+offset_bottom = 392.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_styles/separator = SubResource("StyleBoxFlat_6bata")
+
+[node name="HSeparator" type="HSeparator" parent="."]
+offset_left = 244.0
+offset_top = 354.0
+offset_right = 831.0
+offset_bottom = 376.0
+theme_override_styles/separator = SubResource("StyleBoxLine_p78q2")
