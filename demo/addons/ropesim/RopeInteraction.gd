@@ -84,7 +84,7 @@ func _on_after_update() -> void:
         on_movement_request.emit(target_node, _anchor)
         return
 
-    var diff := _anchor.global_position - target_node.global_position
+    var diff := _anchor.global_position - (input_node_override if input_node_override else target_node).global_position
 
     if diff.length_squared() < 0.01 * 0.01:
         return
