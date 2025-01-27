@@ -40,7 +40,11 @@ enum PositionUpdateMode {
 @export var target_node: Node2D
 
 ## (Optional) Use the given node instead of the target node to update the rope point's position.
-## If set, the target node will only be snapped to the rope, but it will not affect it.
+## If set, the target_node will only be snapped to the rope, but it will not affect it.[br]
+## [br]
+## One use-case is attaching a RigidBody to a rope. The RigidBody should affect the rope, but in
+## order to constrain it, a PointJoint2D is needed.
+## To make it work, the PinJoint2D must be set as target_node and the RigidBody as input_node_override.
 @export var input_node_override: Node2D
 
 ## Target rope.

@@ -1,5 +1,8 @@
 # GDNative Ropesim
 
+![Godot 4.2+ compatible](https://img.shields.io/badge/Godot-4.2+-%23478cbf?logo=godot-engine&logoColor=white)
+
+
 <img src="https://github.com/mphe/GDNative-Ropesim/assets/7116001/272f4f65-cb79-4798-97ba-f0d43589caef" width=128px align="right"/>
 
 A 2D verlet integration based rope simulation for Godot 4.2+.
@@ -7,6 +10,10 @@ A 2D verlet integration based rope simulation for Godot 4.2+.
 The computation-heavy simulation part is written in C++ using GDExtension, the rest in GDScript. This allows for fast processing and easy extendability, while keeping the code readable.
 
 The last Godot 3.x version can be found on the [3.x branch](https://github.com/mphe/GDNative-Ropesim/tree/3.x), however, this branch will no longer receive updates.
+
+If you like this plugin and want to support my work, consider leaving a tip on Ko-fi.
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Q5Q015GBOP)
 
 ## Setup
 
@@ -51,14 +58,14 @@ The following nodes exist:
 
 Use the in-engine help to view the full documentation for each node.
 
+### Examples
+The project includes various example scenes that demonstrate the features of this plugin.
+See also the [showcase video](#showcase) for a basic usage example.
+
 ### Editor Menu
 When one of the above nodes is selected, a "*Ropesim*" menu appears in the editor toolbar with the following options:
 * `Preview in Editor`: Toggle live preview in the editor on or off.
 * `Reset Rope`: Reset the selected rope to its resting position.
-
-### Examples
-The project includes various example scenes that demonstrate the features of this plugin.
-See also the [showcase video](#showcase) for a basic usage example.
 
 ## Showcase
 
