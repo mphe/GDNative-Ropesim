@@ -3,6 +3,7 @@ extends BaseRopeTool2D
 class_name RopeAnchor
 
 ## Can be used to attach nodes at certain positions on a target rope.
+## Updates during the on_post_update signal of NativeRopeServer.
 
 ## Gets emitted just after applying the position. This happens always during _physics_process().
 signal on_after_update()

@@ -3,6 +3,7 @@ extends BaseRopeTool2D
 class_name RopeHandle
 
 ## Can be used to control, animate or fixate points on a target rope.
+## Updates during the on_pre_update signal of NativeRopeServer.
 
 ## Gets emitted just before applying the position. This happens always during _physics_process().
 signal on_before_update()

@@ -5,7 +5,9 @@ class_name RopeToolHelper
 ## It contains boilerplate for registering/unregistering to/from NativeRopeServer when needed.
 
 const UPDATE_HOOK_POST = "on_post_update"
+const UPDATE_HOOK_POST_POST = "on_post_post_update"
 const UPDATE_HOOK_PRE = "on_pre_update"
+const UPDATE_HOOK_PRE_PRE = "on_pre_pre_update"
 
 ## Emitted when the assigned rope has been changed, i.e. to a new rope or null.
 signal on_rope_assigned(old: Rope)

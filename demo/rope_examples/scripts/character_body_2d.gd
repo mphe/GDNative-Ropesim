@@ -4,7 +4,15 @@ extends CharacterBody2D
 @export var speed: float = 300.0
 
 
-func _physics_process(_delta: float) -> void:
+func _ready() -> void:
+    # To prevent a 1-frame lag, we connect to the pre_pre event, so the movement code always runs
+    # before RopeHandles, RopeAnchors and the rope simulation itself.
+    # It is not necessary to do this instead of just using _physics_process() but it should
+    # demonstrate how to solve the lag.
+    NativeRopeServer.on_pre_pre_update.connect(_update)
+
+
+func _update() -> void:
     var wishdir := Vector2()
 
     if use_arrow_keys:

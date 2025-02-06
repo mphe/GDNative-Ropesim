@@ -46,6 +46,8 @@ void NativeRopeServer::_bind_methods()
     ADD_PROPERTY(PropertyInfo(Variant::BOOL, "update_in_editor"), "set_update_in_editor", "get_update_in_editor");
     ADD_SIGNAL(MethodInfo("on_post_update"));
     ADD_SIGNAL(MethodInfo("on_pre_update"));
+    ADD_SIGNAL(MethodInfo("on_post_post_update"));
+    ADD_SIGNAL(MethodInfo("on_pre_pre_update"));
 }
 
 void NativeRopeServer::register_rope(Node2D* rope)
@@ -119,6 +121,7 @@ void NativeRopeServer::_start_stop_process()
 
 void NativeRopeServer::_on_physics_frame()
 {
+    emit_signal("on_pre_pre_update");
     emit_signal("on_pre_update");
     const double delta = _tree->get_root()->get_physics_process_delta_time();
     NativeRopeContext context;
@@ -140,6 +143,7 @@ void NativeRopeServer::_on_physics_frame()
 
     _last_time = (float)(Time::get_singleton()->get_ticks_usec() - start) / 1000.f;
     emit_signal("on_post_update");
+    emit_signal("on_post_post_update");
 }
 
 float NativeRopeServer::get_computation_time() const
