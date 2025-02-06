@@ -1,9 +1,9 @@
 [gd_scene load_steps=7 format=3 uid="uid://dkkstr4acmsvu"]
 
-[ext_resource type="Script" path="res://rope_examples/scripts/split_controller.gd" id="1_34iqv"]
-[ext_resource type="Script" path="res://addons/ropesim/Rope.gd" id="2_dlb8k"]
-[ext_resource type="Script" path="res://addons/ropesim/RopeHandle.gd" id="3_nlat5"]
-[ext_resource type="Script" path="res://addons/ropesim/RopeAnchor.gd" id="4_2ql0w"]
+[ext_resource type="Script" uid="uid://i2s8a0vsi3c1" path="res://rope_examples/scripts/split_controller.gd" id="1_34iqv"]
+[ext_resource type="Script" uid="uid://clgvn2tp1pcmc" path="res://addons/ropesim/Rope.gd" id="2_dlb8k"]
+[ext_resource type="Script" uid="uid://dnyc71ljegebe" path="res://addons/ropesim/RopeHandle.gd" id="3_nlat5"]
+[ext_resource type="Script" uid="uid://csxgkjub6ha7q" path="res://addons/ropesim/RopeAnchor.gd" id="4_2ql0w"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6bata"]
 bg_color = Color(1, 1, 1, 1)

@@ -1,10 +1,10 @@
 [gd_scene load_steps=8 format=3 uid="uid://bdm3ftf6jghmq"]
 
-[ext_resource type="Script" path="res://rope_examples/scripts/character_body_2d_platformer.gd" id="1_kf7l7"]
+[ext_resource type="Script" uid="uid://b013lc6vjth4t" path="res://rope_examples/scripts/character_body_2d_platformer.gd" id="1_kf7l7"]
 [ext_resource type="Texture2D" uid="uid://criwv6nuivcxy" path="res://rope_examples/icon.svg" id="2_3o1qr"]
-[ext_resource type="Script" path="res://addons/ropesim/Rope.gd" id="3_3cx2h"]
-[ext_resource type="Script" path="res://addons/ropesim/RopeInteraction.gd" id="4_q3ugd"]
-[ext_resource type="Script" path="res://addons/ropesim/RopeCollisionShapeGenerator.gd" id="5_wx3wk"]
+[ext_resource type="Script" uid="uid://clgvn2tp1pcmc" path="res://addons/ropesim/Rope.gd" id="3_3cx2h"]
+[ext_resource type="Script" uid="uid://2qjk6jwb6qs" path="res://addons/ropesim/RopeInteraction.gd" id="4_q3ugd"]
+[ext_resource type="Script" uid="uid://cbgknb6qyln5v" path="res://addons/ropesim/RopeCollisionShapeGenerator.gd" id="5_wx3wk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fdqy7"]
 size = Vector2(64, 64)

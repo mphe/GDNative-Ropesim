@@ -1,9 +1,9 @@
 [gd_scene load_steps=7 format=3 uid="uid://ba2ll2csfyo28"]
 
-[ext_resource type="Script" path="res://addons/ropesim/Rope.gd" id="1_ayj28"]
-[ext_resource type="Script" path="res://rope_examples/scripts/character_body_2d.gd" id="2_nvbmc"]
+[ext_resource type="Script" uid="uid://clgvn2tp1pcmc" path="res://addons/ropesim/Rope.gd" id="1_ayj28"]
+[ext_resource type="Script" uid="uid://k4x08a1nqh5t" path="res://rope_examples/scripts/character_body_2d.gd" id="2_nvbmc"]
 [ext_resource type="Texture2D" uid="uid://criwv6nuivcxy" path="res://rope_examples/icon.svg" id="3_8uo3w"]
-[ext_resource type="Script" path="res://addons/ropesim/RopeInteraction.gd" id="6_qu4ri"]
+[ext_resource type="Script" uid="uid://2qjk6jwb6qs" path="res://addons/ropesim/RopeInteraction.gd" id="6_qu4ri"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fdqy7"]
 size = Vector2(64, 64)

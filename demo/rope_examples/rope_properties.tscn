@@ -1,8 +1,8 @@
 [gd_scene load_steps=10 format=3 uid="uid://clyutgr2fativ"]
 
-[ext_resource type="Script" path="res://rope_examples/scripts/animation_player.gd" id="1_mv383"]
-[ext_resource type="Script" path="res://addons/ropesim/RopeHandle.gd" id="3_mb3ny"]
-[ext_resource type="Script" path="res://addons/ropesim/Rope.gd" id="4_rnvio"]
+[ext_resource type="Script" uid="uid://di64tfb4141om" path="res://rope_examples/scripts/animation_player.gd" id="1_mv383"]
+[ext_resource type="Script" uid="uid://dnyc71ljegebe" path="res://addons/ropesim/RopeHandle.gd" id="3_mb3ny"]
+[ext_resource type="Script" uid="uid://clgvn2tp1pcmc" path="res://addons/ropesim/Rope.gd" id="4_rnvio"]
 
 [sub_resource type="Animation" id="Animation_t4gml"]
 length = 0.001
@@ -25,8 +25,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_13y75"]
 _data = {
-"RESET": SubResource("Animation_t4gml"),
-"moving": SubResource("Animation_c3bfa")
+&"RESET": SubResource("Animation_t4gml"),
+&"moving": SubResource("Animation_c3bfa")
 }
 
 [sub_resource type="Curve" id="Curve_2i72k"]
@@ -47,7 +47,7 @@ expand_margin_right = 2.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_13y75")
+&"": SubResource("AnimationLibrary_13y75")
 }
 script = ExtResource("1_mv383")
 
@@ -139,7 +139,7 @@ strength = 1.0
 rope_path = NodePath("..")
 
 [node name="Node2D2" type="Node2D" parent="."]
-position = Vector2(146.001, 146.237)
+position = Vector2(146.846, 145.707)
 
 [node name="Rope3" type="Node2D" parent="Node2D2"]
 position = Vector2(-88.3748, -22.2188)

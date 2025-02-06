@@ -1,10 +1,10 @@
 [gd_scene load_steps=10 format=3 uid="uid://d3hb4pwl1ucly"]
 
-[ext_resource type="Script" path="res://rope_examples/scripts/animation_player.gd" id="1_auvbo"]
-[ext_resource type="Script" path="res://addons/ropesim/RopeCollisionShapeGenerator.gd" id="3_10pwp"]
+[ext_resource type="Script" uid="uid://di64tfb4141om" path="res://rope_examples/scripts/animation_player.gd" id="1_auvbo"]
+[ext_resource type="Script" uid="uid://cbgknb6qyln5v" path="res://addons/ropesim/RopeCollisionShapeGenerator.gd" id="3_10pwp"]
 [ext_resource type="Texture2D" uid="uid://criwv6nuivcxy" path="res://rope_examples/icon.svg" id="3_jqc61"]
-[ext_resource type="Script" path="res://rope_examples/scripts/collision_detector.gd" id="4_b0a70"]
-[ext_resource type="Script" path="res://addons/ropesim/Rope.gd" id="4_wgvfy"]
+[ext_resource type="Script" uid="uid://cns8gtt80tsgg" path="res://rope_examples/scripts/collision_detector.gd" id="4_b0a70"]
+[ext_resource type="Script" uid="uid://clgvn2tp1pcmc" path="res://addons/ropesim/Rope.gd" id="4_wgvfy"]
 
 [sub_resource type="Animation" id="Animation_1pnxe"]
 length = 0.001
@@ -40,8 +40,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_agh7j"]
 _data = {
-"RESET": SubResource("Animation_1pnxe"),
-"moving": SubResource("Animation_q02ig")
+&"RESET": SubResource("Animation_1pnxe"),
+&"moving": SubResource("Animation_q02ig")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xyd70"]
@@ -51,7 +51,7 @@ size = Vector2(128, 128)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_agh7j")
+&"": SubResource("AnimationLibrary_agh7j")
 }
 script = ExtResource("1_auvbo")
 

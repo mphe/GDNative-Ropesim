@@ -1,9 +1,9 @@
 [gd_scene load_steps=8 format=3 uid="uid://dosr2p68fwd6p"]
 
-[ext_resource type="Script" path="res://addons/ropesim/Rope.gd" id="1_le2ut"]
-[ext_resource type="Script" path="res://addons/ropesim/RopeHandle.gd" id="2_0q18d"]
-[ext_resource type="Script" path="res://addons/ropesim/RopeCollisionShapeGenerator.gd" id="3_4yuxp"]
-[ext_resource type="Script" path="res://rope_examples/scripts/character_body_2d_platformer_walk_on_rope.gd" id="4_x28hd"]
+[ext_resource type="Script" uid="uid://clgvn2tp1pcmc" path="res://addons/ropesim/Rope.gd" id="1_le2ut"]
+[ext_resource type="Script" uid="uid://dnyc71ljegebe" path="res://addons/ropesim/RopeHandle.gd" id="2_0q18d"]
+[ext_resource type="Script" uid="uid://cbgknb6qyln5v" path="res://addons/ropesim/RopeCollisionShapeGenerator.gd" id="3_4yuxp"]
+[ext_resource type="Script" uid="uid://dc70qst7bdtxx" path="res://rope_examples/scripts/character_body_2d_platformer_walk_on_rope.gd" id="4_x28hd"]
 [ext_resource type="Texture2D" uid="uid://criwv6nuivcxy" path="res://rope_examples/icon.svg" id="5_mv4mo"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fetoc"]
@@ -54,8 +54,8 @@ color = Color(0.533333, 0.384314, 0.258824, 1)
 [node name="RopeHandle" type="Marker2D" parent="Rope"]
 position = Vector2(1149, -7)
 script = ExtResource("2_0q18d")
-rope_path = NodePath("..")
 strength = 1.0
+rope_path = NodePath("..")
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
 position = Vector2(112, 128)

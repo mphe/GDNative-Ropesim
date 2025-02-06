@@ -1,8 +1,8 @@
 [gd_scene load_steps=7 format=3 uid="uid://bajrq5fmp5squ"]
 
-[ext_resource type="Script" path="res://addons/ropesim/RopeHandle.gd" id="1_n2oah"]
-[ext_resource type="Script" path="res://rope_examples/scripts/animation_player.gd" id="3_g6662"]
-[ext_resource type="Script" path="res://addons/ropesim/Rope.gd" id="3_h0p3k"]
+[ext_resource type="Script" uid="uid://dnyc71ljegebe" path="res://addons/ropesim/RopeHandle.gd" id="1_n2oah"]
+[ext_resource type="Script" uid="uid://di64tfb4141om" path="res://rope_examples/scripts/animation_player.gd" id="3_g6662"]
+[ext_resource type="Script" uid="uid://clgvn2tp1pcmc" path="res://addons/ropesim/Rope.gd" id="3_h0p3k"]
 
 [sub_resource type="Animation" id="Animation_1pnxe"]
 length = 0.001
@@ -38,8 +38,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_agh7j"]
 _data = {
-"RESET": SubResource("Animation_1pnxe"),
-"moving": SubResource("Animation_q02ig")
+&"RESET": SubResource("Animation_1pnxe"),
+&"moving": SubResource("Animation_q02ig")
 }
 
 [node name="main" type="Node2D"]
@@ -89,9 +89,9 @@ metadata/_edit_group_ = true
 [node name="RopeHandle2" type="Marker2D" parent="."]
 position = Vector2(417, 160)
 script = ExtResource("1_n2oah")
+strength = 1.0
 rope_path = NodePath("../Rope3")
 rope_position = 0.582
-strength = 1.0
 
 [node name="Label3" type="Label" parent="."]
 offset_left = 31.0
@@ -103,16 +103,16 @@ text = "A free hanging rope (fixate_begin = false) controlled by two handles"
 [node name="RopeHandleBegin" type="Marker2D" parent="."]
 position = Vector2(114, 428)
 script = ExtResource("1_n2oah")
+strength = 1.0
 rope_path = NodePath("../Rope2")
 rope_position = 0.207
-strength = 1.0
 
 [node name="RopeHandleEnd" type="Marker2D" parent="."]
 position = Vector2(203, 415)
 script = ExtResource("1_n2oah")
+strength = 1.0
 rope_path = NodePath("../Rope2")
 rope_position = 0.775
-strength = 1.0
 
 [node name="Rope2" type="Node2D" parent="."]
 position = Vector2(168, 403)
@@ -131,18 +131,18 @@ text = "Smoothed handle transition enabled"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_agh7j")
+&"": SubResource("AnimationLibrary_agh7j")
 }
 script = ExtResource("3_g6662")
 
 [node name="RopeHandle3" type="Marker2D" parent="."]
 position = Vector2(873, 301)
 script = ExtResource("1_n2oah")
-rope_path = NodePath("../Rope4")
-rope_position = 0.531
 smoothing = true
 position_smoothing_speed = 3.705
 strength = 1.0
+rope_path = NodePath("../Rope4")
+rope_position = 0.531
 
 [node name="Rope4" type="Node2D" parent="."]
 position = Vector2(799, 297)
@@ -167,15 +167,15 @@ fixate_begin = false
 [node name="RopeHandleBegin" type="Marker2D" parent="Rope5"]
 position = Vector2(-10, -4)
 script = ExtResource("1_n2oah")
+strength = 1.0
 rope_path = NodePath("..")
 rope_position = 0.0
-strength = 1.0
 
 [node name="RopeHandleEnd" type="Marker2D" parent="Rope5"]
 position = Vector2(204, 22)
 script = ExtResource("1_n2oah")
-rope_path = NodePath("..")
 strength = 1.0
+rope_path = NodePath("..")
 
 [node name="Rope6" type="Node2D" parent="."]
 position = Vector2(636, 564)
@@ -185,5 +185,5 @@ max_endpoint_distance = 150.0
 [node name="RopeHandleEnd" type="Marker2D" parent="Rope6"]
 position = Vector2(160, 86)
 script = ExtResource("1_n2oah")
-rope_path = NodePath("..")
 strength = 1.0
+rope_path = NodePath("..")
