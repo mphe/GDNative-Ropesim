@@ -13,8 +13,8 @@ class_name RopeInteraction
 ## 2. Wait for rope simulation to be finished.[br]
 ## 3. Set target node position to [RopeAnchor] position.
 
-## Emitted when the target node should be moved and [member RopeInteraction.position_update_mode] is [enum RopeInteraction.Signal].
-signal on_movement_request(target: Node2D, anchor: RopeAnchor)
+## Emitted when the target node should be moved and [member RopeInteraction.position_update_mode] is [enum RopeInteraction.EmitSignal].
+signal on_movement_request(target: Node2D, requested_position: Vector2)
 
 
 ## Determines how the position of the target node is updated.
@@ -57,6 +57,9 @@ enum PositionUpdateMode {
 ## Usually only useful when the rope_position is either 0.0 or 1.0, i.e. one of the endpoints.
 @export_range(0.0, 1.0) var strength: float = 0.0 : set = set_strength
 
+## Offset to apply between rope and target_node/input_node_override.
+@export var offset: Vector2
+
 var _anchor: RopeAnchor
 var _handle: RopeHandle
 
@@ -80,38 +83,38 @@ func _enter_tree() -> void:
 
 
 func _on_before_update() -> void:
-    _handle.global_position = (input_node_override if input_node_override else target_node).global_position
+    _handle.global_position = (input_node_override if input_node_override else target_node).global_position + offset
 
 
 func _on_after_update() -> void:
-    if position_update_mode == PositionUpdateMode.EmitSignal:
-        on_movement_request.emit(target_node, _anchor)
-        return
-
-    var diff := _anchor.global_position - target_node.global_position
+    var target_pos := _anchor.global_position - offset
+    var diff := target_pos - target_node.global_position
 
     if diff.length_squared() < 0.01 * 0.01:
         return
 
-    if position_update_mode == PositionUpdateMode.SetGlobalPosition:
-        target_node.global_position = _anchor.global_position
-    else:
-        var body := target_node as CharacterBody2D
+    match position_update_mode:
+        PositionUpdateMode.EmitSignal:
+            on_movement_request.emit(target_node, target_pos)
+        PositionUpdateMode.SetGlobalPosition:
+            target_node.global_position = target_pos
+        PositionUpdateMode.MoveAndSlide:
+            var body := target_node as CharacterBody2D
 
-        if not body:
-            push_error("RopeInteraction: Target node is not a CharacterBody2D")
-            return
+            if not body:
+                push_error("RopeInteraction: Target node is not a CharacterBody2D")
+                return
 
-        var backup_vel := body.velocity
-        # Counteract the delta multiplication that happens in move_and_slide() because we want to travel the whole distance
-        body.velocity = diff / get_physics_process_delta_time()
-        body.move_and_slide()
-        body.velocity = backup_vel
+            var backup_vel := body.velocity
+            # Counteract the delta multiplication that happens in move_and_slide() because we want to travel the whole distance
+            body.velocity = diff / get_physics_process_delta_time()
+            body.move_and_slide()
+            body.velocity = backup_vel
 
 
 ## Determine the nearest position on the rope to the target node and use it as [member RopeInteraction.rope_position].
 func use_nearest_position() -> void:
-    _handle.use_nearest_position_to_point(target_node.global_position)
+    _handle.use_nearest_position_to_point(target_node.global_position + offset)
     rope_position = _handle.rope_position
 
 
