@@ -35,6 +35,7 @@ motion_mode = 1
 [node name="PinJoint2D" type="PinJoint2D" parent="pin_point"]
 node_a = NodePath("../../hanging_rigidbody")
 node_b = NodePath("..")
+softness = 0.05
 
 [node name="hanging_rigidbody" type="RigidBody2D" parent="."]
 position = Vector2(0, 250)

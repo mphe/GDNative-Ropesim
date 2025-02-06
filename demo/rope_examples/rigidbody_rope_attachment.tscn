@@ -42,10 +42,13 @@ horizontal_alignment = 1
 
 [node name="Label" type="Label" parent="."]
 offset_left = 10.0
-offset_top = 481.0
+offset_top = 451.0
 offset_right = 852.0
-offset_bottom = 504.0
+offset_bottom = 630.0
 text = "Basic example on how to attach a RigidBody to a rope and enabling corresponding physics reactions.
 
 A PinJoint2D fixates the RigidBody to the rope.
-A RopeInteraction uses the RigidBody to control the rope and updates the PinJoint2D respectively."
+The softness property on the PointJoint2D can be tuned to make the RigidBodies less erratic on collisions.
+
+A RopeInteraction uses the RigidBody to control the rope and updates the PinJoint2D respectively.
+For this purpose, the RopeInteraction makes use of the input_override_node property."
