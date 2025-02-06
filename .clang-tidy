@@ -20,3 +20,4 @@ Checks:
   - -readability-magic-numbers  # This also triggers with literals like 3.1415
   - -readability-redundant-access-specifiers
   - -readability-implicit-bool-conversion
+  - -readability-math-missing-parentheses

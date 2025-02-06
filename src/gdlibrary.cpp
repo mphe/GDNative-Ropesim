@@ -1,5 +1,4 @@
 #include "gdlibrary.hpp"
-#include "NativeRopeContext.hpp"
 #include "NativeRopeServer.hpp"
 
 #include <gdextension_interface.h>
@@ -18,7 +17,6 @@ void initialize_libropesim(ModuleInitializationLevel p_level) {
     }
 
     ClassDB::register_class<NativeRopeServer>();
-    ClassDB::register_class<NativeRopeContext>();
     rope_server = memnew(NativeRopeServer);  // NOLINT
     Engine::get_singleton()->register_singleton("NativeRopeServer", rope_server);
 }

@@ -2,8 +2,8 @@
 
 using namespace godot;
 
-const Vector2 VECTOR_ZERO = Vector2();
-const Vector2 VECTOR_DOWN = Vector2(0, 1);
+const Vector2 VECTOR_ZERO = Vector2();   // NOLINT(cert-err58-cpp)
+const Vector2 VECTOR_DOWN = Vector2(0, 1);   // NOLINT(cert-err58-cpp)
 
 
 static float get_point_perc(int index, const PackedVector2Array& points)
@@ -16,10 +16,6 @@ static Vector2 damp_vec(Vector2 value, float damping_factor, double delta)
     return value.lerp(VECTOR_ZERO, (float)(1.0 - exp(-damping_factor * delta)));
 }
 
-
-void NativeRopeContext::_bind_methods()
-{
-}
 
 bool NativeRopeContext::validate() const
 {

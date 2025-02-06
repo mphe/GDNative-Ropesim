@@ -8,17 +8,14 @@ namespace godot
 {
     // Caches properties of a rope node and implements simulation functionality.
     // TODO: Could be used as base class in the future to manage rope data in C++ and not in GDScript.
-    class NativeRopeContext : public Object
+    class NativeRopeContext
     {
-        GDCLASS(NativeRopeContext, Object)  // NOLINT
-
         public:
             void load_context(Node2D* rope);
             void simulate(double delta);
             bool validate() const;
 
         protected:
-            static void _bind_methods();
             void _simulate_velocities(double delta);
             void _simulate_stiffness(PackedVector2Array* velocities) const;
             void _constraint();
