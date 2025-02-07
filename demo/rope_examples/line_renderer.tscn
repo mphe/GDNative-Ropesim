@@ -1,10 +1,10 @@
 [gd_scene load_steps=10 format=3 uid="uid://g4jonp46a2qd"]
 
-[ext_resource type="Script" uid="uid://dnyc71ljegebe" path="res://addons/ropesim/RopeHandle.gd" id="1_1x8kc"]
-[ext_resource type="Script" uid="uid://di64tfb4141om" path="res://rope_examples/scripts/animation_player.gd" id="1_ip83o"]
+[ext_resource type="Script" path="res://addons/ropesim/RopeHandle.gd" id="1_1x8kc"]
+[ext_resource type="Script" path="res://rope_examples/scripts/animation_player.gd" id="1_ip83o"]
 [ext_resource type="Texture2D" uid="uid://criwv6nuivcxy" path="res://rope_examples/icon.svg" id="3_dh00w"]
-[ext_resource type="Script" uid="uid://clgvn2tp1pcmc" path="res://addons/ropesim/Rope.gd" id="4_5xugj"]
-[ext_resource type="Script" uid="uid://jy5ea5ae2yq2" path="res://addons/ropesim/RopeRendererLine2D.gd" id="5_rievp"]
+[ext_resource type="Script" path="res://addons/ropesim/Rope.gd" id="4_5xugj"]
+[ext_resource type="Script" path="res://addons/ropesim/RopeRendererLine2D.gd" id="5_rievp"]
 
 [sub_resource type="Animation" id="Animation_m8wea"]
 length = 0.001
@@ -64,8 +64,8 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ny3rx"]
 _data = {
-&"RESET": SubResource("Animation_m8wea"),
-&"moving": SubResource("Animation_sw2bi")
+"RESET": SubResource("Animation_m8wea"),
+"moving": SubResource("Animation_sw2bi")
 }
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xi23p"]
@@ -78,7 +78,7 @@ expand_margin_right = 2.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-&"": SubResource("AnimationLibrary_ny3rx")
+"": SubResource("AnimationLibrary_ny3rx")
 }
 script = ExtResource("1_ip83o")
 
@@ -312,15 +312,15 @@ script = ExtResource("5_rievp")
 
 [node name="RopeHandle" type="Marker2D" parent="Rope3"]
 script = ExtResource("1_1x8kc")
-strength = 1.0
 rope_path = NodePath("..")
 rope_position = 0.0
+strength = 1.0
 
 [node name="RopeHandle2" type="Marker2D" parent="Rope3"]
 position = Vector2(96.5881, -2)
 script = ExtResource("1_1x8kc")
-strength = 1.0
 rope_path = NodePath("..")
+strength = 1.0
 
 [node name="Rope4" type="Node2D" parent="."]
 position = Vector2(1845, 189)

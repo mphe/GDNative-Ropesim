@@ -1,9 +1,9 @@
 [gd_scene load_steps=8 format=3 uid="uid://l03q4o7r2nuk"]
 
-[ext_resource type="Script" uid="uid://di64tfb4141om" path="res://rope_examples/scripts/animation_player.gd" id="1_sodim"]
-[ext_resource type="Script" uid="uid://csxgkjub6ha7q" path="res://addons/ropesim/RopeAnchor.gd" id="2_hm10y"]
+[ext_resource type="Script" path="res://rope_examples/scripts/animation_player.gd" id="1_sodim"]
+[ext_resource type="Script" path="res://addons/ropesim/RopeAnchor.gd" id="2_hm10y"]
 [ext_resource type="Texture2D" uid="uid://criwv6nuivcxy" path="res://rope_examples/icon.svg" id="3_y0u5w"]
-[ext_resource type="Script" uid="uid://clgvn2tp1pcmc" path="res://addons/ropesim/Rope.gd" id="4_jxxrc"]
+[ext_resource type="Script" path="res://addons/ropesim/Rope.gd" id="4_jxxrc"]
 
 [sub_resource type="Animation" id="Animation_1pnxe"]
 length = 0.001
@@ -39,15 +39,15 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_agh7j"]
 _data = {
-&"RESET": SubResource("Animation_1pnxe"),
-&"moving": SubResource("Animation_q02ig")
+"RESET": SubResource("Animation_1pnxe"),
+"moving": SubResource("Animation_q02ig")
 }
 
 [node name="main" type="Node2D"]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-&"": SubResource("AnimationLibrary_agh7j")
+"": SubResource("AnimationLibrary_agh7j")
 }
 script = ExtResource("1_sodim")
 
@@ -66,8 +66,8 @@ texture = ExtResource("3_y0u5w")
 position = Vector2(252.384, 257.986)
 rotation = 2.85458
 script = ExtResource("2_hm10y")
-apply_angle = true
 rope_path = NodePath("../Rope")
+apply_angle = true
 
 [node name="Icon" type="Sprite2D" parent="RopeAnchor2"]
 position = Vector2(32, 0)
