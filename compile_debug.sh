@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-scons compiledb=yes optimize=debug use_llvm=yes
+SCONS_CACHE="$PWD/.scons_cache_debug" scons compiledb=yes optimize=debug use_llvm=yes "$@"

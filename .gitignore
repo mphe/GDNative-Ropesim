@@ -1,3 +1,4 @@
+.scons_cache_debug
 .vim
 *.pyc
 *.idx

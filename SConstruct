@@ -29,6 +29,13 @@ opts.Update(env)
 env.Append(CCFLAGS="-fdiagnostics-color")
 
 
+scons_cache_path = os.environ.get("SCONS_CACHE")
+if scons_cache_path:
+    os.makedirs(scons_cache_path, exist_ok=True)
+    CacheDir(scons_cache_path)
+    print("Using cache dir:", scons_cache_path)
+
+
 # Sources
 env.Append(CPPPATH=["src/"])
 sources = Glob("src/*.cpp")
