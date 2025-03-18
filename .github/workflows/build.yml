@@ -28,7 +28,7 @@ jobs:
 
         include:
           # Defaults
-          - runner: ubuntu-latest
+          - runner: ubuntu-22.04
           - optimize: speed
           - arch: x86_64
 
