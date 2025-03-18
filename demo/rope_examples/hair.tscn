@@ -1,9 +1,9 @@
 [gd_scene load_steps=8 format=3 uid="uid://meudxbssctd7"]
 
-[ext_resource type="Script" path="res://rope_examples/scripts/animation_player.gd" id="1_hhfs1"]
+[ext_resource type="Script" uid="uid://c8aemupwcpls1" path="res://rope_examples/scripts/animation_player.gd" id="1_hhfs1"]
 [ext_resource type="Texture2D" uid="uid://criwv6nuivcxy" path="res://rope_examples/icon.svg" id="2_3mr5p"]
 [ext_resource type="PackedScene" uid="uid://das2x73tumbrb" path="res://rope_examples/scripts/hair.tscn" id="3_xmkdr"]
-[ext_resource type="Script" path="res://addons/ropesim/RopeHandle.gd" id="4_r73xa"]
+[ext_resource type="Script" uid="uid://1xluodkpnre3" path="res://addons/ropesim/RopeHandle.gd" id="4_r73xa"]
 
 [sub_resource type="Animation" id="Animation_rnorx"]
 length = 0.001
@@ -278,8 +278,8 @@ tracks/10/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_vgrqo"]
 _data = {
-"RESET": SubResource("Animation_rnorx"),
-"moving": SubResource("Animation_sbles")
+&"RESET": SubResource("Animation_rnorx"),
+&"moving": SubResource("Animation_sbles")
 }
 
 [node name="Node2D" type="Node2D"]

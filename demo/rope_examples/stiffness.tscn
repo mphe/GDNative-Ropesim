@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://c7p2vp6s5nvem"]
 
-[ext_resource type="Script" path="res://addons/ropesim/RopeHandle.gd" id="1_flav6"]
-[ext_resource type="Script" path="res://addons/ropesim/Rope.gd" id="4_ty6wv"]
+[ext_resource type="Script" uid="uid://1xluodkpnre3" path="res://addons/ropesim/RopeHandle.gd" id="1_flav6"]
+[ext_resource type="Script" uid="uid://b2shq2gjd4fvt" path="res://addons/ropesim/Rope.gd" id="4_ty6wv"]
 
 [node name="main" type="Node2D"]
 

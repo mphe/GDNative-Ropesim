@@ -1,8 +1,8 @@
 [gd_scene load_steps=10 format=3 uid="uid://clyutgr2fativ"]
 
-[ext_resource type="Script" path="res://rope_examples/scripts/animation_player.gd" id="1_mv383"]
-[ext_resource type="Script" path="res://addons/ropesim/RopeHandle.gd" id="3_mb3ny"]
-[ext_resource type="Script" path="res://addons/ropesim/Rope.gd" id="4_rnvio"]
+[ext_resource type="Script" uid="uid://c8aemupwcpls1" path="res://rope_examples/scripts/animation_player.gd" id="1_mv383"]
+[ext_resource type="Script" uid="uid://1xluodkpnre3" path="res://addons/ropesim/RopeHandle.gd" id="3_mb3ny"]
+[ext_resource type="Script" uid="uid://b2shq2gjd4fvt" path="res://addons/ropesim/Rope.gd" id="4_rnvio"]
 
 [sub_resource type="Animation" id="Animation_t4gml"]
 length = 0.001
@@ -25,8 +25,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_13y75"]
 _data = {
-"RESET": SubResource("Animation_t4gml"),
-"moving": SubResource("Animation_c3bfa")
+&"RESET": SubResource("Animation_t4gml"),
+&"moving": SubResource("Animation_c3bfa")
 }
 
 [sub_resource type="Curve" id="Curve_2i72k"]

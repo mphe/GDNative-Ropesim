@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://dwdcelii43tt4"]
 
-[ext_resource type="Script" path="res://addons/ropesim/Rope.gd" id="1_6c85y"]
-[ext_resource type="Script" path="res://rope_examples/scripts/PerformanceLabel.gd" id="2_ms00a"]
+[ext_resource type="Script" uid="uid://b2shq2gjd4fvt" path="res://addons/ropesim/Rope.gd" id="1_6c85y"]
+[ext_resource type="Script" uid="uid://8rd342pwvcf8" path="res://rope_examples/scripts/PerformanceLabel.gd" id="2_ms00a"]
 
 [node name="benchmark" type="Node2D"]
 
