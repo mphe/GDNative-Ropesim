@@ -123,5 +123,5 @@ func _update_state(old_rope: Rope) -> void:
 
 
 func _restore_state(rope: Rope) -> void:
-    if rope:
+    if rope and _target_idx < rope.get_num_points():
         rope.set_point_simulation_weight(_target_idx, 1.0)

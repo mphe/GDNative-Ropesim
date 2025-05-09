@@ -18,7 +18,7 @@ signal on_point_count_changed()
 @export var pause: bool = false: set = _set_pause
 
 ## Number of rope segments. More segments results in smoother quality but also higher computation cost.
-@export var num_segments: int = 10: set = _set_num_segs
+@export_range(1, 100, 1, "or_greater", "hide_slider") var num_segments: int = 10: set = _set_num_segs
 
 ## Overall rope length. Will be distributed uniformly among all segments.
 @export var rope_length: float = 100: set = _set_length
@@ -346,7 +346,7 @@ func get_point_simulation_weight(index: int) -> float:
 func _set_num_segs(value: int) -> void:
     if value == num_segments:
         return
-    num_segments = value
+    num_segments = max(1, value)
     _setup(Engine.is_editor_hint())
     on_point_count_changed.emit()
 
