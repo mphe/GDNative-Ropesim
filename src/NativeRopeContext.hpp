@@ -21,21 +21,21 @@ namespace godot
             void _constraint();
 
         public:
-            Node2D* rope;
+            Node2D* rope = nullptr;
             PackedVector2Array points;
             PackedVector2Array oldpoints;
             PackedFloat32Array seg_lengths;
             PackedFloat32Array simulation_weights;
-            float gravity;
+            float gravity = 0.0;
             Vector2 gravity_direction;
-            float damping;
-            float stiffness;
-            float max_endpoint_distance;
-            int num_constraint_iterations;
+            float damping = 0.0;
+            float stiffness = 0.0;
+            float max_endpoint_distance = 0.0;
+            int num_constraint_iterations = 0;
             Ref<Curve> damping_curve;
-            bool fixate_begin;
-            bool resolve_to_begin;
-            bool resolve_to_end;
+            bool fixate_begin = true;
+            bool resolve_to_begin = false;
+            bool resolve_to_end = false;
     };
 }
 
