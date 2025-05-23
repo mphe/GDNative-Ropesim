@@ -102,7 +102,7 @@ metadata/_edit_group_ = true
 
 [node name="RopeRendererLine2D" type="Line2D" parent="Rope"]
 show_behind_parent = true
-points = PackedVector2Array(0, 0, 5.72205e-06, 8.64366, 1.14441e-05, 17.2641, 1.71661e-05, 25.8513, 2.28882e-05, 34.3962, 2.76566e-05, 42.8914, 3.43323e-05, 51.3305, 4.1008e-05, 59.7084, 4.76837e-05, 68.0211, 5.43594e-05, 76.2654, 6.19888e-05, 84.4392, 6.96182e-05, 92.5406, 7.72476e-05, 100.568, 8.4877e-05, 108.522, 9.05991e-05, 116.4, 9.91821e-05, 124.203, 0.000107765, 131.931, 0.000118256, 139.582, 0.0001297, 147.158, 0.000141144, 154.659, 0.000148773, 162.083, 0.000153542, 169.432, 0.00015831, 176.704, 0.000164032, 183.902, 0.000170708, 191.023, 0.000179291, 198.068, 0.000187874, 205.038, 0.000197411, 211.932, 0.000211716, 218.75, 0.000200272, 225.492, 0.00015831, 232.159)
+points = PackedVector2Array(-4.80347, -0.761364, -10.5067, 4.73146, -16.2553, 10.1485, -22.0847, 15.4381, -28.0196, 20.5571, -34.0784, 25.4675, -40.2769, 30.13, -46.6331, 34.4975, -53.1677, 38.508, -59.8992, 42.0816, -66.8356, 45.1321, -73.9514, 47.6038, -81.184, 49.5443, -88.4286, 51.1361, -95.6589, 52.6133, -102.818, 54.1794, -110.062, 55.7639, -117.205, 57.3264, -124.137, 59.5047, -130.619, 62.4396, -137.429, 64.4097, -144.43, 65.1974, -151.431, 64.8602, -158.295, 63.6191, -164.975, 61.7275, -171.526, 59.542, -178.05, 57.3897, -184.654, 59.0407, -191.195, 60.6472, -197.749, 62.0709, -204.415, 62.0989)
 texture = ExtResource("3_h0ft8")
 texture_mode = 1
 script = ExtResource("4_gll4t")
@@ -126,3 +126,13 @@ shape = SubResource("CapsuleShape2D_6b71f")
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
 position = Vector2(335, 23)
 polygon = PackedVector2Array(-24, -54, -16, -109, 28, -120, 58, -81, 84, -119, 116, -126, 144, -61, 219, -114, 301, -101, 306, 90, 211, 113, 186, -9, 81, 91, 33, -9)
+
+[node name="Label" type="Label" parent="."]
+offset_left = 9.0
+offset_top = 448.0
+offset_right = 471.0
+offset_bottom = 471.0
+text = "This scene demonstrates rope colisions with physics bodies.
+Enable the \"render_debug\" property to see the colliders.
+Higher segment counts and a larger collision radius lead to smoother collisions.
+\"resolve_collisions_while_constraining\" improves the precision but also increases computation costs."
