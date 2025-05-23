@@ -23,25 +23,6 @@ signal on_point_count_changed()
 ## Overall rope length. Will be distributed uniformly among all segments.
 @export var rope_length: float = 100: set = _set_length
 
-## Maximum euclidean distance between rope endpoints. Zero or negative for no limitation.
-## This is an approximation and not 100% accurate.
-## It is intended as a simple way to constraint the rope length when both endpoints are fixed by a RopeHandle.
-## The actual length of the rope might differ depending on the number of constraint iterations.
-## Fixed points in between are not taken into account.
-@export var max_endpoint_distance: float = -1
-
-## If [member Rope.max_endpoint_distance] is set, contract the rope towards the first point.
-## If [member Rope.resolve_to_end] is set as well or if neither is set, the rope gets contracted
-## towards the center.
-## [member Rope.fixate_begin] will always take precedence over this property.
-@export var resolve_to_begin: bool = false
-
-## If [member Rope.max_endpoint_distance] is set, contract the rope towards the last point.
-## If [member Rope.resolve_to_begin] is set as well or if neither is set, the rope gets contracted
-## towards the center.
-## [member Rope.fixate_begin] will always take precedence over this property.
-@export var resolve_to_end: bool = false
-
 ## (Optional) Allows to distribute the length of rope segment in a non-uniform manner.
 ## Useful when certain parts of the rope should be more detailed than the rest.
 ## For example, if it is known that most movement happens at the beginning of the rope, a curve with
@@ -66,11 +47,36 @@ signal on_point_count_changed()
 ## (Optional) Apply different amounts of damping along the rope.
 @export var damping_curve: Curve
 
-## Constraints the rope to its intended length. Less constraint iterations effectively makes the rope more elastic.
-@export_range(0, 1000) var num_constraint_iterations: int = 10
+
+@export_group("Constraint")
 
 ## Whether to fixate the first point at the rope's node position.
 @export var fixate_begin: bool = true
+
+## Maximum euclidean distance between rope endpoints. Zero or negative for no limitation.
+## This is an approximation and not 100% accurate.
+## It is intended as a simple way to constraint the rope length when both endpoints are fixed by a RopeHandle.
+## The actual length of the rope might differ depending on the number of constraint iterations.
+## Fixed points in between are not taken into account.
+@export var max_endpoint_distance: float = -1
+
+## If [member Rope.max_endpoint_distance] is set, contract the rope towards the first point.
+## If [member Rope.resolve_to_end] is set as well or if neither is set, the rope gets contracted
+## towards the center.
+## [member Rope.fixate_begin] will always take precedence over this property.
+@export var resolve_to_begin: bool = false
+
+## If [member Rope.max_endpoint_distance] is set, contract the rope towards the last point.
+## If [member Rope.resolve_to_begin] is set as well or if neither is set, the rope gets contracted
+## towards the center.
+## [member Rope.fixate_begin] will always take precedence over this property.
+@export var resolve_to_end: bool = false
+
+## Constraints the rope to its intended length. Less constraint iterations effectively makes the rope more elastic.
+@export_range(0, 1000) var num_constraint_iterations: int = 10
+
+
+@export_group("Rendering")
 
 ## Render rope points and collision radius for debugging purposes.
 @export var render_debug: bool = false: set = _set_draw_debug
@@ -86,6 +92,7 @@ signal on_point_count_changed()
 
 ## Color gradient along the rendered line.
 @export var color_gradient: Gradient: set = _set_gradient
+
 
 @export_group("Collisions")
 
@@ -103,6 +110,7 @@ signal on_point_count_changed()
 
 ## Velocity damping after collisions. Gets applied in addition to regular damping.
 ## Allows to make the rope appear smoother or rougher, i.e. make it slide more or less.
+## Negative values make it more slippery.
 @export var collision_damping: float = 0.0
 
 ## Resolves collisions after each constraint iteration instead of once after the constraint step.
