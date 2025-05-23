@@ -2,5 +2,5 @@
 extends AnimationPlayer
 
 
-func _ready() -> void:
+func _enter_tree() -> void:
     play("moving")

@@ -1,0 +1,128 @@
+[gd_scene load_steps=11 format=3 uid="uid://cdjoxiv0y7jrp"]
+
+[ext_resource type="Script" uid="uid://c8aemupwcpls1" path="res://rope_examples/scripts/animation_player.gd" id="1_26382"]
+[ext_resource type="Script" uid="uid://b2shq2gjd4fvt" path="res://addons/ropesim/Rope.gd" id="2_f7f8s"]
+[ext_resource type="Texture2D" uid="uid://criwv6nuivcxy" path="res://rope_examples/icon.svg" id="3_h0ft8"]
+[ext_resource type="Script" uid="uid://dfppmnngy2wx4" path="res://addons/ropesim/RopeRendererLine2D.gd" id="4_gll4t"]
+
+[sub_resource type="Animation" id="Animation_6b71f"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Rope:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-14, 19)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("StaticBody2D/CollisionShape2D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_fvc1g"]
+resource_name = "run"
+length = 16.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Rope:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3.03333, 4.01, 4.51, 5, 5.54517, 6.54, 7.54, 8.4, 9.23333, 10.4333, 11.3333, 12.2333, 14.0667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-14, 19), Vector2(766, 33), Vector2(331, 91), Vector2(375, 234), Vector2(379, 405), Vector2(276, 346), Vector2(151, 80), Vector2(48, 291), Vector2(2, 36), Vector2(134, 58), Vector2(315, 359), Vector2(430, 287), Vector2(251, 66), Vector2(676, 56)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("StaticBody2D/CollisionShape2D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = false
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 3.23333, 6.1, 8.53333, 11.4, 14.1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 6.28319, 0.0, 6.28319, 0.0, 6.28319]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_d00lc"]
+_data = {
+&"RESET": SubResource("Animation_6b71f"),
+&"moving": SubResource("Animation_fvc1g")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_aatbp"]
+size = Vector2(64, 64)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fvc1g"]
+radius = 43.1741
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6b71f"]
+radius = 25.0
+height = 224.0
+
+[node name="collisions_demo" type="Node2D"]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_d00lc")
+}
+autoplay = "moving"
+script = ExtResource("1_26382")
+
+[node name="Rope" type="Node2D" parent="."]
+texture_repeat = 2
+position = Vector2(-14, 19)
+script = ExtResource("2_f7f8s")
+num_segments = 30
+rope_length = 200.0
+damping = 6.095
+num_constraint_iterations = 22
+render_line = false
+enable_collisions = true
+collision_radius = 5.0
+resolve_collisions_while_constraining = true
+metadata/_edit_group_ = true
+
+[node name="RopeRendererLine2D" type="Line2D" parent="Rope"]
+show_behind_parent = true
+points = PackedVector2Array(0, 0, 5.72205e-06, 8.64366, 1.14441e-05, 17.2641, 1.71661e-05, 25.8513, 2.28882e-05, 34.3962, 2.76566e-05, 42.8914, 3.43323e-05, 51.3305, 4.1008e-05, 59.7084, 4.76837e-05, 68.0211, 5.43594e-05, 76.2654, 6.19888e-05, 84.4392, 6.96182e-05, 92.5406, 7.72476e-05, 100.568, 8.4877e-05, 108.522, 9.05991e-05, 116.4, 9.91821e-05, 124.203, 0.000107765, 131.931, 0.000118256, 139.582, 0.0001297, 147.158, 0.000141144, 154.659, 0.000148773, 162.083, 0.000153542, 169.432, 0.00015831, 176.704, 0.000164032, 183.902, 0.000170708, 191.023, 0.000179291, 198.068, 0.000187874, 205.038, 0.000197411, 211.932, 0.000211716, 218.75, 0.000200272, 225.492, 0.00015831, 232.159)
+texture = ExtResource("3_h0ft8")
+texture_mode = 1
+script = ExtResource("4_gll4t")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(69, 204)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-18, -52)
+shape = SubResource("RectangleShape2D_aatbp")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(78, 43)
+shape = SubResource("CircleShape2D_fvc1g")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(203, 3)
+rotation = -0.719538
+shape = SubResource("CapsuleShape2D_6b71f")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+position = Vector2(335, 23)
+polygon = PackedVector2Array(-24, -54, -16, -109, 28, -120, 58, -81, 84, -119, 116, -126, 144, -61, 219, -114, 301, -101, 306, 90, 211, 113, 186, -9, 81, 91, 33, -9)
