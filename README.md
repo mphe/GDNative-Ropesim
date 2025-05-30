@@ -86,3 +86,9 @@ More advanced usage examples.
 https://github.com/user-attachments/assets/28e3dda1-6929-4ddf-8afa-041f66a5849b
 
 
+Collisions with physics bodies
+
+https://github.com/user-attachments/assets/424e8277-6e20-4ccc-9231-ec5003d57bae
+
+
+
