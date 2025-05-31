@@ -17,20 +17,25 @@ on:
 jobs:
   build:
     runs-on: ${{ matrix.runner }}
-    name: ${{ matrix.platform }} ${{ matrix.target }} ${{ matrix.arch }} ${{ matrix.optimize }}
+    name: ${{ matrix.platform }} ${{ matrix.target }} ${{ matrix.arch }} ${{ matrix.optimize }} ${{ matrix.scons_args }}
+
     env:
-      BUILD_ID: ${{ matrix.platform }}-${{ matrix.target }}-${{ matrix.arch }}-${{ matrix.optimize }}
+      BUILD_ID: ${{ matrix.platform }}-${{ matrix.target }}-${{ matrix.arch }}-${{ matrix.optimize }}-${{ matrix.scons_args }}
+      EM_VERSION: 4.0.9
+      EM_CACHE_FOLDER: "emsdk-cache"
+
     strategy:
       fail-fast: false
       matrix:
         target: [ template_debug, template_release ]
-        identifier: [ windows, linux, macos, android, android_arm64 ]
+        identifier: [ windows, linux, macos, android, android_arm64, web ]
 
         include:
           # Defaults
           - runner: ubuntu-22.04
           - optimize: speed
           - arch: x86_64
+          - scons_args:
 
           # Debug build settings
           - target: template_debug
@@ -54,6 +59,11 @@ jobs:
           - identifier: android_arm64
             platform: android
             arch: arm64
+
+          - identifier: web
+            platform: web
+            arch: wasm32
+            scons_args: threads=no
 
     steps:
       - name: Check settings
@@ -95,6 +105,20 @@ jobs:
           ndk-version: r23c
           link-to-sdk: true
 
+      - name: (Web) Set up Emscripten cache
+        if: ${{ matrix.platform == 'web' }}
+        uses: actions/cache@v4
+        with:
+          path: ${{env.EM_CACHE_FOLDER}}
+          key: ${{env.EM_VERSION}}-${{ env.BUILD_ID }}
+
+      - name: (Web) Set up Emscripten
+        if: ${{ matrix.platform == 'web' }}
+        uses: mymindstorm/setup-emsdk@v14
+        with:
+          version: ${{env.EM_VERSION}}
+          actions-cache-folder: ${{env.EM_CACHE_FOLDER}}
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -113,21 +137,6 @@ jobs:
           submodules: recursive
           ref: ${{ inputs.git-ref }}
 
-#       TODO: Cache doesn't work yet. SCons rebuilds the objects even if they already exist. Could be caused by modification dates or extension_api.json.
-#             fetch-depth: 0 May be needed for cache. See: <https://github.com/actions/checkout/issues/468>.
-#      - name: Set up SCons cache
-#        uses: actions/cache@v3
-#        with:
-#          path: |
-#            ${{ github.workspace }}/.scons-cache/
-#            ${{ github.workspace }}/**/.sconsign.dblite
-#            ${{ github.workspace }}/godot-cpp/gen/
-#          key: ${{ matrix.platform }}-${{ github.ref }}-${{ github.sha }}
-#          restore-keys: |
-#            ${{ matrix.platform }}-${{ github.ref }}-${{ github.sha }}
-#            ${{ matrix.platform }}-${{ github.ref }}
-#            ${{ matrix.platform }}
-
       - name: Scons Cache
         id: scons-cache
         uses: actions/cache@v4
@@ -140,7 +149,7 @@ jobs:
         env:
           SCONS_CACHE: .scons-cache
         run: |
-          scons target='${{ matrix.target }}' platform='${{ matrix.platform }}' arch='${{ matrix.arch }}' optimize=${{ matrix.optimize }} -j2
+          scons target='${{ matrix.target }}' platform='${{ matrix.platform }}' arch='${{ matrix.arch }}' optimize=${{ matrix.optimize }} ${{ matrix.scons_args }} -j2
           ls -l demo/addons/*/bin/
 
       - name: Prepare files for publish

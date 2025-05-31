@@ -1,0 +1,111 @@
+# Adapted from https://github.com/nathanfranke/gdextension/blob/main/.github/workflows/build.yml
+name: Web Export Template
+on:
+  workflow_dispatch:
+    inputs:
+      git-ref:
+        description: A commit, branch or tag to build.
+        type: string
+        required: true
+  workflow_call:
+    inputs:
+      git-ref:
+        description: A commit, branch or tag to build.
+        type: string
+        required: true
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    name: Web ${{ matrix.target }} ${{ matrix.optimize }}
+
+    env:
+      BUILD_ID: web-${{ matrix.target }}-${{ matrix.optimize }}-${{ matrix.threads }}
+      EM_VERSION: 4.0.9
+      EM_CACHE_FOLDER: "emsdk-cache"
+      GODOT_REF: godot-4.4-stable
+      SCONS_CACHE: .scons-cache
+
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [ template_debug, template_release ]
+        threads: [ yes, no ]
+
+        include:
+          # Defaults
+          - optimize: speed
+
+          # Debug build settings
+          - target: template_debug
+            optimize: speed_trace
+
+    steps:
+      - name: Check settings
+        if: ${{ matrix.platform == '' || matrix.target == '' || matrix.runner == '' || matrix.optimize == '' || matrix.arch == ''}}
+        run: |
+          echo "One of the matrix values is not set."
+          exit 1
+
+      - name: (Web) Set up Emscripten cache
+        if: ${{ matrix.platform == 'web' }}
+        uses: actions/cache@v4
+        with:
+          path: ${{env.EM_CACHE_FOLDER}}
+          key: ${{env.EM_VERSION}}-${{ env.BUILD_ID }}
+
+      - name: (Web) Set up Emscripten
+        if: ${{ matrix.platform == 'web' }}
+        uses: mymindstorm/setup-emsdk@v14
+        with:
+          version: ${{env.EM_VERSION}}
+          actions-cache-folder: ${{env.EM_CACHE_FOLDER}}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Set up SCons
+        shell: bash
+        run: |
+          python -c "import sys; print(sys.version)"
+          python -m pip install scons==4.7.0
+          scons --version
+
+      - name: Clone Godot
+        uses: actions/checkout@v4
+        with:
+          repository: godotengine/godot
+          ref: ${{ env.GODOT_REF }}
+
+      - name: Scons Cache
+        id: scons-cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.SCONS_CACHE }}
+          key: ${{ env.BUILD_ID }}
+
+      - name: Compile extension
+        shell: sh
+        run: |
+          scons target='${{ matrix.target }}' platform=web optimize=${{ matrix.optimize }} -j2
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: godot-${{ env.BUILD_ID }}
+          path: |
+            ${{ github.workspace }}/demo/
+  merge:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Git describe
+        id: ghd
+        uses: proudust/gh-describe@v2
+      - name: Merge Artifacts
+        uses: actions/upload-artifact/merge@v4
+        with:
+          name: ${{ github.event.repository.name }}-${{ steps.ghd.outputs.describe }}
+          pattern: godot-*
