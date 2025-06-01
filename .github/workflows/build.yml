@@ -24,6 +24,7 @@ jobs:
       EM_VERSION: 3.1.64
       EM_CACHE_FOLDER: "emsdk-cache"
       SCONS_CACHE: .scons-cache
+      CACHE_VERSION: 1  # Invalidate cache by increasing this number
 
     strategy:
       fail-fast: false
@@ -116,7 +117,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{env.EM_CACHE_FOLDER}}
-          key: ${{env.EM_VERSION}}-${{ env.BUILD_ID }}
+          key: ${{env.EM_VERSION}}-${{ env.BUILD_ID }}-${{ env.CACHE_VERSION }}
 
       - name: (Web) Set up Emscripten
         if: ${{ matrix.platform == 'web' }}
@@ -148,7 +149,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ env.SCONS_CACHE }}
-          key: ${{ env.BUILD_ID }}
+          key: ${{ env.BUILD_ID }}-${{ env.CACHE_VERSION }}
 
       - name: Compile extension
         shell: sh
