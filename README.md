@@ -67,6 +67,16 @@ When one of the above nodes is selected, a "*Ropesim*" menu appears in the edito
 * `Preview in Editor`: Toggle live preview in the editor on or off.
 * `Reset Rope`: Reset the selected rope to its resting position.
 
+### Advanced Topics
+- [Collisions Documentation](docs/collisions.md)
+- [Execution Order Documentation](docs/execution_order.md)
+
+
+## FAQ / Troubleshooting
+
+See [FAQ](FAQ.md).
+
+
 ## Showcase
 
 A quick overview of how to use each node.
