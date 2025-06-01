@@ -66,7 +66,12 @@ void NativeRopeContext::load_context(Node2D* rope)
     collision_radius = rope->get("collision_radius");
     collision_mask = rope->get("collision_mask");
     collision_damping = rope->get("collision_damping");
+    report_contact_points = rope->get("report_contact_points");
     resolve_collisions_while_constraining = rope->get("resolve_collisions_while_constraining");
+
+    // Contact points are only written, not read
+    if (report_contact_points)
+        contact_points.clear();
 }
 
 void NativeRopeContext::simulate(double delta)
@@ -123,7 +128,7 @@ void NativeRopeContext::_simulate_velocities(double delta)
 
     for (int i = first_idx; i < size; ++i)
     {
-        const float dampmult = use_damping_curve ? (float)damping_curve->sample_baked(get_point_perc(i, points)) : 1.0f;
+        const float dampmult = use_damping_curve ? damping_curve->sample_baked(get_point_perc(i, points)) : 1.0f;
         const Vector2 final_vel = simulation_weights[i] * (
                 damp_vec(velocities[i], damping * dampmult, delta)
                 + gravity_direction * frame_gravity
@@ -271,6 +276,12 @@ void NativeRopeContext::_resolve_collisions(double delta)
         const Vector2 new_point = points[i] + safe_motion;
 
         points[i] = oldpoints[i] + damp_vec(new_point - oldpoints[i], collision_damping, delta);
+
+        if (report_contact_points)
+            contact_points.push_back(intersect_point);
     }
+
+    if (report_contact_points)
+        rope->set("_contact_points", contact_points);
 }
 

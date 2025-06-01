@@ -45,12 +45,14 @@ public:
     float collision_radius = 1.0;
     float collision_damping = 0.0;
     int collision_mask = 0;
+    PackedVector2Array contact_points;
 
     bool fixate_begin = true;
     bool resolve_to_begin = false;
     bool resolve_to_end = false;
     bool enable_collisions = false;
     bool resolve_collisions_while_constraining = false;
+    bool report_contact_points = false;
 };
 
 }

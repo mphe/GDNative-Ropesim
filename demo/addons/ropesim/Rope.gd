@@ -118,6 +118,10 @@ signal on_point_count_changed()
 ## Negligible with a single rope but expensive with many ropes.
 @export var resolve_collisions_while_constraining: bool = false
 
+## Whether to store collision contact points.
+## If enabled, can be retrieved using [method get_contact_points].
+@export var report_contact_points: bool = false
+
 ## Physics layers to collide with.
 @export_flags_2d_physics var collision_mask: int = 1
 
@@ -129,6 +133,7 @@ var _points := PackedVector2Array()
 var _oldpoints := PackedVector2Array()
 # NOTE: Not @exported on purpose to prevent accidentally saving a scene with unintended weights, e.g. due to bugs or user errors.
 var _simulation_weights := PackedFloat32Array()
+var _contact_points := PackedVector2Array()
 
 
 # General
@@ -159,11 +164,15 @@ func _draw() -> void:
             draw_polyline(_points, color, line_width)
 
     if render_debug:
-        for i in _points.size():
-            draw_circle(_points[i], line_width / 2, Color.RED)
+        for p in _points:
+            draw_circle(p, line_width / 2, Color.RED)
 
             if enable_collisions:
-                draw_circle(_points[i], collision_radius, Color.CYAN, false)
+                draw_circle(p, collision_radius, Color.CYAN, false)
+
+        if enable_collisions and report_contact_points:
+            for p in _contact_points:
+                draw_circle(p, line_width / 2, Color.GREEN)
 
 
 # Logic
@@ -366,6 +375,11 @@ func get_color(index: int) -> Color:
 
 func get_segment_lengths() -> PackedFloat32Array:
     return _seg_lengths
+
+
+## Returns collision contact points if collisions and [member report_contact_points] are enabled.
+func get_contact_points() -> PackedVector2Array:
+    return _contact_points
 
 
 ## The simulation weight determines how much a point can be moved during the simulation/constraint phase.
