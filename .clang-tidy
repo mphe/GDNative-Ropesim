@@ -9,6 +9,7 @@ Checks:
   - -cppcoreguidelines-avoid-magic-numbers  # This also triggers with literals like 3.1415
   - -cppcoreguidelines-avoid-non-const-global-variables
   - -cppcoreguidelines-owning-memory
+  - -cppcoreguidelines-non-private-member-variables-in-classes
   - misc-*
   - -misc-non-private-member-variables-in-classes
   - -misc-use-anonymous-namespace

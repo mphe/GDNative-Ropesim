@@ -22,18 +22,19 @@ static Vector2 damp_vec(Vector2 value, float damping_factor, double delta)
     return value.lerp(VECTOR_ZERO, (float)(1.0 - exp(-damping_factor * delta)));
 }
 
+
 NativeRopeContext::NativeRopeContext() :
-    shape_query(memnew(PhysicsShapeQueryParameters2D))
+    _shape_query(memnew(PhysicsShapeQueryParameters2D))
 {
     PhysicsServer2D* physics_server = PhysicsServer2D::get_singleton();
-    cast_shape_rid = physics_server->circle_shape_create();
-    shape_query->set_shape_rid(cast_shape_rid);
+    _cast_shape_rid = physics_server->circle_shape_create();
+    _shape_query->set_shape_rid(_cast_shape_rid);
 }
 
 NativeRopeContext::~NativeRopeContext()
 {
     PhysicsServer2D* physics_server = PhysicsServer2D::get_singleton();
-    physics_server->free_rid(cast_shape_rid);
+    physics_server->free_rid(_cast_shape_rid);
 }
 
 bool NativeRopeContext::validate() const
@@ -251,14 +252,14 @@ void NativeRopeContext::_resolve_collisions(double delta)
     PhysicsServer2D* physics_server = PhysicsServer2D::get_singleton();
     Transform2D transform;
 
-    physics_server->shape_set_data(cast_shape_rid, collision_radius);
-    shape_query->set_collision_mask(collision_mask);
+    physics_server->shape_set_data(_cast_shape_rid, collision_radius);
+    _shape_query->set_collision_mask(collision_mask);
 
     for (int i = 0; i < points.size(); ++i)
     {
         transform.set_origin(points[i]);
-        shape_query->set_transform(transform);
-        const Dictionary rest_info = space->get_rest_info(shape_query);
+        _shape_query->set_transform(transform);
+        const Dictionary rest_info = space->get_rest_info(_shape_query);
 
         if (rest_info.is_empty())
             continue;
