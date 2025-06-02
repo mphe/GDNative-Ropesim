@@ -21,12 +21,15 @@ public:
 protected:
     void _simulate_velocities(double delta);
     void _simulate_stiffness(PackedVector2Array* velocities) const;
-    void _resolve_collisions(double delta);
+    void _resolve_collisions(double delta, bool disable_contact_reporting);
     void _constraint(double delta);
+    void _writeback();
 
 private:
-    Ref<PhysicsShapeQueryParameters2D> _shape_query;  // TODO: Maybe move to NativeRopeServer
-    RID _cast_shape_rid;  // TODO: Maybe move to NativeRopeServer
+    // TODO: These are "buffer" variables that are (re)used globally across all ropes. Consider moving them to a parent scope.
+    Ref<PhysicsShapeQueryParameters2D> _shape_query;
+    RID _cast_shape_rid;
+    PackedVector2Array _contact_points;
 
 public:
     Node2D* rope = nullptr;
@@ -45,7 +48,6 @@ public:
     float collision_radius = 1.0;
     float collision_damping = 0.0;
     int collision_mask = 0;
-    PackedVector2Array contact_points;
 
     bool fixate_begin = true;
     bool resolve_to_begin = false;

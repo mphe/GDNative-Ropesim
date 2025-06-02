@@ -68,10 +68,6 @@ void NativeRopeContext::load_context(Node2D* rope)
     collision_damping = rope->get("collision_damping");
     report_contact_points = rope->get("report_contact_points");
     resolve_collisions_while_constraining = rope->get("resolve_collisions_while_constraining");
-
-    // Contact points are only written, not read
-    if (report_contact_points)
-        contact_points.clear();
 }
 
 void NativeRopeContext::simulate(double delta)
@@ -91,15 +87,23 @@ void NativeRopeContext::simulate(double delta)
     _constraint(delta);
 
     if (!resolve_collisions_while_constraining)
-        _resolve_collisions(delta);
+        _resolve_collisions(delta, false);
 
     if (fixate_begin)
         simulation_weights[0] = backup_multiplier_begin;
 
+    _writeback();
+}
+
+void NativeRopeContext::_writeback()
+{
     // PackedArrays are pass-by-reference in Godot 4.x but not when being passed to a C++ function.
     // See https://github.com/godotengine/godot/pull/36492#issue-569558185.
     rope->call("set_points", points);
     rope->call("set_old_points", oldpoints);
+
+    if (report_contact_points)
+        rope->set("_contact_points", _contact_points);
 }
 
 void NativeRopeContext::_simulate_velocities(double delta)
@@ -238,24 +242,28 @@ void NativeRopeContext::_constraint(double delta)
         }
     }
 
-    for (int _ = 0; _ < num_constraint_iterations; ++_)
+    for (int i = 0; i < num_constraint_iterations; ++i)
     {
         for (int i = 0; i < points.size() - 1; ++i)
             constraint_segment(&points[i], &points[i + 1], simulation_weights[i], simulation_weights[i + 1], seg_lengths[i]);
 
         if (resolve_collisions_while_constraining)
-            _resolve_collisions(delta);
+            _resolve_collisions(delta, i != num_constraint_iterations - 1);
     }
 }
 
-void NativeRopeContext::_resolve_collisions(double delta)
+void NativeRopeContext::_resolve_collisions(double delta, bool disable_contact_reporting)
 {
     if (!enable_collisions)
         return;
 
+    const bool report_contacts = report_contact_points && !disable_contact_reporting;
     PhysicsDirectSpaceState2D* space = rope->get_world_2d()->get_direct_space_state();
     PhysicsServer2D* physics_server = PhysicsServer2D::get_singleton();
     Transform2D transform;
+
+    if (report_contacts)
+        _contact_points.clear();
 
     physics_server->shape_set_data(_cast_shape_rid, collision_radius);
     _shape_query->set_collision_mask(collision_mask);
@@ -277,11 +285,8 @@ void NativeRopeContext::_resolve_collisions(double delta)
 
         points[i] = oldpoints[i] + damp_vec(new_point - oldpoints[i], collision_damping, delta);
 
-        if (report_contact_points)
-            contact_points.push_back(intersect_point);
+        if (report_contacts)
+            _contact_points.push_back(intersect_point);
     }
-
-    if (report_contact_points)
-        rope->set("_contact_points", contact_points);
 }
 
