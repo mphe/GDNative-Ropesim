@@ -176,14 +176,16 @@ func _draw() -> void:
 
 
 # Logic
-
 func _setup(run_reset: bool = true) -> void:
     if not is_inside_tree():
         return
 
-    _points.resize(num_segments + 1)
-    _oldpoints.resize(num_segments + 1)
-    _resize_with_default(_simulation_weights, num_segments + 1, 1.0)
+    var num_points := num_segments + 1
+
+    # Initialize all new points with the endpoint's coordinates to reduce erratic movement.
+    _resize_with_default(_points, num_points, _points[-1] if not _points.is_empty() else Vector2.ZERO)
+    _resize_with_default(_oldpoints, num_points, _oldpoints[-1] if not _oldpoints.is_empty() else Vector2.ZERO)
+    _resize_with_default(_simulation_weights, num_points, 1.0)
 
     update_colors()
     update_segments()
@@ -444,9 +446,11 @@ func _set_seg_dist(value: Curve) -> void:
     update_segments()
 
 
-func _resize_with_default(arr: PackedFloat32Array, new_size: int, default: float) -> void:
-    var oldsize := arr.size()
-    arr.resize(new_size)
+static func _resize_with_default(array: Variant, new_size: int, default: Variant) -> void:
+    @warning_ignore("unsafe_method_access")
+    var oldsize: int = array.size()
+    @warning_ignore("unsafe_method_access")
+    array.resize(new_size)
 
     for i in range(oldsize, new_size):
-        arr[i] = default
+        array[i] = default
