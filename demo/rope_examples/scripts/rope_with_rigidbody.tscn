@@ -19,26 +19,16 @@ rope_length = 250.0
 gravity = 75.0
 num_constraint_iterations = 20
 
-[node name="RopeInteraction" type="Node" parent="." node_paths=PackedStringArray("target_node", "input_node_override", "rope")]
+[node name="RopeInteraction" type="Node" parent="Rope" node_paths=PackedStringArray("target_node", "input_node_override", "rope")]
 script = ExtResource("2_1yts0")
+disable_in_editor = true
 position_update_mode = 0
-target_node = NodePath("../pin_point")
-input_node_override = NodePath("../hanging_rigidbody")
-rope = NodePath("../Rope")
-
-[node name="pin_point" type="CharacterBody2D" parent="."]
-position = Vector2(0, 250)
-collision_layer = 0
-collision_mask = 0
-motion_mode = 1
-
-[node name="PinJoint2D" type="PinJoint2D" parent="pin_point"]
-node_a = NodePath("../../hanging_rigidbody")
-node_b = NodePath("..")
-softness = 0.05
+target_node = NodePath("../../hanging_rigidbody/attachment_marker/rope_end")
+input_node_override = NodePath("../../hanging_rigidbody/attachment_marker")
+rope = NodePath("..")
 
 [node name="hanging_rigidbody" type="RigidBody2D" parent="."]
-position = Vector2(0, 250)
+position = Vector2(0, 281)
 mass = 5.0
 physics_material_override = SubResource("PhysicsMaterial_nwm6u")
 metadata/_edit_group_ = true
@@ -49,3 +39,17 @@ shape = SubResource("RectangleShape2D_3g7xa")
 [node name="Icon" type="Sprite2D" parent="hanging_rigidbody"]
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("3_uwcl5")
+
+[node name="attachment_marker" type="Marker2D" parent="hanging_rigidbody"]
+position = Vector2(0, -31)
+metadata/_edit_group_ = true
+
+[node name="rope_end" type="CharacterBody2D" parent="hanging_rigidbody/attachment_marker"]
+collision_layer = 0
+collision_mask = 0
+motion_mode = 1
+
+[node name="PinJoint2D" type="PinJoint2D" parent="hanging_rigidbody/attachment_marker/rope_end"]
+node_a = NodePath("../../..")
+node_b = NodePath("..")
+softness = 0.05

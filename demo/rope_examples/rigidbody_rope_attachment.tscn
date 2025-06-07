@@ -42,13 +42,27 @@ horizontal_alignment = 1
 
 [node name="Label" type="Label" parent="."]
 offset_left = 10.0
-offset_top = 451.0
-offset_right = 852.0
-offset_bottom = 630.0
-text = "Basic example on how to attach a RigidBody to a rope and enabling corresponding physics reactions.
-
-A PinJoint2D fixates the RigidBody to the rope.
+offset_top = 381.0
+offset_right = 1186.0
+offset_bottom = 638.0
+text = "A PinJoint2D fixates the RigidBody to the rope.
+As it only works on two physics bodies, a CharacterBody (rope_end) is used as proxy for the location on the rope.
 The softness property on the PointJoint2D can be tuned to make the RigidBodies less erratic on collisions.
 
-A RopeInteraction uses the RigidBody to control the rope and updates the PinJoint2D respectively.
-For this purpose, the RopeInteraction makes use of the input_override_node property."
+A RopeInteraction handles the mutual interaction between the RigidBody and the rope.
+It snaps the rope to the position indicated by the attachment_marker node and updates the rope_end+PinJoint2D to constrain the RigidBody to the rope.
+To specifically target the marker, the RopeInteraction makes use of the input_override_node property.
+
+The PinJoint2D, the rope_end and the attachment_marker nodes should be aligned initially, otherwise it may lead to undesired behavior.
+The disable_in_editor property of RopeInteraction is useful to prevent accidantelly messing up the layout."
+
+[node name="Label2" type="Label" parent="."]
+offset_left = 10.0
+offset_top = 8.0
+offset_right = 1146.0
+offset_bottom = 109.0
+text = "Basic example on how to attach a RigidBody to a rope and enabling corresponding physics reactions.
+
+Keep in mind that Godot's internal physics and the rope simulation of this plugin are completely different approaches.
+Combining them is a hack that will never produce perfect results and is not particularily intuitive."
+autowrap_mode = 3

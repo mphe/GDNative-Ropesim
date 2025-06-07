@@ -1,0 +1,122 @@
+[gd_scene load_steps=7 format=3 uid="uid://cioc6wtbs3ubf"]
+
+[ext_resource type="Script" uid="uid://b2shq2gjd4fvt" path="res://addons/ropesim/Rope.gd" id="1_mk4gc"]
+[ext_resource type="Script" uid="uid://y8nntt6dh711" path="res://rope_examples/scripts/character_body_2d.gd" id="1_ww34l"]
+[ext_resource type="Script" uid="uid://dvxegqp0cf77n" path="res://addons/ropesim/RopeInteraction.gd" id="2_ww34l"]
+[ext_resource type="Texture2D" uid="uid://criwv6nuivcxy" path="res://rope_examples/icon.svg" id="3_ovf25"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_nwm6u"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3g7xa"]
+size = Vector2(64, 64)
+
+[node name="rope_with_body" type="Node2D"]
+position = Vector2(479, 16)
+
+[node name="left_rope_mover" type="CharacterBody2D" parent="."]
+position = Vector2(-176, 62)
+motion_mode = 1
+script = ExtResource("1_ww34l")
+
+[node name="Rope" type="Node2D" parent="left_rope_mover"]
+script = ExtResource("1_mk4gc")
+num_segments = 15
+rope_length = 250.0
+gravity = 61.765
+num_constraint_iterations = 20
+
+[node name="RopeInteraction" type="Node" parent="left_rope_mover/Rope" node_paths=PackedStringArray("target_node", "input_node_override", "rope")]
+script = ExtResource("2_ww34l")
+disable_in_editor = true
+position_update_mode = 0
+target_node = NodePath("../../../hanging_rigidbody/attach_marker/rope_end")
+input_node_override = NodePath("../../../hanging_rigidbody/attach_marker")
+rope = NodePath("..")
+
+[node name="Label" type="Label" parent="left_rope_mover"]
+offset_left = -24.0
+offset_top = -34.0
+offset_right = 23.0
+offset_bottom = -11.0
+text = "WSAD"
+
+[node name="right_rope_mover" type="CharacterBody2D" parent="."]
+position = Vector2(185, 80)
+motion_mode = 1
+script = ExtResource("1_ww34l")
+use_arrow_keys = true
+
+[node name="Rope2" type="Node2D" parent="right_rope_mover"]
+script = ExtResource("1_mk4gc")
+num_segments = 15
+rope_length = 250.0
+gravity = 61.765
+num_constraint_iterations = 20
+
+[node name="RopeInteraction" type="Node" parent="right_rope_mover/Rope2" node_paths=PackedStringArray("target_node", "input_node_override", "rope")]
+script = ExtResource("2_ww34l")
+disable_in_editor = true
+position_update_mode = 0
+target_node = NodePath("../../../hanging_rigidbody/attach_marker2/rope_end2")
+input_node_override = NodePath("../../../hanging_rigidbody/attach_marker2")
+rope = NodePath("..")
+
+[node name="Label" type="Label" parent="right_rope_mover"]
+offset_left = -24.0
+offset_top = -34.0
+offset_right = 23.0
+offset_bottom = -11.0
+text = "Arrow keys"
+
+[node name="hanging_rigidbody" type="RigidBody2D" parent="."]
+position = Vector2(-75, 156)
+mass = 20.091
+physics_material_override = SubResource("PhysicsMaterial_nwm6u")
+metadata/_edit_group_ = true
+
+[node name="attach_marker" type="Marker2D" parent="hanging_rigidbody"]
+position = Vector2(-19, 0)
+metadata/_edit_group_ = true
+
+[node name="rope_end" type="CharacterBody2D" parent="hanging_rigidbody/attach_marker"]
+collision_layer = 0
+collision_mask = 0
+motion_mode = 1
+
+[node name="PinJoint2D" type="PinJoint2D" parent="hanging_rigidbody/attach_marker/rope_end"]
+node_a = NodePath("../../..")
+node_b = NodePath("..")
+softness = 0.05
+
+[node name="attach_marker2" type="Marker2D" parent="hanging_rigidbody"]
+position = Vector2(22, 0)
+metadata/_edit_group_ = true
+
+[node name="rope_end2" type="CharacterBody2D" parent="hanging_rigidbody/attach_marker2"]
+collision_layer = 0
+collision_mask = 0
+motion_mode = 1
+
+[node name="PinJoint2D2" type="PinJoint2D" parent="hanging_rigidbody/attach_marker2/rope_end2"]
+node_a = NodePath("../../..")
+node_b = NodePath("..")
+softness = 0.05
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hanging_rigidbody"]
+shape = SubResource("RectangleShape2D_3g7xa")
+
+[node name="Icon" type="Sprite2D" parent="hanging_rigidbody"]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_ovf25")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -467.0
+offset_top = 466.0
+offset_right = 709.0
+offset_bottom = 619.0
+text = "Very similar setup to the \"rigidbody_rope_attachment\" example but with two ropes attached simultaneously.
+The same principles apply as before.
+
+As before, attaching Rigidbodies to ropes is a hack and will be tricky to make look right.
+For example, visible gaps will appear if both ropes are pulled away too far from each other.
+Additionally, ropes are not processed simultaneously. One rope will always be updated earlier, which can cause execution order related effects."
