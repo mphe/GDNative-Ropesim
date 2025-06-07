@@ -33,6 +33,9 @@ enum PositionUpdateMode {
 ## Enable or disable.
 @export var enable: bool = true : set = set_enable
 
+## Always disable this node in editor. Mostly useful to not accidentally move nodes around, e.g. PinJoints.
+@export var disable_in_editor: bool = false : set = set_disable_in_editor
+
 ## Determines how the position of the target node should be updated.
 @export var position_update_mode: PositionUpdateMode = PositionUpdateMode.EmitSignal
 
@@ -72,6 +75,8 @@ func _init() -> void:
     _anchor = _create_default_anchor()
     _anchor.on_after_update.connect(_on_after_update)
     add_child(_anchor)
+
+    _update_enable_state()
 
 
 func _enter_tree() -> void:
@@ -148,8 +153,12 @@ func set_rope(value: Rope) -> void:
 
 func set_enable(value: bool) -> void:
     enable = value
-    _handle.enable = enable
-    _anchor.enable = enable
+    _update_enable_state()
+
+
+func set_disable_in_editor(value: bool) -> void:
+    disable_in_editor = value
+    _update_enable_state()
 
 
 func set_strength(value: float) -> void:
@@ -182,3 +191,8 @@ func _create_default_anchor() -> RopeAnchor:
     anchor.rope_position = rope_position
     anchor.precise = true
     return anchor
+
+
+func _update_enable_state() -> void:
+    _handle.enable = enable
+    _anchor.enable = enable and (not disable_in_editor or not Engine.is_editor_hint())
