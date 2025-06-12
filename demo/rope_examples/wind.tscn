@@ -1,0 +1,616 @@
+[gd_scene load_steps=7 format=3 uid="uid://dedfd3r8spcaq"]
+
+[ext_resource type="Script" uid="uid://b2shq2gjd4fvt" path="res://addons/ropesim/Rope.gd" id="1_8m3e7"]
+[ext_resource type="Script" uid="uid://8rd342pwvcf8" path="res://rope_examples/scripts/PerformanceLabel.gd" id="1_pmk4g"]
+[ext_resource type="Script" uid="uid://dfppmnngy2wx4" path="res://addons/ropesim/RopeRendererLine2D.gd" id="2_8vldf"]
+[ext_resource type="Texture2D" uid="uid://criwv6nuivcxy" path="res://rope_examples/icon.svg" id="2_pmk4g"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_pmk4g"]
+frequency = 0.0012
+
+[sub_resource type="RopeWindParameters" id="RopeWindParameters_blftt"]
+direction = 0.671952
+wind_strength = 1.885
+oscillation_strength = 2.435
+noise = SubResource("FastNoiseLite_pmk4g")
+
+[node name="Wind" type="Node2D"]
+
+[node name="PerformanceLabel" type="Label" parent="."]
+offset_left = 13.0
+offset_top = 441.0
+offset_right = 83.0
+offset_bottom = 490.0
+text = "32 Ropes
+3.04 ms"
+script = ExtResource("1_pmk4g")
+
+[node name="Label" type="Label" parent="."]
+offset_left = 14.0
+offset_top = 490.0
+offset_right = 655.0
+offset_bottom = 643.0
+text = "When enabled, ropes have simulated wind based on FastNoiseLite.
+
+Direction: The direction the wind force is blowing in.
+Wind Strength: Determines how taut the rope is in the direction the wind is blowing.
+Oscillation Strength: Increases or decreases the distance the noise applies to the rope velocity.  
+Noise: The noise function and settings used when computing the oscillation."
+
+[node name="Rope" type="Node2D" parent="."]
+position = Vector2(270, 52)
+script = ExtResource("1_8m3e7")
+num_segments = 25
+rope_length = 300.0
+wind_enabled = true
+wind = SubResource("RopeWindParameters_blftt")
+num_constraint_iterations = 20
+metadata/_custom_type_script = "uid://b2shq2gjd4fvt"
+
+[node name="RopeRendererLine2D" type="Line2D" parent="Rope"]
+texture_repeat = 2
+points = PackedVector2Array(1.53809, 1.09438, 9.40747, 14.0908, 17.2633, 27.0363, 25.1045, 39.9064, 32.9311, 52.6791, 40.7436, 65.336, 48.5422, 77.8619, 56.3249, 90.2466, 64.0855, 102.485, 71.8128, 114.577, 79.4903, 126.53, 87.0981, 138.353, 94.6162, 150.057, 102.028, 161.652, 109.324, 173.144, 116.503, 184.535, 123.567, 195.821, 130.527, 206.999, 137.393, 218.06, 144.18, 228.999, 150.899, 239.807, 157.556, 250.482, 164.157, 261.021, 170.703, 271.422, 177.198, 281.685, 183.627, 291.817)
+texture = ExtResource("2_pmk4g")
+texture_mode = 1
+script = ExtResource("2_8vldf")
+metadata/_custom_type_script = "uid://dfppmnngy2wx4"
+
+[node name="Rope2" type="Node2D" parent="."]
+position = Vector2(235, 52)
+script = ExtResource("1_8m3e7")
+num_segments = 25
+rope_length = 300.0
+wind_enabled = true
+wind = SubResource("RopeWindParameters_blftt")
+num_constraint_iterations = 20
+metadata/_custom_type_script = "uid://b2shq2gjd4fvt"
+
+[node name="RopeRendererLine2D" type="Line2D" parent="Rope2"]
+texture_repeat = 2
+points = PackedVector2Array(1.49707, 1.14597, 9.24274, 14.1148, 16.9671, 27.0385, 24.6633, 39.8966, 32.3265, 52.6706, 39.9545, 65.344, 47.5458, 77.9033, 55.0987, 90.3383, 62.6093, 102.643, 70.0704, 114.815, 77.4733, 126.857, 84.8082, 138.77, 92.0663, 150.561, 99.2392, 162.233, 106.318, 173.791, 113.295, 185.243, 120.161, 196.593, 126.909, 207.846, 133.529, 219.01, 140.004, 230.095, 146.303, 241.119, 152.393, 252.1, 158.253, 263.047, 163.883, 273.958, 169.299, 284.821, 174.505, 295.633)
+texture = ExtResource("2_pmk4g")
+texture_mode = 1
+script = ExtResource("2_8vldf")
+metadata/_custom_type_script = "uid://dfppmnngy2wx4"
+
+[node name="Rope3" type="Node2D" parent="."]
+position = Vector2(205, 52)
+script = ExtResource("1_8m3e7")
+num_segments = 25
+rope_length = 300.0
+wind_enabled = true
+wind = SubResource("RopeWindParameters_blftt")
+num_constraint_iterations = 20
+metadata/_custom_type_script = "uid://b2shq2gjd4fvt"
+
+[node name="RopeRendererLine2D" type="Line2D" parent="Rope3"]
+texture_repeat = 2
+points = PackedVector2Array(1.4834, 1.16316, 9.01086, 14.4026, 16.5125, 27.5992, 23.9754, 40.7355, 31.3872, 53.797, 38.7375, 66.7718, 46.018, 79.6495, 53.2232, 92.4215, 60.3486, 105.081, 67.3886, 117.625, 74.336, 130.052, 81.1826, 142.363, 87.9219, 154.56, 94.5519, 166.642, 101.075, 178.608, 107.498, 190.455, 113.825, 202.181, 120.058, 213.786, 126.189, 225.275, 132.203, 236.658, 138.071, 247.95, 143.761, 259.17, 149.232, 270.335, 154.437, 281.467, 159.313, 292.589, 163.817, 303.712)
+texture = ExtResource("2_pmk4g")
+texture_mode = 1
+script = ExtResource("2_8vldf")
+metadata/_custom_type_script = "uid://dfppmnngy2wx4"
+
+[node name="Rope4" type="Node2D" parent="."]
+position = Vector2(173, 52)
+script = ExtResource("1_8m3e7")
+num_segments = 25
+rope_length = 300.0
+wind_enabled = true
+wind = SubResource("RopeWindParameters_blftt")
+num_constraint_iterations = 20
+metadata/_custom_type_script = "uid://b2shq2gjd4fvt"
+
+[node name="RopeRendererLine2D" type="Line2D" parent="Rope4"]
+texture_repeat = 2
+points = PackedVector2Array(1.46507, 1.1862, 8.51575, 14.9216, 15.535, 28.6159, 22.5061, 42.2529, 29.4127, 55.8192, 36.2392, 69.3043, 42.9708, 82.7003, 49.5937, 96.0015, 56.0959, 109.204, 62.4678, 122.304, 68.7028, 135.299, 74.7986, 148.184, 80.7589, 160.956, 86.5934, 173.606, 92.3177, 186.127, 97.9503, 198.509, 103.51, 210.744, 109.013, 222.826, 114.467, 234.751, 119.87, 246.523, 125.205, 258.149, 130.444, 269.643, 135.546, 281.025, 140.456, 292.319, 145.11, 303.55, 149.443, 314.741)
+texture = ExtResource("2_pmk4g")
+texture_mode = 1
+script = ExtResource("2_8vldf")
+metadata/_custom_type_script = "uid://dfppmnngy2wx4"
+
+[node name="Rope5" type="Node2D" parent="."]
+position = Vector2(144, 52)
+script = ExtResource("1_8m3e7")
+num_segments = 25
+rope_length = 300.0
+wind_enabled = true
+wind = SubResource("RopeWindParameters_blftt")
+num_constraint_iterations = 20
+metadata/_custom_type_script = "uid://b2shq2gjd4fvt"
+
+[node name="RopeRendererLine2D" type="Line2D" parent="Rope5"]
+texture_repeat = 2
+points = PackedVector2Array(1.28893, 1.40763, 8.05994, 15.495, 14.797, 29.5406, 21.4799, 43.529, 28.0889, 57.4476, 34.6044, 71.2869, 41.0079, 85.0396, 47.2831, 98.7003, 53.4165, 112.265, 59.3979, 125.728, 65.221, 139.087, 70.8827, 152.337, 76.3842, 165.473, 81.7305, 178.489, 86.9315, 191.379, 92.0024, 204.135, 96.9633, 216.748, 101.838, 229.208, 106.653, 241.505, 111.43, 253.631, 116.189, 265.578, 120.934, 277.344, 125.645, 288.939, 130.262, 300.386, 134.707, 311.717, 138.91, 322.957)
+texture = ExtResource("2_pmk4g")
+texture_mode = 1
+script = ExtResource("2_8vldf")
+metadata/_custom_type_script = "uid://dfppmnngy2wx4"
+
+[node name="Rope6" type="Node2D" parent="."]
+position = Vector2(109, 53)
+script = ExtResource("1_8m3e7")
+num_segments = 25
+rope_length = 300.0
+wind_enabled = true
+wind = SubResource("RopeWindParameters_blftt")
+num_constraint_iterations = 20
+metadata/_custom_type_script = "uid://b2shq2gjd4fvt"
+
+[node name="RopeRendererLine2D" type="Line2D" parent="Rope6"]
+texture_repeat = 2
+points = PackedVector2Array(1.2614, 1.44225, 7.59312, 15.9845, 13.8956, 30.4806, 20.1512, 44.9127, 26.341, 59.2665, 32.4448, 73.5317, 38.4423, 87.7006, 44.3141, 101.768, 50.0425, 115.73, 55.6129, 129.584, 61.0149, 143.326, 66.2435, 156.951, 71.2995, 170.454, 76.1901, 183.828, 80.9273, 197.064, 85.5252, 210.155, 89.9995, 223.093, 94.3666, 235.871, 98.6466, 248.481, 102.865, 260.913, 107.053, 273.157, 111.249, 285.2, 115.488, 297.028, 119.797, 308.63, 124.184, 320.001, 128.643, 331.142)
+texture = ExtResource("2_pmk4g")
+texture_mode = 1
+script = ExtResource("2_8vldf")
+metadata/_custom_type_script = "uid://dfppmnngy2wx4"
+
+[node name="Rope7" type="Node2D" parent="."]
+position = Vector2(76, 52)
+script = ExtResource("1_8m3e7")
+num_segments = 25
+rope_length = 300.0
+wind_enabled = true
+wind = SubResource("RopeWindParameters_blftt")
+num_constraint_iterations = 20
+metadata/_custom_type_script = "uid://b2shq2gjd4fvt"
+
+[node name="RopeRendererLine2D" type="Line2D" parent="Rope7"]
+texture_repeat = 2
+points = PackedVector2Array(1.38924, 1.28152, 7.46099, 16.2305, 13.5009, 31.1321, 19.4905, 45.9676, 25.411, 60.7212, 31.2432, 75.3809, 36.9678, 89.9373, 42.5663, 104.383, 48.022, 118.713, 53.3215, 132.922, 58.4548, 147.006, 63.4163, 160.958, 68.2046, 174.773, 72.823, 188.445, 77.2797, 201.966, 81.5874, 215.328, 85.763, 228.523, 89.826, 241.543, 93.7964, 254.38, 97.6932, 267.026, 101.532, 279.475, 105.325, 291.725, 109.077, 303.772, 112.796, 315.613, 116.496, 327.245, 120.193, 338.661)
+texture = ExtResource("2_pmk4g")
+texture_mode = 1
+script = ExtResource("2_8vldf")
+metadata/_custom_type_script = "uid://dfppmnngy2wx4"
+
+[node name="Rope8" type="Node2D" parent="."]
+position = Vector2(34, 52)
+script = ExtResource("1_8m3e7")
+num_segments = 25
+rope_length = 300.0
+wind_enabled = true
+wind = SubResource("RopeWindParameters_blftt")
+num_constraint_iterations = 20
+metadata/_custom_type_script = "uid://b2shq2gjd4fvt"
+
+[node name="RopeRendererLine2D" type="Line2D" parent="Rope8"]
+texture_repeat = 2
+points = PackedVector2Array(1.39253, 1.27739, 7.16854, 16.5583, 12.9007, 31.7948, 18.5629, 46.9697, 24.1323, 62.068, 29.5891, 77.0761, 34.9168, 91.9823, 40.1021, 106.776, 45.1344, 121.449, 50.0058, 135.992, 54.7109, 150.399, 59.2472, 164.661, 63.6161, 178.773, 67.8229, 192.726, 71.8774, 206.513, 75.7939, 220.124, 79.5904, 233.552, 83.288, 246.788, 86.9102, 259.822, 90.4819, 272.647, 94.0286, 285.252, 97.5754, 297.631, 101.147, 309.775, 104.772, 321.674, 108.486, 333.315, 112.344, 344.678)
+texture = ExtResource("2_pmk4g")
+texture_mode = 1
+script = ExtResource("2_8vldf")
+metadata/_custom_type_script = "uid://dfppmnngy2wx4"
+
+[node name="Rope9" type="Node2D" parent="."]
+position = Vector2(530, 51)
+script = ExtResource("1_8m3e7")
+num_segments = 25
+rope_length = 300.0
+wind_enabled = true
+wind = SubResource("RopeWindParameters_blftt")
+num_constraint_iterations = 20
+metadata/_custom_type_script = "uid://b2shq2gjd4fvt"
+
+[node name="RopeRendererLine2D" type="Line2D" parent="Rope9"]
+texture_repeat = 2
+points = PackedVector2Array(2.00708, 0.504814, 8.74042, 14.2943, 15.4106, 28.0608, 21.9843, 41.7967, 28.4423, 55.4906, 34.7779, 69.1277, 40.9951, 82.6916, 47.1049, 96.1651, 53.1229, 109.532, 59.0676, 122.777, 64.9576, 135.886, 70.8097, 148.849, 76.6365, 161.655, 82.4453, 174.301, 88.2372, 186.784, 94.0068, 199.104, 99.7444, 211.265, 105.435, 223.274, 111.063, 235.136, 116.61, 246.859, 122.06, 258.451, 127.391, 269.92, 132.579, 281.277, 137.6, 292.532, 142.44, 303.689, 147.083, 314.755)
+texture = ExtResource("2_pmk4g")
+texture_mode = 1
+script = ExtResource("2_8vldf")
+metadata/_custom_type_script = "uid://dfppmnngy2wx4"
+
+[node name="Rope10" type="Node2D" parent="."]
+position = Vector2(495, 51)
+script = ExtResource("1_8m3e7")
+num_segments = 25
+rope_length = 300.0
+wind_enabled = true
+wind = SubResource("RopeWindParameters_blftt")
+num_constraint_iterations = 20
+metadata/_custom_type_script = "uid://b2shq2gjd4fvt"
+
+[node name="RopeRendererLine2D" type="Line2D" parent="Rope10"]
+texture_repeat = 2
+position = Vector2(-611, -39)
+points = PackedVector2Array(613.084, 39.4075, 619.523, 53.2592, 625.894, 67.0903, 632.16, 80.8949, 638.298, 94.6628, 644.298, 108.381, 650.161, 122.035, 655.892, 135.611, 661.499, 149.095, 666.996, 162.476, 672.4, 175.74, 677.726, 188.878, 682.991, 201.881, 688.204, 214.742, 693.367, 227.459, 698.474, 240.034, 703.513, 252.47, 708.467, 264.773, 713.324, 276.947, 718.076, 288.994, 722.72, 300.915, 727.251, 312.71, 731.659, 324.382, 735.932, 335.935, 740.061, 347.371, 744.032, 358.695)
+texture = ExtResource("2_pmk4g")
+texture_mode = 1
+script = ExtResource("2_8vldf")
+metadata/_custom_type_script = "uid://dfppmnngy2wx4"
+
+[node name="Rope11" type="Node2D" parent="."]
+position = Vector2(465, 51)
+script = ExtResource("1_8m3e7")
+num_segments = 25
+rope_length = 300.0
+wind_enabled = true
+wind = SubResource("RopeWindParameters_blftt")
+num_constraint_iterations = 20
+metadata/_custom_type_script = "uid://b2shq2gjd4fvt"
+
+[node name="RopeRendererLine2D" type="Line2D" parent="Rope11"]
+texture_repeat = 2
+points = PackedVector2Array(1.86465, 0.683857, 7.93536, 14.6291, 13.9357, 28.5539, 19.827, 42.4528, 25.5859, 56.3158, 31.2028, 70.1301, 36.6779, 83.8813, 42.0163, 97.556, 47.2245, 111.143, 52.3092, 124.632, 57.277, 138.015, 62.1349, 151.286, 66.8904, 164.44, 71.5493, 177.471, 76.1132, 190.378, 80.5786, 203.161, 84.9382, 215.82, 89.1824, 228.357, 93.3044, 240.775, 97.3022, 253.072, 101.18, 265.245, 104.948, 277.291, 108.615, 289.205, 112.17, 300.992, 115.553, 312.667, 118.646, 324.261)
+texture = ExtResource("2_pmk4g")
+texture_mode = 1
+script = ExtResource("2_8vldf")
+metadata/_custom_type_script = "uid://dfppmnngy2wx4"
+
+[node name="Rope12" type="Node2D" parent="."]
+position = Vector2(433, 51)
+script = ExtResource("1_8m3e7")
+num_segments = 25
+rope_length = 300.0
+wind_enabled = true
+wind = SubResource("RopeWindParameters_blftt")
+num_constraint_iterations = 20
+metadata/_custom_type_script = "uid://b2shq2gjd4fvt"
+
+[node name="RopeRendererLine2D" type="Line2D" parent="Rope12"]
+texture_repeat = 2
+points = PackedVector2Array(1.6673, 0.931942, 7.44482, 14.9569, 13.1643, 28.955, 18.7915, 42.9182, 24.3008, 56.8374, 29.6748, 70.7027, 34.9022, 84.5045, 39.9768, 98.2338, 44.8969, 111.882, 49.666, 125.441, 54.2938, 138.901, 58.7946, 152.254, 63.1843, 165.491, 67.4753, 178.606, 71.6732, 191.596, 75.7766, 204.461, 79.7795, 217.2, 83.6755, 229.816, 87.4583, 242.31, 91.1231, 254.683, 94.6648, 266.934, 98.0816, 279.065, 101.376, 291.074, 104.555, 302.957, 107.618, 314.716, 110.523, 326.359)
+texture = ExtResource("2_pmk4g")
+texture_mode = 1
+script = ExtResource("2_8vldf")
+metadata/_custom_type_script = "uid://dfppmnngy2wx4"
+
+[node name="Rope13" type="Node2D" parent="."]
+position = Vector2(404, 51)
+script = ExtResource("1_8m3e7")
+num_segments = 25
+rope_length = 300.0
+wind_enabled = true
+wind = SubResource("RopeWindParameters_blftt")
+num_constraint_iterations = 20
+metadata/_custom_type_script = "uid://b2shq2gjd4fvt"
+
+[node name="RopeRendererLine2D" type="Line2D" parent="Rope13"]
+texture_repeat = 2
+points = PackedVector2Array(1.55298, 1.07568, 7.1347, 15.2102, 12.666, 29.3129, 18.1154, 43.3739, 23.457, 57.3834, 28.6698, 71.3326, 33.7387, 85.213, 38.6544, 99.0163, 43.4138, 112.734, 48.0208, 126.359, 52.4856, 139.88, 56.8228, 153.29, 61.0498, 166.579, 65.1829, 179.741, 69.2349, 192.771, 73.2131, 205.666, 77.1193, 218.425, 80.9529, 231.049, 84.7162, 243.537, 88.4179, 255.887, 92.0735, 268.095, 95.6968, 280.157, 99.2824, 292.075, 102.789, 303.861, 106.147, 315.536, 109.277, 327.121)
+texture = ExtResource("2_pmk4g")
+texture_mode = 1
+script = ExtResource("2_8vldf")
+metadata/_custom_type_script = "uid://dfppmnngy2wx4"
+
+[node name="Rope14" type="Node2D" parent="."]
+position = Vector2(369, 52)
+script = ExtResource("1_8m3e7")
+num_segments = 25
+rope_length = 300.0
+wind_enabled = true
+wind = SubResource("RopeWindParameters_blftt")
+num_constraint_iterations = 20
+metadata/_custom_type_script = "uid://b2shq2gjd4fvt"
+
+[node name="RopeRendererLine2D" type="Line2D" parent="Rope14"]
+texture_repeat = 2
+points = PackedVector2Array(1.45056, 1.20442, 7.73627, 15.1261, 13.9978, 29.0038, 20.2234, 42.8194, 26.4013, 56.5575, 32.5197, 70.2062, 38.5663, 83.757, 44.529, 97.2037, 50.3985, 110.542, 56.1693, 123.767, 61.8419, 136.874, 67.423, 149.856, 72.9258, 162.706, 78.369, 175.414, 83.7741, 187.97, 89.1602, 200.366, 94.5386, 212.597, 99.9117, 224.663, 105.276, 236.565, 110.631, 248.304, 115.982, 259.878, 121.343, 271.281, 126.729, 282.505, 132.139, 293.551, 137.522, 304.444, 142.797, 315.223)
+texture = ExtResource("2_pmk4g")
+texture_mode = 1
+script = ExtResource("2_8vldf")
+metadata/_custom_type_script = "uid://dfppmnngy2wx4"
+
+[node name="Rope15" type="Node2D" parent="."]
+position = Vector2(336, 51)
+script = ExtResource("1_8m3e7")
+num_segments = 25
+rope_length = 300.0
+wind_enabled = true
+wind = SubResource("RopeWindParameters_blftt")
+num_constraint_iterations = 20
+metadata/_custom_type_script = "uid://b2shq2gjd4fvt"
+
+[node name="RopeRendererLine2D" type="Line2D" parent="Rope15"]
+texture_repeat = 2
+points = PackedVector2Array(1.43692, 1.22159, 8.849, 14.4406, 16.2597, 27.603, 23.6741, 40.6813, 31.0933, 53.6536, 38.513, 66.5046, 45.9232, 79.2255, 53.3086, 91.8138, 60.6517, 104.271, 67.936, 116.601, 75.1491, 128.806, 82.2856, 140.887, 89.3481, 152.841, 96.3485, 164.66, 103.307, 176.331, 110.25, 187.839, 117.204, 199.169, 124.183, 210.311, 131.187, 221.265, 138.204, 232.039, 145.215, 242.644, 152.212, 253.086, 159.199, 263.363, 166.201, 273.456, 173.247, 283.345, 180.324, 293.036)
+texture = ExtResource("2_pmk4g")
+texture_mode = 1
+script = ExtResource("2_8vldf")
+metadata/_custom_type_script = "uid://dfppmnngy2wx4"
+
+[node name="Rope16" type="Node2D" parent="."]
+position = Vector2(294, 51)
+script = ExtResource("1_8m3e7")
+num_segments = 25
+rope_length = 300.0
+wind_enabled = true
+wind = SubResource("RopeWindParameters_blftt")
+num_constraint_iterations = 20
+metadata/_custom_type_script = "uid://b2shq2gjd4fvt"
+
+[node name="RopeRendererLine2D" type="Line2D" parent="Rope16"]
+texture_repeat = 2
+points = PackedVector2Array(1.49185, 1.15254, 9.23303, 14.3263, 16.9647, 27.446, 24.6882, 40.4852, 32.4043, 53.4212, 40.1133, 66.2355, 47.8126, 78.9141, 55.4966, 91.4485, 63.1553, 103.836, 70.7746, 116.077, 78.3378, 128.179, 85.8283, 140.148, 93.2329, 151.991, 100.545, 163.71, 107.765, 175.305, 114.904, 186.77, 121.978, 198.095, 129.007, 209.267, 136.012, 220.275, 143.01, 231.107, 150.009, 241.76, 157.014, 252.228, 164.033, 262.507, 171.071, 272.591, 178.129, 282.48, 185.224, 292.157)
+texture = ExtResource("2_pmk4g")
+texture_mode = 1
+script = ExtResource("2_8vldf")
+metadata/_custom_type_script = "uid://dfppmnngy2wx4"
+
+[node name="Rope17" type="Node2D" parent="."]
+position = Vector2(793, 53)
+script = ExtResource("1_8m3e7")
+num_segments = 25
+rope_length = 300.0
+wind_enabled = true
+wind = SubResource("RopeWindParameters_blftt")
+num_constraint_iterations = 20
+metadata/_custom_type_script = "uid://b2shq2gjd4fvt"
+
+[node name="RopeRendererLine2D" type="Line2D" parent="Rope17"]
+texture_repeat = 2
+points = PackedVector2Array(1.58813, 1.0315, 9.28705, 14.5329, 16.956, 27.9921, 24.5829, 41.3905, 32.1599, 54.7102, 39.6838, 67.9338, 47.1567, 81.0449, 54.5836, 94.0278, 61.9726, 106.868, 69.3328, 119.552, 76.6735, 132.07, 84.002, 144.411, 91.3237, 156.57, 98.6409, 168.542, 105.953, 180.325, 113.258, 191.918, 120.551, 203.322, 127.828, 214.538, 135.082, 225.567, 142.309, 236.411, 149.497, 247.077, 156.632, 257.571, 163.697, 267.905, 170.676, 278.088, 177.545, 288.138, 184.278, 298.071)
+texture = ExtResource("2_pmk4g")
+texture_mode = 1
+script = ExtResource("2_8vldf")
+metadata/_custom_type_script = "uid://dfppmnngy2wx4"
+
+[node name="Rope18" type="Node2D" parent="."]
+position = Vector2(758, 53)
+script = ExtResource("1_8m3e7")
+num_segments = 25
+rope_length = 300.0
+wind_enabled = true
+wind = SubResource("RopeWindParameters_blftt")
+num_constraint_iterations = 20
+metadata/_custom_type_script = "uid://b2shq2gjd4fvt"
+
+[node name="RopeRendererLine2D" type="Line2D" parent="Rope18"]
+texture_repeat = 2
+points = PackedVector2Array(1.57098, 1.05302, 9.51624, 14.3319, 17.4313, 27.5703, 25.3014, 40.7518, 33.1132, 53.8624, 40.8555, 66.8899, 48.5209, 79.8234, 56.1057, 92.6524, 63.6111, 105.367, 71.0436, 117.954, 78.412, 130.405, 85.7266, 142.708, 92.996, 154.855, 100.225, 166.84, 107.414, 178.661, 114.561, 190.318, 121.661, 201.812, 128.711, 213.144, 135.709, 224.312, 142.654, 235.316, 149.543, 246.158, 156.373, 256.838, 163.138, 267.359, 169.82, 277.731, 176.375, 287.984, 182.731, 298.163)
+texture = ExtResource("2_pmk4g")
+texture_mode = 1
+script = ExtResource("2_8vldf")
+metadata/_custom_type_script = "uid://dfppmnngy2wx4"
+
+[node name="Rope19" type="Node2D" parent="."]
+position = Vector2(728, 53)
+script = ExtResource("1_8m3e7")
+num_segments = 25
+rope_length = 300.0
+wind_enabled = true
+wind = SubResource("RopeWindParameters_blftt")
+num_constraint_iterations = 20
+metadata/_custom_type_script = "uid://b2shq2gjd4fvt"
+
+[node name="RopeRendererLine2D" type="Line2D" parent="Rope19"]
+texture_repeat = 2
+points = PackedVector2Array(1.51917, 1.11819, 9.90485, 13.9939, 18.2734, 26.8224, 26.6177, 39.5832, 34.9268, 52.2615, 43.1871, 64.8477, 51.3831, 77.3371, 59.4996, 89.7272, 67.5242, 102.017, 75.4489, 114.204, 83.2712, 126.285, 90.9933, 138.253, 98.6199, 150.102, 106.156, 161.828, 113.605, 173.425, 120.967, 184.891, 128.242, 196.225, 135.43, 207.426, 142.535, 218.49, 149.566, 229.408, 156.536, 240.171, 163.452, 250.775, 170.313, 261.218, 177.117, 271.501, 183.863, 281.625, 190.524, 291.606)
+texture = ExtResource("2_pmk4g")
+texture_mode = 1
+script = ExtResource("2_8vldf")
+metadata/_custom_type_script = "uid://dfppmnngy2wx4"
+
+[node name="Rope20" type="Node2D" parent="."]
+position = Vector2(696, 53)
+script = ExtResource("1_8m3e7")
+num_segments = 25
+rope_length = 300.0
+wind_enabled = true
+wind = SubResource("RopeWindParameters_blftt")
+num_constraint_iterations = 20
+metadata/_custom_type_script = "uid://b2shq2gjd4fvt"
+
+[node name="RopeRendererLine2D" type="Line2D" parent="Rope20"]
+texture_repeat = 2
+points = PackedVector2Array(1.63916, 0.967358, 10.1765, 13.7413, 18.6964, 26.4681, 27.1919, 39.1268, 35.6535, 51.7021, 44.0688, 64.1838, 52.4229, 76.567, 60.6993, 88.8506, 68.8817, 101.036, 76.9548, 113.127, 84.907, 125.125, 92.7303, 137.031, 100.421, 148.844, 107.977, 160.562, 115.4, 172.183, 122.691, 183.702, 129.853, 195.115, 136.894, 206.417, 143.827, 217.596, 150.672, 228.639, 157.456, 239.527, 164.207, 250.241, 170.944, 260.768, 177.666, 271.108, 184.347, 281.275, 190.958, 291.29)
+texture = ExtResource("2_pmk4g")
+texture_mode = 1
+script = ExtResource("2_8vldf")
+metadata/_custom_type_script = "uid://dfppmnngy2wx4"
+
+[node name="Rope21" type="Node2D" parent="."]
+position = Vector2(667, 53)
+script = ExtResource("1_8m3e7")
+num_segments = 25
+rope_length = 300.0
+wind_enabled = true
+wind = SubResource("RopeWindParameters_blftt")
+num_constraint_iterations = 20
+metadata/_custom_type_script = "uid://b2shq2gjd4fvt"
+
+[node name="RopeRendererLine2D" type="Line2D" parent="Rope21"]
+texture_repeat = 2
+points = PackedVector2Array(1.76373, 0.810757, 9.92883, 13.8548, 18.0649, 26.8587, 26.1592, 39.8053, 34.2002, 52.6799, 42.1783, 65.4703, 50.0844, 78.1671, 57.9102, 90.7635, 65.6487, 103.255, 73.2939, 115.637, 80.8411, 127.908, 88.2865, 140.065, 95.6274, 152.109, 102.862, 164.036, 109.987, 175.848, 116.999, 187.544, 123.894, 199.125, 130.665, 210.593, 137.311, 221.947, 143.838, 233.182, 150.26, 244.289, 156.605, 255.25, 162.903, 266.046, 169.187, 276.658, 175.483, 287.068, 181.821, 297.258)
+texture = ExtResource("2_pmk4g")
+texture_mode = 1
+script = ExtResource("2_8vldf")
+metadata/_custom_type_script = "uid://dfppmnngy2wx4"
+
+[node name="Rope22" type="Node2D" parent="."]
+position = Vector2(632, 54)
+script = ExtResource("1_8m3e7")
+num_segments = 25
+rope_length = 300.0
+wind_enabled = true
+wind = SubResource("RopeWindParameters_blftt")
+num_constraint_iterations = 20
+metadata/_custom_type_script = "uid://b2shq2gjd4fvt"
+
+[node name="RopeRendererLine2D" type="Line2D" parent="Rope22"]
+texture_repeat = 2
+points = PackedVector2Array(1.88727, 0.655445, 9.63342, 14.0866, 17.3375, 27.4832, 24.9798, 40.8314, 32.5482, 54.1158, 40.0371, 67.3207, 47.4465, 80.4305, 54.7795, 93.4312, 62.0413, 106.31, 69.2372, 119.055, 76.3735, 131.658, 83.4565, 144.111, 90.493, 156.406, 97.4903, 168.537, 104.456, 180.497, 111.399, 192.279, 118.328, 203.877, 125.247, 215.286, 132.163, 226.502, 139.079, 237.52, 146.006, 248.332, 152.963, 258.925, 159.967, 269.284, 167.027, 279.4, 174.151, 289.265, 181.379, 298.843)
+texture = ExtResource("2_pmk4g")
+texture_mode = 1
+script = ExtResource("2_8vldf")
+metadata/_custom_type_script = "uid://dfppmnngy2wx4"
+
+[node name="Rope23" type="Node2D" parent="."]
+position = Vector2(599, 53)
+script = ExtResource("1_8m3e7")
+num_segments = 25
+rope_length = 300.0
+wind_enabled = true
+wind = SubResource("RopeWindParameters_blftt")
+num_constraint_iterations = 20
+metadata/_custom_type_script = "uid://b2shq2gjd4fvt"
+
+[node name="RopeRendererLine2D" type="Line2D" parent="Rope23"]
+texture_repeat = 2
+points = PackedVector2Array(1.99829, 0.515823, 9.32117, 14.1187, 16.5924, 27.6923, 23.787, 41.2253, 30.8903, 54.7038, 37.8978, 68.1117, 44.8116, 81.4324, 51.639, 94.6499, 58.3893, 107.75, 65.0738, 120.718, 71.7053, 133.543, 78.2979, 146.213, 84.868, 158.716, 91.4315, 171.041, 98.0013, 183.179, 104.584, 195.125, 111.181, 206.877, 117.788, 218.434, 124.409, 229.793, 131.06, 240.945, 137.77, 251.868, 144.579, 262.535, 151.521, 272.92, 158.606, 283.007, 165.827, 292.796, 173.179, 302.279)
+texture = ExtResource("2_pmk4g")
+texture_mode = 1
+script = ExtResource("2_8vldf")
+metadata/_custom_type_script = "uid://dfppmnngy2wx4"
+
+[node name="Rope24" type="Node2D" parent="."]
+position = Vector2(557, 53)
+script = ExtResource("1_8m3e7")
+num_segments = 25
+rope_length = 300.0
+wind_enabled = true
+wind = SubResource("RopeWindParameters_blftt")
+num_constraint_iterations = 20
+metadata/_custom_type_script = "uid://b2shq2gjd4fvt"
+
+[node name="RopeRendererLine2D" type="Line2D" parent="Rope24"]
+texture_repeat = 2
+points = PackedVector2Array(1.96478, 0.557972, 8.85522, 14.3126, 15.6917, 28.0393, 22.446, 41.7279, 29.1004, 55.3661, 35.647, 68.9399, 42.0859, 82.434, 48.4249, 95.8329, 54.6763, 109.121, 60.857, 122.283, 66.9849, 135.306, 73.0764, 148.177, 79.145, 160.887, 85.2006, 173.429, 91.2504, 185.799, 97.2981, 197.993, 103.342, 210.01, 109.373, 221.854, 115.375, 233.533, 121.323, 245.058, 127.194, 256.442, 132.969, 267.695, 138.643, 278.816, 144.233, 289.8, 149.769, 300.629, 155.292, 311.282)
+texture = ExtResource("2_pmk4g")
+texture_mode = 1
+script = ExtResource("2_8vldf")
+metadata/_custom_type_script = "uid://dfppmnngy2wx4"
+
+[node name="Rope25" type="Node2D" parent="."]
+position = Vector2(1053, 52)
+script = ExtResource("1_8m3e7")
+num_segments = 25
+rope_length = 300.0
+wind_enabled = true
+wind = SubResource("RopeWindParameters_blftt")
+num_constraint_iterations = 20
+metadata/_custom_type_script = "uid://b2shq2gjd4fvt"
+
+[node name="RopeRendererLine2D" type="Line2D" parent="Rope25"]
+texture_repeat = 2
+points = PackedVector2Array(1.10767, 1.63548, 10.2926, 13.3901, 19.531, 25.0383, 28.8676, 36.5151, 38.335, 47.7668, 47.9548, 58.75, 57.7401, 69.4291, 67.6997, 79.7737, 77.8412, 89.7545, 88.173, 99.3416, 98.7043, 108.502, 109.445, 117.2, 120.4, 125.4, 131.569, 133.069, 142.943, 140.182, 154.502, 146.724, 166.22, 152.694, 178.069, 158.093, 190.022, 162.918, 202.062, 167.149, 214.171, 170.749, 226.327, 173.684, 238.498, 175.94, 250.644, 177.552, 262.725, 178.596, 274.711, 179.18)
+texture = ExtResource("2_pmk4g")
+texture_mode = 1
+script = ExtResource("2_8vldf")
+metadata/_custom_type_script = "uid://dfppmnngy2wx4"
+
+[node name="Rope26" type="Node2D" parent="."]
+position = Vector2(1018, 52)
+script = ExtResource("1_8m3e7")
+num_segments = 25
+rope_length = 300.0
+wind_enabled = true
+wind = SubResource("RopeWindParameters_blftt")
+num_constraint_iterations = 20
+metadata/_custom_type_script = "uid://b2shq2gjd4fvt"
+
+[node name="RopeRendererLine2D" type="Line2D" parent="Rope26"]
+texture_repeat = 2
+position = Vector2(-611, -39)
+points = PackedVector2Array(612.07, 40.6823, 620.81, 53.0515, 629.598, 65.3185, 638.477, 77.4235, 647.477, 89.3172, 656.617, 100.959, 665.911, 112.314, 675.375, 123.349, 685.021, 134.031, 694.866, 144.326, 704.928, 154.195, 715.219, 163.6, 725.748, 172.505, 736.518, 180.874, 747.529, 188.669, 758.775, 195.853, 770.246, 202.386, 781.925, 208.23, 793.786, 213.354, 805.795, 217.737, 817.913, 221.362, 830.102, 224.207, 842.321, 226.231, 854.522, 227.384, 866.647, 227.628, 878.63, 226.99)
+texture = ExtResource("2_pmk4g")
+texture_mode = 1
+script = ExtResource("2_8vldf")
+metadata/_custom_type_script = "uid://dfppmnngy2wx4"
+
+[node name="Rope27" type="Node2D" parent="."]
+position = Vector2(988, 52)
+script = ExtResource("1_8m3e7")
+num_segments = 25
+rope_length = 300.0
+wind_enabled = true
+wind = SubResource("RopeWindParameters_blftt")
+num_constraint_iterations = 20
+metadata/_custom_type_script = "uid://b2shq2gjd4fvt"
+
+[node name="RopeRendererLine2D" type="Line2D" parent="Rope27"]
+texture_repeat = 2
+points = PackedVector2Array(1.12555, 1.61306, 9.54816, 14.3936, 18.014, 27.0776, 26.5609, 39.6093, 35.218, 51.9414, 44.006, 64.0341, 52.9406, 75.8533, 62.0358, 87.3674, 71.3076, 98.5444, 80.7748, 109.35, 90.4583, 119.745, 100.378, 129.69, 110.549, 139.145, 120.978, 148.072, 131.662, 156.439, 142.594, 164.217, 153.762, 171.372, 165.153, 177.867, 176.753, 183.662, 188.539, 188.708, 200.483, 192.963, 212.547, 196.385, 224.683, 198.945, 236.834, 200.629, 248.94, 201.437, 260.94, 201.354)
+texture = ExtResource("2_pmk4g")
+texture_mode = 1
+script = ExtResource("2_8vldf")
+metadata/_custom_type_script = "uid://dfppmnngy2wx4"
+
+[node name="Rope28" type="Node2D" parent="."]
+position = Vector2(956, 52)
+script = ExtResource("1_8m3e7")
+num_segments = 25
+rope_length = 300.0
+wind_enabled = true
+wind = SubResource("RopeWindParameters_blftt")
+num_constraint_iterations = 20
+metadata/_custom_type_script = "uid://b2shq2gjd4fvt"
+
+[node name="RopeRendererLine2D" type="Line2D" parent="Rope28"]
+texture_repeat = 2
+points = PackedVector2Array(1.20599, 1.51188, 9.24493, 14.7259, 17.3152, 27.8535, 25.4484, 40.8456, 33.671, 53.659, 42.0045, 66.2559, 50.4658, 78.604, 59.0679, 90.6754, 67.8215, 102.445, 76.7373, 113.89, 85.8276, 124.985, 95.1075, 135.702, 104.596, 146.008, 114.313, 155.864, 124.278, 165.231, 134.501, 174.064, 144.987, 182.328, 155.726, 189.988, 166.703, 197.018, 177.897, 203.392, 189.284, 209.082, 200.837, 214.062, 212.524, 218.306, 224.305, 221.802, 236.137, 224.532, 247.988, 226.418)
+texture = ExtResource("2_pmk4g")
+texture_mode = 1
+script = ExtResource("2_8vldf")
+metadata/_custom_type_script = "uid://dfppmnngy2wx4"
+
+[node name="Rope29" type="Node2D" parent="."]
+position = Vector2(927, 52)
+script = ExtResource("1_8m3e7")
+num_segments = 25
+rope_length = 300.0
+wind_enabled = true
+wind = SubResource("RopeWindParameters_blftt")
+num_constraint_iterations = 20
+metadata/_custom_type_script = "uid://b2shq2gjd4fvt"
+
+[node name="RopeRendererLine2D" type="Line2D" parent="Rope29"]
+texture_repeat = 2
+points = PackedVector2Array(1.2215, 1.49239, 8.97601, 14.9545, 16.7568, 28.336, 24.5906, 41.5929, 32.4992, 54.6867, 40.4999, 67.5845, 48.6063, 80.2584, 56.8285, 92.6849, 65.174, 104.844, 73.6486, 116.72, 82.2573, 128.295, 91.0073, 139.555, 99.9094, 150.48, 108.979, 161.045, 118.237, 171.22, 127.703, 180.971, 137.393, 190.26, 147.319, 199.052, 157.481, 207.316, 167.869, 215.027, 178.467, 222.167, 189.248, 228.732, 200.177, 234.726, 211.221, 240.164, 222.348, 245.055, 233.542, 249.379)
+texture = ExtResource("2_pmk4g")
+texture_mode = 1
+script = ExtResource("2_8vldf")
+metadata/_custom_type_script = "uid://dfppmnngy2wx4"
+
+[node name="Rope30" type="Node2D" parent="."]
+position = Vector2(892, 53)
+script = ExtResource("1_8m3e7")
+num_segments = 25
+rope_length = 300.0
+wind_enabled = true
+wind = SubResource("RopeWindParameters_blftt")
+num_constraint_iterations = 20
+metadata/_custom_type_script = "uid://b2shq2gjd4fvt"
+
+[node name="RopeRendererLine2D" type="Line2D" parent="Rope30"]
+texture_repeat = 2
+points = PackedVector2Array(1.38727, 1.284, 9.24445, 14.7074, 17.1166, 28.0583, 25.022, 41.2984, 32.9752, 54.3944, 40.9874, 67.3184, 49.0665, 80.0475, 57.2179, 92.5631, 65.4445, 104.851, 73.7469, 116.899, 82.1259, 128.7, 90.5823, 140.244, 99.1193, 151.522, 107.743, 162.524, 116.462, 173.235, 125.29, 183.639, 134.243, 193.712, 143.341, 203.428, 152.603, 212.752, 162.048, 221.65, 171.694, 230.082, 181.556, 238, 191.638, 245.362, 201.933, 252.133, 212.414, 258.301, 223.035, 263.887)
+texture = ExtResource("2_pmk4g")
+texture_mode = 1
+script = ExtResource("2_8vldf")
+metadata/_custom_type_script = "uid://dfppmnngy2wx4"
+
+[node name="Rope31" type="Node2D" parent="."]
+position = Vector2(859, 52)
+script = ExtResource("1_8m3e7")
+num_segments = 25
+rope_length = 300.0
+wind_enabled = true
+wind = SubResource("RopeWindParameters_blftt")
+num_constraint_iterations = 20
+metadata/_custom_type_script = "uid://b2shq2gjd4fvt"
+
+[node name="RopeRendererLine2D" type="Line2D" parent="Rope31"]
+texture_repeat = 2
+points = PackedVector2Array(1.54083, 1.09096, 9.30957, 14.6332, 17.0751, 28.1152, 24.8439, 41.5063, 32.6223, 54.7793, 40.4171, 67.9101, 48.235, 80.8781, 56.0819, 93.666, 63.9621, 106.26, 71.8779, 118.65, 79.8303, 130.828, 87.8195, 142.789, 95.8467, 154.527, 103.914, 166.037, 112.021, 177.313, 120.169, 188.353, 128.356, 199.153, 136.58, 209.711, 144.843, 220.02, 153.155, 230.066, 161.538, 239.827, 170.021, 249.268, 178.649, 258.34, 187.472, 266.975, 196.533, 275.103, 205.845, 282.672)
+texture = ExtResource("2_pmk4g")
+texture_mode = 1
+script = ExtResource("2_8vldf")
+metadata/_custom_type_script = "uid://dfppmnngy2wx4"
+
+[node name="Rope32" type="Node2D" parent="."]
+position = Vector2(817, 52)
+script = ExtResource("1_8m3e7")
+num_segments = 25
+rope_length = 300.0
+wind_enabled = true
+wind = SubResource("RopeWindParameters_blftt")
+num_constraint_iterations = 20
+metadata/_custom_type_script = "uid://b2shq2gjd4fvt"
+
+[node name="RopeRendererLine2D" type="Line2D" parent="Rope32"]
+texture_repeat = 2
+points = PackedVector2Array(1.66034, 0.940708, 9.24506, 14.5862, 16.808, 28.1835, 24.3436, 41.7098, 31.8504, 55.1431, 39.3312, 68.4626, 46.791, 81.6494, 54.2368, 94.6867, 61.6765, 107.56, 69.1179, 120.255, 76.5673, 132.764, 84.0292, 145.079, 91.5054, 157.193, 98.995, 169.105, 106.495, 180.814, 114.001, 192.319, 121.504, 203.625, 128.99, 214.736, 136.443, 225.664, 143.841, 236.42, 151.17, 247.012, 158.424, 257.443, 165.611, 267.707, 172.736, 277.799, 179.804, 287.714, 186.83, 297.442)
+texture = ExtResource("2_pmk4g")
+texture_mode = 1
+script = ExtResource("2_8vldf")
+metadata/_custom_type_script = "uid://dfppmnngy2wx4"

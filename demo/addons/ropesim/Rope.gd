@@ -30,6 +30,8 @@ signal on_point_count_changed()
 ## significantly by providing more segments at the beginning and less segments to the end.
 @export var segment_length_distribution: Curve: set = _set_seg_dist
 
+@export_group("Forces")
+
 ## Stiffness forces the rope to return to its resting position.
 ## The resting direction is downwards and affected by the the node's rotation.
 ## Might not produce 100% realistic results with fixed points.
@@ -40,6 +42,9 @@ signal on_point_count_changed()
 
 ## Gravity direction. Will not be normalized.
 @export var gravity_direction: Vector2 = Vector2.DOWN
+
+## Optional parameters for wind simulation.
+@export var wind: RopeWindParameters
 
 ## Dampens the velocity of the rope.
 @export var damping: float = 0

@@ -1,8 +1,9 @@
 #pragma once
 
-#include "godot_cpp/classes/curve.hpp"
-#include "godot_cpp/classes/node2d.hpp"
-#include "godot_cpp/classes/physics_shape_query_parameters2d.hpp"
+#include "RopeWindParameters.hpp"
+#include <godot_cpp/classes/curve.hpp>
+#include <godot_cpp/classes/node2d.hpp>
+#include <godot_cpp/classes/physics_shape_query_parameters2d.hpp>
 
 namespace godot {
 
@@ -20,6 +21,7 @@ public:
 
 protected:
     void _simulate_velocities(double delta);
+    void _simulate_wind(PackedVector2Array* velocities) const;
     void _simulate_stiffness(PackedVector2Array* velocities) const;
     void _resolve_collisions(double delta, bool disable_contact_reporting);
     void _constraint(double delta);
@@ -39,6 +41,7 @@ public:
     PackedFloat32Array simulation_weights;
     float gravity = 0.0;
     Vector2 gravity_direction;
+    Ref<RopeWindParameters> wind;
     float damping = 0.0;
     Ref<Curve> damping_curve;
     float stiffness = 0.0;

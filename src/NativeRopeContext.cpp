@@ -1,10 +1,8 @@
 #include "NativeRopeContext.hpp"
-#include "godot_cpp/classes/physics_direct_space_state2d.hpp"
-#include "godot_cpp/classes/physics_server2d.hpp"
-#include "godot_cpp/classes/physics_shape_query_parameters2d.hpp"
-#include "godot_cpp/classes/world2d.hpp"
-#include <godot_cpp/classes/window.hpp>
-#include <godot_cpp/variant/utility_functions.hpp>
+#include <godot_cpp/classes/physics_direct_space_state2d.hpp>
+#include <godot_cpp/classes/physics_server2d.hpp>
+#include <godot_cpp/classes/world2d.hpp>
+#include <godot_cpp/classes/time.hpp>
 
 using namespace godot;
 
@@ -53,6 +51,7 @@ void NativeRopeContext::load_context(Node2D* rope)
     damping_curve = rope->get("damping_curve");
     gravity = rope->get("gravity");
     gravity_direction = rope->get("gravity_direction");
+    wind = rope->get("wind");
     damping = rope->get("damping");
     stiffness = rope->get("stiffness");
     max_endpoint_distance = rope->get("max_endpoint_distance");
@@ -123,7 +122,7 @@ void NativeRopeContext::_simulate_velocities(double delta)
     for (int i = first_idx; i < size; ++i)
         velocities[i] = points[i] - oldpoints[i];
 
-    // Stiffness
+    _simulate_wind(&velocities);
     _simulate_stiffness(&velocities);
 
     // Apply velocity and damping
@@ -142,6 +141,23 @@ void NativeRopeContext::_simulate_velocities(double delta)
     }
 
     std::swap(oldpoints, points);
+}
+
+void NativeRopeContext::_simulate_wind(PackedVector2Array* velocities) const
+{
+    if (wind.is_null() || !wind->get_enable_wind() || wind->get_noise().is_null())
+        return;
+
+    const float time = (float)Time::get_singleton()->get_ticks_msec();
+    const Vector2 wind_velocity = wind->get_direction_vector() * wind->get_wind_strength();
+    const Vector2 orth_strength = wind->get_direction_vector().orthogonal() *  wind->get_oscillation_strength();
+
+    for (int i = 0; i < points.size(); ++i)
+    {
+        const float noise = wind->get_noise()->get_noise_3d(points[i].x, points[i].y, time);
+        const Vector2 noise_velocity = orth_strength * noise;
+        (*velocities)[i] += wind_velocity + noise_velocity;
+    }
 }
 
 void NativeRopeContext::_simulate_stiffness(PackedVector2Array* velocities) const
