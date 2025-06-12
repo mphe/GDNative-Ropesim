@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="NativeRopeServer" inherits="Object" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="get_computation_time" qualifiers="const">
+			<return type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="get_num_ropes" qualifiers="const">
+			<return type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="register_rope">
+			<return type="void" />
+			<param index="0" name="rope" type="Node2D" />
+			<description>
+			</description>
+		</method>
+		<method name="unregister_rope">
+			<return type="void" />
+			<param index="0" name="rope" type="Node2D" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="update_in_editor" type="bool" setter="set_update_in_editor" getter="get_update_in_editor" default="false">
+		</member>
+	</members>
+	<signals>
+		<signal name="on_post_post_update">
+			<description>
+			</description>
+		</signal>
+		<signal name="on_post_update">
+			<description>
+			</description>
+		</signal>
+		<signal name="on_pre_pre_update">
+			<description>
+			</description>
+		</signal>
+		<signal name="on_pre_update">
+			<description>
+			</description>
+		</signal>
+	</signals>
+</class>

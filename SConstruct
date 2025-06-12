@@ -26,7 +26,8 @@ opts.Update(env)
 # - CPPDEFINES are for pre-processor defines
 # - LINKFLAGS are for linking flags
 
-env.Append(CCFLAGS="-fdiagnostics-color")
+if os.name == "posix":
+    env.Append(CCFLAGS="-fdiagnostics-color")
 
 
 scons_cache_path = os.environ.get("SCONS_CACHE")
@@ -40,6 +41,13 @@ if scons_cache_path:
 env.Append(CPPPATH=["src/"])
 sources = Glob("src/*.cpp")
 
+# Docs
+if env["target"] in ["editor", "template_debug"]:
+    try:
+        doc_data = env.GodotCPPDocData("src/gen/doc_data.gen.cpp", source=Glob("doc_classes/*.xml"))
+        sources.append(doc_data)
+    except AttributeError:
+        print("Not including class reference as we're targeting a pre-4.3 baseline.")
 
 # Build
 if env["platform"] == "macos":
@@ -50,5 +58,7 @@ if env["platform"] == "macos":
     )
 else:
     library = env.SharedLibrary(f"{TARGET_PATH}{env['suffix']}{env['SHLIBSUFFIX']}", source=sources)
+
+
 
 Default(library)

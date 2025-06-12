@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="RopeWindParameters" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Data for rope wind.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<members>
+		<member name="direction" type="float" setter="set_direction" getter="get_direction" default="0.0">
+			The angle the wind force is pushing the rope.
+		</member>
+		<member name="noise" type="FastNoiseLite" setter="set_noise" getter="get_noise">
+			Noise function used when generating oscillating wind forces.
+		</member>
+		<member name="oscillation_strength" type="float" setter="set_oscillation_strength" getter="get_oscillation_strength" default="0.0">
+			Amplitude of oscillations in the wind noise. Higher values increase the oscillations perpendicular to the wind direction.
+		</member>
+		<member name="wind_strength" type="float" setter="set_wind_strength" getter="get_wind_strength" default="0.0">
+			How taut the wind force is pulling the rope. Lower values allow the noise to move easier, higher can straighten the rope out even with high noise oscillation strength.
+		</member>
+        <member name="enable_wind" type="bool" setter="set_wind_enabled" getter="get_wind_enabled" default="true">
+			Enables or disables wind for all ropes who reference this resource.
+		</member>
+	</members>
+</class>

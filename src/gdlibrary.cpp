@@ -1,5 +1,6 @@
 #include "gdlibrary.hpp"
 #include "NativeRopeServer.hpp"
+#include "RopeWindParameters.hpp"
 
 #include <gdextension_interface.h>
 #include <godot_cpp/core/defs.hpp>
@@ -17,6 +18,7 @@ void initialize_libropesim(ModuleInitializationLevel p_level) {
     }
 
     ClassDB::register_class<NativeRopeServer>();
+    ClassDB::register_class<RopeWindParameters>();
     rope_server = memnew(NativeRopeServer);  // NOLINT
     Engine::get_singleton()->register_singleton("NativeRopeServer", rope_server);
 }
