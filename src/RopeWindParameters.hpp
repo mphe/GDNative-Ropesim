@@ -6,7 +6,7 @@
 
 namespace godot
 {
-    class RopeWindParameters : public Resource
+    class RopeWindParameters : public Resource  // NOLINT(cppcoreguidelines-special-member-functions)
     {
         GDCLASS(RopeWindParameters, Resource) // NOLINT
 

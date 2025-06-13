@@ -4,3 +4,6 @@ CompileFlags:
   Add:
     - -Wall
     - -Wextra
+Diagnostics:
+  ClangTidy:
+    FastCheckFilter: None

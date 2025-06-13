@@ -35,6 +35,7 @@ void uninitialize_libropesim(ModuleInitializationLevel p_level) {
 
 extern "C" {
     // Initialization.
+    // NOLINTNEXTLINE(misc-misplaced-const)
     GDExtensionBool GDE_EXPORT libropesim_init(GDExtensionInterfaceGetProcAddress p_get_proc_address, const GDExtensionClassLibraryPtr p_library, GDExtensionInitialization *r_initialization) {
         const godot::GDExtensionBinding::InitObject init_obj(p_get_proc_address, p_library, r_initialization);
 

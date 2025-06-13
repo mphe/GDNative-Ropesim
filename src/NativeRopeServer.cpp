@@ -59,7 +59,7 @@ void NativeRopeServer::register_rope(Node2D* rope)
 
 void NativeRopeServer::unregister_rope(Node2D* rope)
 {
-    const int idx = _ropes.find(rope);
+    const int64_t idx = _ropes.find(rope);
 
     if (idx < 0)
     {
@@ -68,7 +68,7 @@ void NativeRopeServer::unregister_rope(Node2D* rope)
     }
 
     // Swap and pop
-    const int last_idx = _ropes.size() - 1;
+    const int64_t last_idx = _ropes.size() - 1;
     _ropes.set(idx, _ropes[last_idx]);
     _ropes.remove_at(last_idx);
 
@@ -151,7 +151,7 @@ float NativeRopeServer::get_computation_time() const
     return _last_time;
 }
 
-int NativeRopeServer::get_num_ropes() const
+int64_t NativeRopeServer::get_num_ropes() const
 {
     return _ropes.size();
 }

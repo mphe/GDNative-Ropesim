@@ -8,7 +8,7 @@
 
 namespace godot
 {
-    class NativeRopeServer : public Object
+    class NativeRopeServer : public Object  // NOLINT(cppcoreguidelines-special-member-functions)
     {
         GDCLASS(NativeRopeServer, Object)  // NOLINT
 
@@ -24,7 +24,7 @@ namespace godot
             void set_update_in_editor(bool value);
             bool get_update_in_editor() const;
 
-            int get_num_ropes() const;
+            int64_t get_num_ropes() const;
             float get_computation_time() const;
 
         protected:

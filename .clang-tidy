@@ -10,6 +10,8 @@ Checks:
   - -cppcoreguidelines-avoid-non-const-global-variables
   - -cppcoreguidelines-owning-memory
   - -cppcoreguidelines-non-private-member-variables-in-classes
+  - -cppcoreguidelines-pro-type-union-access  # False positives when accessing Vector2 coordinates
+  - -cppcoreguidelines-use-default-member-init
   - misc-*
   - -misc-non-private-member-variables-in-classes
   - -misc-use-anonymous-namespace
@@ -24,3 +26,5 @@ Checks:
   - -readability-implicit-bool-conversion
   - -readability-math-missing-parentheses
   - -readability-avoid-unconditional-preprocessor-if
+CheckOptions:
+  performance-unnecessary-value-param.AllowedTypes: Ref
