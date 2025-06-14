@@ -15,11 +15,7 @@ using namespace godot;
 NativeRopeServer* NativeRopeServer::_singleton = nullptr;
 
 
-NativeRopeServer::NativeRopeServer() :
-    _tree(nullptr),
-    _last_time(0.0),
-    _update_in_editor(false),
-    _is_running(false)
+NativeRopeServer::NativeRopeServer()
 {
     _singleton = this;
 }

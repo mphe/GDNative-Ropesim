@@ -1,0 +1,48 @@
+# WIP, some stuff is still formatted in an undesired way.
+---
+BasedOnStyle: LLVM
+
+IndentWidth: 4
+IndentCaseLabels: true
+IndentAccessModifiers: false
+AccessModifierOffset: -4
+
+SpaceBeforeCpp11BracedList: false
+Cpp11BracedListStyle: false
+SpacesBeforeTrailingComments: 2
+FixNamespaceComments: false
+
+EmptyLineBeforeAccessModifier: Always
+WrapNamespaceBodyWithEmptyLines: Always
+MaxEmptyLinesToKeep: 3
+SeparateDefinitionBlocks: Leave  # Should be at least one, but there is no option for that
+
+PackConstructorInitializers: Never
+BreakConstructorInitializers: AfterColon
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterControlStatement: Always
+  AfterCaseLabel: true
+  AfterClass: true
+  AfterEnum: true
+  AfterFunction: true
+  AfterNamespace: false
+  AfterExternBlock: false
+  AfterStruct: true
+  AfterUnion: true
+  BeforeCatch: true
+  BeforeElse: true
+  BeforeLambdaBody: false
+  BeforeWhile: true
+  SplitEmptyFunction: false
+  SplitEmptyRecord: false
+  SplitEmptyNamespace: false
+ColumnLimit: 0
+
+QualifierAlignment: Left
+ReferenceAlignment: Left
+PointerAlignment: Left
+AlignArrayOfStructures: None
+AlignTrailingComments:
+  Kind: Leave
+---
