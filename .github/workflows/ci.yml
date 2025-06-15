@@ -6,9 +6,15 @@ on:
     # branches: [ master ]
 
 jobs:
-  ci:
+  build:
     name: "CI"
     uses: ./.github/workflows/build.yml
+    with:
+      git-ref: ${{ github.ref }}
+
+  check:
+    name: "Clang-Tidy"
+    uses: ./.github/workflows/clangtidy.yml
     with:
       git-ref: ${{ github.ref }}
 

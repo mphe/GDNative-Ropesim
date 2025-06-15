@@ -1,0 +1,46 @@
+name: Clang-Tidy
+on:
+  workflow_dispatch:
+    inputs:
+      git-ref:
+        description: A commit, branch or tag to build.
+        type: string
+        required: true
+  workflow_call:
+    inputs:
+      git-ref:
+        description: A commit, branch or tag to build.
+        type: string
+        required: true
+
+jobs:
+  check:
+    runs-on: ubuntu-22.04
+    container: silkeh/clang
+
+    steps:
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Set up SCons
+        shell: bash
+        run: |
+          python -c "import sys; print(sys.version)"
+          python -m pip install scons==4.7.0
+          scons --version
+
+      - run: apt-get update && apt-get install -y git
+
+      - name: Checkout project
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          ref: ${{ inputs.git-ref }}
+
+      - name: Run Clang-Tidy
+        shell: sh
+        run: |
+          ./compile_debug.sh compiledb
+          ./run_clang_tidy.sh -warnings-as-errors '*'
