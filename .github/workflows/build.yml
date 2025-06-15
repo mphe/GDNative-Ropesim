@@ -160,7 +160,7 @@ jobs:
       - name: Prepare files for publish
         shell: sh
         run: |
-            cp -n '${{ github.workspace }}/README.md' '${{ github.workspace }}/LICENSE' '${{ github.workspace }}/demo/addons/ropesim/'
+            cp -rn '${{ github.workspace }}/'*.md '${{ github.workspace }}/docs' '${{ github.workspace }}/LICENSE' '${{ github.workspace }}/demo/addons/ropesim/'
             rm -rf '${{ github.workspace }}/demo/addons/diagnosticlist'
             rm '${{ github.workspace }}/demo/project.godot'
 
