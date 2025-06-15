@@ -1,11 +1,11 @@
 # GDNative Ropesim
 
-![Godot 4.2+ compatible](https://img.shields.io/badge/Godot-4.2+-%23478cbf?logo=godot-engine&logoColor=white)
+![Godot 4.3+ compatible](https://img.shields.io/badge/Godot-4.3+-%23478cbf?logo=godot-engine&logoColor=white)
 
 
 <img src="https://github.com/mphe/GDNative-Ropesim/assets/7116001/272f4f65-cb79-4798-97ba-f0d43589caef" width=128px align="right"/>
 
-A 2D verlet integration based rope simulation for Godot 4.2+.
+A 2D verlet integration based rope simulation for Godot 4.3+.
 
 The computation-heavy simulation part is written in C++ using GDExtension, the rest in GDScript. This allows for fast processing and easy extendability, while keeping the code readable.
 
