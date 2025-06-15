@@ -21,26 +21,10 @@ If you like this plugin and want to support my work, consider leaving a tip on K
     * [Download](https://godotengine.org/asset-library/asset/2334) from the asset store, or
     * [Download](https://github.com/mphe/GDNative-Ropesim/releases/latest) the latest release from the release page, or
     * [Download](https://github.com/mphe/GDNative-Ropesim/actions) it from the latest GitHub Actions run, or
-    * [Compile](#building) it yourself.
-2. Copy or symlink `addons/ropesim` to your project's `addons/` directory
+    * [Compile](docs/developing.md) it yourself.
+2. Move `addons/ropesim` to your project's `addons/` directory
 3. Enable the addon in the project settings
-4. Restart Godot
-
-## Building
-
-First, clone or download the repository and run `git submodule update --init --recursive`.
-
-See [here](https://docs.godotengine.org/en/latest/tutorials/scripting/gdextension/gdextension_cpp_example.html#doc-gdextension-cpp-example) on how to create and compile GDExtension libraries.
-
-To compile for Linux, run the following commands.
-Compiling for other platforms works analogously.
-
-```sh
-$ scons target=template_release platform=linux optimize=speed arch=x86_64 -j8
-$ scons target=template_debug platform=linux arch=x86_64 -j8
-```
-
-Output files are saved to `demo/addons/ropesim/bin/`.
+4. Possibly restart Godot
 
 ## Documentation and Usage
 
@@ -70,6 +54,7 @@ When one of the above nodes is selected, a "*Ropesim*" menu appears in the edito
 ### Advanced Topics
 - [Collisions Documentation](docs/collisions.md)
 - [Execution Order Documentation](docs/execution_order.md)
+- [Developing](docs/developing.md)
 
 
 ## FAQ / Troubleshooting
