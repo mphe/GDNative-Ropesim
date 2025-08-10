@@ -9,19 +9,18 @@ A 2D verlet integration based rope simulation for Godot 4.3+.
 
 The computation-heavy simulation part is written in C++ using GDExtension, the rest in GDScript. This allows for fast processing and easy extendability, while keeping the code readable.
 
-The last Godot 3.x version can be found on the [3.x branch](https://github.com/mphe/GDNative-Ropesim/tree/3.x), however, this branch will no longer receive updates.
+The last Godot 3.x version can be found on the [3.x branch](https://github.com/mphe/GDNative-Ropesim/tree/3.x), however, this version is no longer maintained.
 
-If you like this plugin and want to support my work, consider leaving a tip on Ko-fi.
-
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Q5Q015GBOP)
+If you like this plugin and want to support my work, consider leaving a tip on Ko-fi.<br/>
+[![Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Q5Q015GBOP)
 
 ## Setup
 
-1. Get the addon
-    * [Download](https://godotengine.org/asset-library/asset/2334) from the asset store, or
-    * [Download](https://github.com/mphe/GDNative-Ropesim/releases/latest) the latest release from the release page, or
-    * [Download](https://github.com/mphe/GDNative-Ropesim/actions) it from the latest GitHub Actions run, or
-    * [Compile](docs/developing.md) it yourself.
+1. Download the addon
+    * From the [Asset Library](https://godotengine.org/asset-library/asset/2334)
+    * From the [Beta Asset Store](https://store-beta.godotengine.org/asset/mphe/gdnative-ropesim/)
+    * From the [Release Page](https://github.com/mphe/GDNative-Ropesim/releases/latest)
+    * From [GitHub Actions](https://github.com/mphe/GDNative-Ropesim/actions) (for preview builds mostly)
 2. Move `addons/ropesim` to your project's `addons/` directory
 3. Enable the addon in the project settings
 4. Possibly restart Godot

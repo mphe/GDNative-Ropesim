@@ -1,6 +1,13 @@
 # FAQ / Troubleshooting
 
-## Is Web Export Supported?
+## Textures do not tile in `RopeRendererLine2D`
+
+Enable texture repeat under "CanvasItem → Texture → Repeat → Enabled".
+
+See also [#28](https://github.com/mphe/GDNative-Ropesim/issues/28).
+
+
+## Is Web export supported?
 
 Yes, partially.
 The plugin includes a web build, but since it uses GDExtension, a web export template with GDExtension support is required to use it.
@@ -15,7 +22,7 @@ To compile it yourself, refer to the official Godot documentation for further in
 Alternatively, you can download prebuilt export templates from another trusted source.
 For example, the [LimboAI addon](https://github.com/limbonaut/limboai) provides web export templates with GDExtension support.
 
-## Ropes Lag One Frame Behind
+## Ropes lag one frame behind
 
 This is a known issue and related to execution order.
 
@@ -24,6 +31,6 @@ This is a known issue and related to execution order.
 See [Execution Order Documentation](docs/execution_order.md) for a more detailed explanation.
 
 
-## Collisions Tunnel Through Objects / Stretch Along Corners
+## Collisions tunnel through objects / stretch along corners
 
 See [Collisions Documentation](docs/collisions.md).
