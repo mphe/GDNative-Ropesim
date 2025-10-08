@@ -12,7 +12,7 @@ const Vector2 VECTOR_DOWN = Vector2(0, 1);   // NOLINT(cert-err58-cpp)
 
 static float get_point_perc(int index, const PackedVector2Array& points)
 {
-    return (float)index / (points.size() > 0 ? float(points.size() - 1) : 0.f);
+    return points.size() > 0 ? static_cast<float>(index) / static_cast<float>(points.size() - 1) : 0;
 }
 
 static Vector2 damp_vec(Vector2 value, float damping_factor, double delta)
