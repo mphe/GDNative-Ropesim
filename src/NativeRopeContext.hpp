@@ -1,5 +1,6 @@
 #pragma once
 
+#include "RopeStiffnessParameters.hpp"
 #include "RopeWindParameters.hpp"
 #include <godot_cpp/classes/curve.hpp>
 #include <godot_cpp/classes/node2d.hpp>
@@ -20,11 +21,23 @@ public:
     bool validate() const;
 
 protected:
+    /// Reads point data from `points` and `oldpoints` and writes velocities to `data_buffer`.
     void _simulate_velocities(double delta);
-    void _simulate_wind(PackedVector2Array* velocities) const;
-    void _simulate_stiffness(PackedVector2Array* velocities) const;
+
+    /// Reads point data from `points` and adds velocities to `data_buffer`.
+    void _simulate_wind();
+
+    /// Simulates stiffness. Reads and writes from/to `points`.
+    void _simulate_stiffness(double delta);
+    void _simulate_stiffness_forward(double delta, Vector2 last_stiffness_dir);
+
+    /// Resolves collisions. Reads and writes to `points`.
     void _resolve_collisions(double delta, bool disable_contact_reporting);
+
+    /// Constrains points iteratively. Reads and writes to `points`.
     void _constraint(double delta);
+
+    /// Write point data back to the rope node.
     void _writeback();
 
 private:
@@ -34,17 +47,27 @@ private:
     PackedVector2Array _contact_points;
 
 public:
+    /// Internal buffer for intermediate results during point and velocity calculations.
+    /// Will be resized on demand to be at least as large as the current `points` vector.
+    /// It will not be cleared.
+    PackedVector2Array data_buffer;
+
     Node2D* rope = nullptr;
+
     PackedVector2Array points;
     PackedVector2Array oldpoints;
     PackedFloat32Array seg_lengths;
     PackedFloat32Array simulation_weights;
+
+    /// Number of rope points. Same as `points.size()` but cached.
+    int64_t num_points = 0;
+
     float gravity = 0.0;
     Vector2 gravity_direction;
     Ref<RopeWindParameters> wind;
     float damping = 0.0;
     Ref<Curve> damping_curve;
-    float stiffness = 0.0;
+    Ref<RopeStiffnessParameters> stiffness_params;
     float max_endpoint_distance = 0.0;
     int num_constraint_iterations = 0;
 

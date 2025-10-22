@@ -137,7 +137,7 @@ void NativeRopeServer::_on_physics_frame()
         context.simulate(delta);
     }
 
-    _last_time = (float)(Time::get_singleton()->get_ticks_usec() - start) / 1000.f;
+    _last_time = static_cast<float>(Time::get_singleton()->get_ticks_usec() - start) / 1000.f;
     emit_signal("on_post_update");
     emit_signal("on_post_post_update");
 }
