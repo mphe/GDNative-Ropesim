@@ -118,27 +118,25 @@ void NativeRopeContext::_simulate_velocities(double delta)
     // Afterwards we use oldpoints to store the new points and finally swap points and oldpoints
     PackedVector2Array& new_points = oldpoints;
 
-    // Compute velocities
-    for (int i = first_idx; i < size; ++i)
-        velocities[i] = points[i] - oldpoints[i];
-
-    _simulate_wind(&velocities);
-    _simulate_stiffness(&velocities);
-
-    // Apply velocity and damping
-    const float frame_gravity = (float)(gravity * delta);
+    // Compute velocities and apply damping + gravity
     const bool use_damping_curve = damping_curve.is_valid() && damping_curve->get_point_count() > 0;
+    const Vector2 frame_gravity = gravity_direction * static_cast<float>(gravity * delta);
 
     for (int i = first_idx; i < size; ++i)
     {
+        const Vector2 vel = points[i] - oldpoints[i];
         const float dampmult = use_damping_curve ? damping_curve->sample_baked(get_point_perc(i, points)) : 1.0f;
-        const Vector2 final_vel = simulation_weights[i] * (
-                damp_vec(velocities[i], damping * dampmult, delta)
-                + gravity_direction * frame_gravity
-                );
-
-        new_points[i] = points[i] + final_vel;
+        velocities[i] = damp_vec(vel, damping * dampmult, delta);
+        velocities[i] += frame_gravity;
     }
+
+    // Apply other forces
+    _simulate_wind(&velocities);
+    _simulate_stiffness(&velocities);
+
+    // Move points according to velocity
+    for (int i = first_idx; i < size; ++i)
+        new_points[i] = points[i] + simulation_weights[i] * velocities[i];
 
     std::swap(oldpoints, points);
 }
