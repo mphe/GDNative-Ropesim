@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="RopeStiffnessParameters" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+    <brief_description>
+            Resource for stiffness properties.[br]Stiffness forces the rope to return to its resting position. The resting direction is downwards and affected by the the node's rotation.
+    </brief_description>
+    <description>
+    </description>
+    <tutorials>
+    </tutorials>
+    <members>
+        <member name="stiffness" type="float" setter="set_stiffness" getter="get_stiffness" default="0.0">
+                The strength at which the rope is forced into its resting position.
+        </member>
+        <member name="stiffness_bend_curve" type="Curve" setter="set_stiffness_bend_curve" getter="get_stiffness_bend_curve">
+                (Optional) Scales the stiffness according to how far a segment is bent.[br]The [code]y[/code] value of the curve is multiplied with the stiffness. [code]x = 0[/code] corresponds to no bending and [code]x = 1[/code] corresponds to 180° bending.
+        </member>
+        <member name="stiffness_curve" type="Curve" setter="set_stiffness_curve" getter="get_stiffness_curve">
+                (Optional) Scales the stiffness along the rope.
+        </member>
+    </members>
+</class>

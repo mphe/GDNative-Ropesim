@@ -4,6 +4,7 @@ class_name Rope
 
 # TODO: Split line rendering into a separate node
 
+
 ## Triggered when the rope has been registered at the NativeRopeServer.
 signal on_registered()
 
@@ -32,10 +33,20 @@ signal on_point_count_changed()
 
 @export_group("Forces")
 
-## Stiffness forces the rope to return to its resting position.
-## The resting direction is downwards and affected by the the node's rotation.
-## Might not produce 100% realistic results with fixed points.
-@export var stiffness: float = 0.0
+## Deprecated. Exists only for compatibility
+## @deprecated
+@export_storage var stiffness: float = 0.0 :
+    set(value):
+        if not stiffness_settings:
+            var bend_curve := Curve.new()
+            bend_curve.add_point(Vector2(0, 0), 0, 0, Curve.TANGENT_LINEAR, Curve.TANGENT_LINEAR)
+            bend_curve.add_point(Vector2(1, 1), 0, 0, Curve.TANGENT_LINEAR, Curve.TANGENT_LINEAR)
+            stiffness_settings = RopeStiffnessParameters.new()
+            stiffness_settings.stiffness_bend_curve = bend_curve
+            stiffness_settings.stiffness = value
+
+## (Optional) Parameters for stiffness simulation.
+@export var stiffness_settings: RopeStiffnessParameters
 
 ## Gravity
 @export var gravity: float = 100
@@ -449,7 +460,6 @@ func _set_seg_dist(value: Curve) -> void:
     if segment_length_distribution:
         segment_length_distribution.changed.connect(update_segments)
     update_segments()
-
 
 static func _resize_with_default(array: Variant, new_size: int, default: Variant) -> void:
     @warning_ignore("unsafe_method_access")

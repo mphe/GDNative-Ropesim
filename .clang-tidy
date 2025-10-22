@@ -11,13 +11,20 @@ Checks:
   - -cppcoreguidelines-owning-memory
   - -cppcoreguidelines-non-private-member-variables-in-classes
   - -cppcoreguidelines-pro-type-union-access  # False positives when accessing Vector2 coordinates
+  - -cppcoreguidelines-pro-bounds-avoid-unchecked-container-access
   - -cppcoreguidelines-use-default-member-init
   - misc-*
   - -misc-non-private-member-variables-in-classes
   - -misc-use-anonymous-namespace
   - -misc-include-cleaner
+  - -misc-no-recursion
+  - modernize-*
+  - -modernize-use-trailing-return-type
+  - -modernize-use-nodiscard
+  - -modernize-use-auto
   - performance-*
   - portability-*
+  - -portability-avoid-pragma-once
   - readability-*
   - -readability-braces-around-statements
   - -readability-uppercase-literal-suffix
