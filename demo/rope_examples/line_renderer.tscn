@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://g4jonp46a2qd"]
+[gd_scene load_steps=14 format=3 uid="uid://g4jonp46a2qd"]
 
 [ext_resource type="Script" uid="uid://1xluodkpnre3" path="res://addons/ropesim/RopeHandle.gd" id="1_1x8kc"]
 [ext_resource type="Script" uid="uid://c8aemupwcpls1" path="res://rope_examples/scripts/animation_player.gd" id="1_ip83o"]
 [ext_resource type="Texture2D" uid="uid://criwv6nuivcxy" path="res://rope_examples/icon.svg" id="3_dh00w"]
 [ext_resource type="Script" uid="uid://b2shq2gjd4fvt" path="res://addons/ropesim/Rope.gd" id="4_5xugj"]
 [ext_resource type="Script" uid="uid://dfppmnngy2wx4" path="res://addons/ropesim/RopeRendererLine2D.gd" id="5_rievp"]
+[ext_resource type="Shader" uid="uid://bgfjqiek21jle" path="res://rope_examples/scripts/RopeRenderer.gdshader" id="6_jb20h"]
 
 [sub_resource type="Animation" id="Animation_m8wea"]
 length = 0.001
@@ -68,17 +69,29 @@ _data = {
 &"moving": SubResource("Animation_sw2bi")
 }
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nqdhp"]
+shader = ExtResource("6_jb20h")
+shader_parameter/tilings = 13.333
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jb20h"]
+shader = ExtResource("6_jb20h")
+shader_parameter/tilings = 6.667
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xi23p"]
 bg_color = Color(1, 1, 1, 1)
 border_color = Color(1, 1, 1, 1)
 expand_margin_left = 2.0
 expand_margin_right = 2.0
 
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_bnqod"]
+color = Color(1, 1, 1, 1)
+thickness = 4
+
 [node name="main" type="Node2D"]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_ny3rx")
+&"": SubResource("AnimationLibrary_ny3rx")
 }
 script = ExtResource("1_ip83o")
 
@@ -87,6 +100,7 @@ show_behind_parent = true
 texture_repeat = 2
 position = Vector2(81, 457)
 points = PackedVector2Array(-25, -8, -20.7475, 1.44524, -15.687, 10.4419, -9.18967, 18.3892, -0.636871, 23.9551, 9.50717, 24.7611, 18.6586, 20.3429, 25.7304, 13.1054, 31.1967, 4.66277, 35.1485, -4.52231, 45.1295, -4.63291, 44.6916, 5.83709, 44.575, 16.4508, 44.5429, 27.1293, 44.5313, 37.8096, 44.5235, 48.4408, 44.5157, 58.9835, 44.5077, 69.4093, 44.4992, 79.6994, 44.4905, 89.8445, 44.4813, 99.8445)
+width = 15.0
 texture = ExtResource("3_dh00w")
 texture_mode = 1
 script = ExtResource("5_rievp")
@@ -106,6 +120,7 @@ show_behind_parent = true
 texture_repeat = 2
 position = Vector2(25, 8)
 points = PackedVector2Array(-25, -8, -22.7762, 3.04263, -20.4138, 13.9832, -17.8192, 24.771, -14.9128, 35.3586, -11.5991, 45.6908, -7.74203, 55.6878, -3.13376, 65.2097, 2.54843, 73.9766, 9.77274, 81.366, 18.9411, 86.0076, 29.2663, 85.9136, 38.5399, 81.0415, 45.9161, 73.3553, 51.7538, 64.2748, 56.4952, 54.5067, 60.4478, 44.4342, 63.8161, 34.2926, 66.7439, 24.2285, 69.3381, 14.3219, 71.6804, 4.6001)
+width = 15.0
 texture = ExtResource("3_dh00w")
 texture_mode = 1
 script = ExtResource("5_rievp")
@@ -161,7 +176,7 @@ offset_left = 764.0
 offset_top = 561.0
 offset_right = 1350.0
 offset_bottom = 662.0
-text = "The rope can also be rendered the rope node's position."
+text = "The rope can also be rendered at the rope node's position."
 autowrap_mode = 2
 
 [node name="Label6" type="Label" parent="."]
@@ -181,6 +196,21 @@ text = "The \"invert\" option reverses the point order, which also reverses the 
 Mostly useful in cases where the rope should be extensible/retractable, as it looks more natural."
 autowrap_mode = 2
 
+[node name="Label11" type="Label" parent="."]
+offset_left = 1727.0
+offset_top = 464.0
+offset_right = 2664.0
+offset_bottom = 669.0
+text = "If dynamic tiling is not desired, a fixed amount of tilings can be achieved using a simple shader.
+1. Set texture_mode to \"Stretch\"
+2. Add a custom shader that scales UV.x by any given factor.
+2. Increase the tiling factor as desired or calculate the amount of tilings that would fit the current rope length:
+    tilings = rope_length / (texture width * render width / texture height)
+In this case
+    tilings = 100 / (128 * 15 / 128) = 6.6666
+5. The rope will now keep the same amount of tilings regardless of its actual length."
+autowrap_mode = 2
+
 [node name="Label9" type="Label" parent="."]
 offset_left = 1789.0
 offset_top = 139.0
@@ -197,6 +227,22 @@ offset_bottom = 162.0
 text = "invert = true"
 autowrap_mode = 2
 
+[node name="Label12" type="Label" parent="."]
+offset_left = 1818.0
+offset_top = 731.0
+offset_right = 2074.0
+offset_bottom = 754.0
+text = "Custom shader with fixed tiling"
+autowrap_mode = 2
+
+[node name="Label13" type="Label" parent="."]
+offset_left = 2219.0
+offset_top = 731.0
+offset_right = 2443.0
+offset_bottom = 754.0
+text = "texture_mode = Tile"
+autowrap_mode = 2
+
 [node name="Node2D" type="Node2D" parent="."]
 position = Vector2(1057, 225)
 
@@ -205,6 +251,7 @@ show_behind_parent = true
 texture_repeat = 2
 position = Vector2(-133, -132)
 points = PackedVector2Array(0, 0, -0.722794, 12.932, -1.23862, 25.7996, -1.49449, 38.5739, -1.52303, 51.2288, -1.39105, 63.7453, -1.16194, 76.1113, -0.880508, 88.3193, -0.5728, 100.365, -0.251495, 112.244, 0.0788269, 123.955, 0.417938, 135.498, 0.767776, 146.87, 1.13104, 158.071, 1.51077, 169.1, 1.91002, 179.956, 2.33171, 190.639, 2.77904, 201.149, 3.25516, 211.484, 3.76396, 221.644, 4.30963, 231.629)
+width = 15.0
 texture = ExtResource("3_dh00w")
 texture_mode = 1
 script = ExtResource("5_rievp")
@@ -216,6 +263,7 @@ show_behind_parent = true
 texture_repeat = 2
 position = Vector2(307, 1)
 points = PackedVector2Array(0, 0, -0.722794, 12.932, -1.23862, 25.7996, -1.49449, 38.5739, -1.52303, 51.2288, -1.39105, 63.7453, -1.16194, 76.1113, -0.880508, 88.3193, -0.5728, 100.365, -0.251495, 112.244, 0.0788269, 123.955, 0.417938, 135.498, 0.767776, 146.87, 1.13104, 158.071, 1.51077, 169.1, 1.91002, 179.956, 2.33171, 190.639, 2.77904, 201.149, 3.25516, 211.484, 3.76396, 221.644, 4.30963, 231.629)
+width = 15.0
 texture = ExtResource("3_dh00w")
 texture_mode = 1
 script = ExtResource("5_rievp")
@@ -227,6 +275,7 @@ show_behind_parent = true
 texture_repeat = 2
 position = Vector2(252, 5)
 points = PackedVector2Array(0, 0, -0.722794, 12.932, -1.23862, 25.7996, -1.49449, 38.5739, -1.52303, 51.2288, -1.39105, 63.7453, -1.16194, 76.1113, -0.880508, 88.3193, -0.5728, 100.365, -0.251495, 112.244, 0.0788269, 123.955, 0.417938, 135.498, 0.767776, 146.87, 1.13104, 158.071, 1.51077, 169.1, 1.91002, 179.956, 2.33171, 190.639, 2.77904, 201.149, 3.25516, 211.484, 3.76396, 221.644, 4.30963, 231.629)
+width = 15.0
 texture = ExtResource("3_dh00w")
 texture_mode = 1
 script = ExtResource("5_rievp")
@@ -238,6 +287,7 @@ show_behind_parent = true
 texture_repeat = 2
 position = Vector2(201, 12)
 points = PackedVector2Array(0, 0, -0.722794, 12.932, -1.23862, 25.7996, -1.49449, 38.5739, -1.52303, 51.2288, -1.39105, 63.7453, -1.16194, 76.1113, -0.880508, 88.3193, -0.5728, 100.365, -0.251495, 112.244, 0.0788269, 123.955, 0.417938, 135.498, 0.767776, 146.87, 1.13104, 158.071, 1.51077, 169.1, 1.91002, 179.956, 2.33171, 190.639, 2.77904, 201.149, 3.25516, 211.484, 3.76396, 221.644, 4.30963, 231.629)
+width = 15.0
 texture = ExtResource("3_dh00w")
 texture_mode = 1
 script = ExtResource("5_rievp")
@@ -249,6 +299,7 @@ show_behind_parent = true
 texture_repeat = 2
 position = Vector2(140, 19)
 points = PackedVector2Array(0, 0, -0.722794, 12.932, -1.23862, 25.7996, -1.49449, 38.5739, -1.52303, 51.2288, -1.39105, 63.7453, -1.16194, 76.1113, -0.880508, 88.3193, -0.5728, 100.365, -0.251495, 112.244, 0.0788269, 123.955, 0.417938, 135.498, 0.767776, 146.87, 1.13104, 158.071, 1.51077, 169.1, 1.91002, 179.956, 2.33171, 190.639, 2.77904, 201.149, 3.25516, 211.484, 3.76396, 221.644, 4.30963, 231.629)
+width = 15.0
 texture = ExtResource("3_dh00w")
 texture_mode = 1
 script = ExtResource("5_rievp")
@@ -270,6 +321,7 @@ show_behind_parent = true
 texture_repeat = 2
 position = Vector2(25, 8)
 points = PackedVector2Array(-18.1114, -8, -18.8342, 4.93199, -19.35, 17.7996, -19.6059, 30.5739, -19.6344, 43.2288, -19.5024, 55.7453, -19.2733, 68.1113, -18.9919, 80.3193, -18.6842, 92.3645, -18.3629, 104.244, -18.0325, 115.955, -17.6934, 127.498, -17.3436, 138.87, -16.9803, 150.071, -16.6006, 161.1, -16.2014, 171.956, -15.7797, 182.639, -15.3323, 193.149, -14.8562, 203.484, -14.3474, 213.644, -13.8017, 223.629)
+width = 15.0
 texture = ExtResource("3_dh00w")
 texture_mode = 1
 script = ExtResource("5_rievp")
@@ -287,6 +339,7 @@ show_behind_parent = true
 texture_repeat = 2
 position = Vector2(228, 71)
 points = PackedVector2Array(-228, -71, -228, -58.1105, -228, -45.2946, -228, -32.5795, -228, -19.9864, -228, -7.53052, -228, 4.77734, -228, 16.93, -228, 28.9226, -228, 40.7524, -228, 52.4175, -228, 63.917, -228, 75.2502, -228, 86.4171, -228, 97.4172, -228, 108.251, -228, 118.917, -228, 129.418, -228, 139.751, -228, 149.918, -228, 159.918)
+width = 15.0
 texture = ExtResource("3_dh00w")
 texture_mode = 1
 script = ExtResource("5_rievp")
@@ -306,21 +359,22 @@ show_behind_parent = true
 texture_repeat = 2
 position = Vector2(288.021, 8)
 points = PackedVector2Array(-288.021, -8, -285.644, 2.92297, -283.11, 13.7374, -280.312, 24.3867, -277.158, 34.8157, -273.534, 44.956, -269.274, 54.7013, -264.121, 63.8546, -257.677, 71.9983, -249.436, 78.1768, -239.419, 80.5198, -229.445, 77.6694, -221.27, 71.0529, -214.873, 62.5068, -209.75, 52.9601, -205.514, 42.8307, -201.914, 32.3325, -198.789, 21.5969, -196.029, 10.7188, -193.536, -0.223572, -191.433, -10)
+width = 15.0
 texture = ExtResource("3_dh00w")
 texture_mode = 1
 script = ExtResource("5_rievp")
 
 [node name="RopeHandle" type="Marker2D" parent="Rope3"]
 script = ExtResource("1_1x8kc")
+strength = 1.0
 rope_path = NodePath("..")
 rope_position = 0.0
-strength = 1.0
 
 [node name="RopeHandle2" type="Marker2D" parent="Rope3"]
 position = Vector2(96.5881, -2)
 script = ExtResource("1_1x8kc")
-rope_path = NodePath("..")
 strength = 1.0
+rope_path = NodePath("..")
 
 [node name="Rope4" type="Node2D" parent="."]
 position = Vector2(1845, 189)
@@ -335,6 +389,7 @@ show_behind_parent = true
 texture_repeat = 2
 position = Vector2(25, 8)
 points = PackedVector2Array(-25, -8, -25, 0.0043335, -25, 7.98198, -25, 15.9263, -25, 23.8346, -25, 31.7076, -25, 39.5482, -25, 47.3604, -25, 55.1487, -25, 62.9175, -25, 70.6711, -25, 78.4129, -25, 86.1458, -25, 93.8721, -25, 101.594, -25, 109.312, -25, 117.028, -25, 124.742, -25, 132.454, -25, 140.166, -25, 147.877)
+width = 15.0
 texture = ExtResource("3_dh00w")
 texture_mode = 1
 script = ExtResource("5_rievp")
@@ -345,11 +400,109 @@ show_behind_parent = true
 texture_repeat = 2
 position = Vector2(203, 0)
 points = PackedVector2Array(0, 155.877, 0, 148.166, 0, 140.454, 0, 132.742, 0, 125.028, 0, 117.312, 0, 109.594, 0, 101.872, 0, 94.1458, 0, 86.4129, 0, 78.6711, 0, 70.9175, 0, 63.1487, 0, 55.3604, 0, 47.5482, 0, 39.7076, 0, 31.8346, 0, 23.9263, 0, 15.982, 0, 8.00433, 0, 0)
+width = 15.0
 texture = ExtResource("3_dh00w")
 texture_mode = 1
 script = ExtResource("5_rievp")
 position_mode = 0
 invert = true
+
+[node name="RopeRendererLine2D2" type="Line2D" parent="."]
+show_behind_parent = true
+texture_repeat = 2
+material = SubResource("ShaderMaterial_nqdhp")
+position = Vector2(1801, 796)
+points = PackedVector2Array(0, 0, 0, 8.702209, 0, 17.377731, 0, 26.019882, 0, 34.6261, 0, 43.19702, 0, 51.735474, 0, 60.245514, 0, 68.73169, 0, 77.198425, 0, 85.64987, 0, 94.08954, 0, 102.520325, 0, 110.94452, 0, 119.36395, 0, 127.78, 0, 136.19363, 0, 144.60553, 0, 153.01614, 0, 161.42575, 0, 169.83432)
+width = 15.0
+texture = ExtResource("3_dh00w")
+texture_mode = 2
+script = ExtResource("5_rievp")
+target_rope_path = NodePath("../Rope4")
+position_mode = 0
+
+[node name="RopeRendererLine2D3" type="Line2D" parent="."]
+show_behind_parent = true
+texture_repeat = 2
+position = Vector2(2177, 796)
+points = PackedVector2Array(0, 0, 0, 8.702209, 0, 17.377731, 0, 26.019882, 0, 34.6261, 0, 43.19702, 0, 51.735474, 0, 60.245514, 0, 68.73169, 0, 77.198425, 0, 85.64987, 0, 94.08954, 0, 102.520325, 0, 110.94452, 0, 119.36395, 0, 127.78, 0, 136.19363, 0, 144.60553, 0, 153.01614, 0, 161.42575, 0, 169.83432)
+width = 15.0
+texture = ExtResource("3_dh00w")
+texture_mode = 1
+script = ExtResource("5_rievp")
+target_rope_path = NodePath("../Rope4")
+position_mode = 0
+
+[node name="Rope6" type="Node2D" parent="."]
+position = Vector2(1848, 841)
+script = ExtResource("4_5xugj")
+num_segments = 20
+num_constraint_iterations = 20
+render_line = false
+
+[node name="RopeRendererLine2D" type="Line2D" parent="Rope6"]
+show_behind_parent = true
+texture_repeat = 2
+material = SubResource("ShaderMaterial_jb20h")
+position = Vector2(-105, 0)
+points = PackedVector2Array(105, 0, 107.83923, 4.7731323, 110.802, 9.445251, 113.98572, 13.9348755, 117.46582, 18.155945, 121.302734, 22.007507, 125.54236, 25.359558, 130.20471, 28.044617, 135.25427, 29.862244, 140.56958, 30.621582, 145.9425, 30.216553, 151.14355, 28.684998, 156.00354, 26.185669, 160.44727, 22.923828, 164.4707, 19.088257, 168.10657, 14.828918, 171.40051, 10.25824, 174.40271, 5.4628906, 177.16992, 0.51397705, 179.77234, -4.5236816, 182, -9)
+width = 15.0
+texture = ExtResource("3_dh00w")
+texture_mode = 2
+script = ExtResource("5_rievp")
+
+[node name="RopeRendererLine2D2" type="Line2D" parent="Rope6"]
+show_behind_parent = true
+texture_repeat = 2
+position = Vector2(392, 0)
+points = PackedVector2Array(0, 0, 2.8392334, 4.7731323, 5.802002, 9.445251, 8.985718, 13.9348755, 12.46582, 18.155945, 16.302734, 22.007507, 20.542358, 25.359558, 25.204712, 28.044617, 30.254272, 29.862244, 35.56958, 30.621582, 40.942505, 30.216553, 46.143555, 28.684998, 51.00354, 26.185669, 55.447266, 22.923828, 59.470703, 19.088257, 63.106567, 14.828918, 66.40051, 10.25824, 69.40271, 5.4628906, 72.16992, 0.51397705, 74.77234, -4.5236816, 77, -9)
+width = 15.0
+texture = ExtResource("3_dh00w")
+texture_mode = 1
+script = ExtResource("5_rievp")
+position_mode = 0
+
+[node name="RopeHandle" type="Marker2D" parent="Rope6"]
+position = Vector2(77, -9)
+script = ExtResource("1_1x8kc")
+strength = 1.0
+rope_path = NodePath("..")
+metadata/_custom_type_script = "uid://1xluodkpnre3"
+
+[node name="Rope7" type="Node2D" parent="."]
+position = Vector2(1848, 926)
+script = ExtResource("4_5xugj")
+num_segments = 20
+num_constraint_iterations = 20
+render_line = false
+
+[node name="RopeRendererLine2D" type="Line2D" parent="Rope7"]
+show_behind_parent = true
+texture_repeat = 2
+material = SubResource("ShaderMaterial_jb20h")
+position = Vector2(-105, 0)
+points = PackedVector2Array(105, 0, 113.06543, 1.0250854, 121.13733, 1.9746704, 129.21973, 2.8034058, 137.31372, 3.4760132, 145.41919, 3.9673462, 153.53369, 4.2609253, 161.65454, 4.3468018, 169.7782, 4.2197876, 177.90112, 3.8773193, 186.01904, 3.3186646, 194.12769, 2.543457, 202.22229, 1.5516357, 210.29749, 0.34399414, 218.34851, -1.0759277, 226.3706, -2.6987305, 234.36182, -4.5058594, 242.32275, -6.4675293, 250.25818, -8.543091, 258.1765, -10.683289, 263, -12)
+width = 15.0
+texture = ExtResource("3_dh00w")
+texture_mode = 2
+script = ExtResource("5_rievp")
+
+[node name="RopeRendererLine2D2" type="Line2D" parent="Rope7"]
+show_behind_parent = true
+texture_repeat = 2
+position = Vector2(392, 0)
+points = PackedVector2Array(0, 0, 8.06543, 1.0250854, 16.13733, 1.9746704, 24.219727, 2.8034058, 32.31372, 3.4760132, 40.41919, 3.9673462, 48.53369, 4.2609253, 56.65454, 4.3468018, 64.7782, 4.2197876, 72.90112, 3.8773193, 81.01904, 3.3186646, 89.127686, 2.543457, 97.22229, 1.5516357, 105.297485, 0.34399414, 113.34851, -1.0759277, 121.370605, -2.6987305, 129.36182, -4.5058594, 137.32275, -6.4675293, 145.25818, -8.543091, 153.17651, -10.683289, 158, -12)
+width = 15.0
+texture = ExtResource("3_dh00w")
+texture_mode = 1
+script = ExtResource("5_rievp")
+position_mode = 0
+
+[node name="RopeHandle" type="Marker2D" parent="Rope7"]
+position = Vector2(158, -12)
+script = ExtResource("1_1x8kc")
+strength = 1.0
+rope_path = NodePath("..")
+metadata/_custom_type_script = "uid://1xluodkpnre3"
 
 [node name="VSeparator2" type="VSeparator" parent="."]
 offset_left = 582.0
@@ -359,8 +512,22 @@ offset_bottom = 857.0
 theme_override_styles/separator = SubResource("StyleBoxFlat_xi23p")
 
 [node name="VSeparator3" type="VSeparator" parent="."]
-offset_left = 1591.0
+offset_left = 1676.0
 offset_top = -25.0
-offset_right = 1795.0
-offset_bottom = 892.0
+offset_right = 1709.0
+offset_bottom = 1092.0
 theme_override_styles/separator = SubResource("StyleBoxFlat_xi23p")
+
+[node name="HSeparator2" type="HSeparator" parent="."]
+offset_left = -138.0
+offset_top = 330.0
+offset_right = 681.0
+offset_bottom = 350.0
+theme_override_styles/separator = SubResource("StyleBoxLine_bnqod")
+
+[node name="HSeparator3" type="HSeparator" parent="."]
+offset_left = 1692.0
+offset_top = 419.0
+offset_right = 2511.0
+offset_bottom = 439.0
+theme_override_styles/separator = SubResource("StyleBoxLine_bnqod")
