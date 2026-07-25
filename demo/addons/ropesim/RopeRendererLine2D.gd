@@ -53,25 +53,27 @@ func _ready() -> void:
 func refresh() -> void:
     var target: Rope = _helper.target_rope
 
-    if target and target.get_num_points() > 0 and visible:
-        var xform: Transform2D
+    if not target or target.get_num_points() == 0 or not visible:
+        return
 
-        match position_mode:
-            PositionMode.UseLineRendererPosition:
-                xform = Transform2D(0, -target.get_point(0))
-            PositionMode.UseRopeNodePosition:
-                xform = Transform2D(0, -global_position - target.get_point(0) + target.global_position)
-            PositionMode.UseRopeFirstPointPosition:
-                xform = Transform2D(0, -global_position)
+    var xform: Transform2D
 
-        xform = xform.scaled(scale)
-        var p: PackedVector2Array = xform * target.get_points()
+    match position_mode:
+        PositionMode.UseLineRendererPosition:
+            xform = Transform2D(0, -target.get_point(0))
+        PositionMode.UseRopeNodePosition:
+            xform = Transform2D(0, -global_position - target.get_point(0) + target.global_position)
+        PositionMode.UseRopeFirstPointPosition:
+            xform = Transform2D(0, -global_position)
 
-        if invert:
-            p.reverse()
+    xform = xform.scaled(scale)
+    var p: PackedVector2Array = xform * target.get_points()
 
-        points = p
-        global_rotation = 0
+    if invert:
+        p.reverse()
+
+    points = p
+    global_rotation = 0
 
 
 func set_rope_path(value: NodePath) -> void:
@@ -90,6 +92,7 @@ func set_position_mode(value: PositionMode) -> void:
 
 func set_auto_update(value: bool) -> void:
     _helper.enable = value
+
 
 func get_auto_update() -> bool:
     return _helper.enable
