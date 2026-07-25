@@ -204,11 +204,11 @@ offset_bottom = 669.0
 text = "If dynamic tiling is not desired, a fixed amount of tilings can be achieved using a simple shader.
 1. Set texture_mode to \"Stretch\"
 2. Add a custom shader that scales UV.x by any given factor.
-2. Increase the tiling factor as desired or calculate the amount of tilings that would fit the current rope length:
+3. Increase the tiling factor as desired or calculate the amount of tilings that would fit the current rope length:
     tilings = rope_length / (texture width * render width / texture height)
 In this case
     tilings = 100 / (128 * 15 / 128) = 6.6666
-5. The rope will now keep the same amount of tilings regardless of its actual length."
+4. The rope will now keep the same amount of tilings regardless of its actual length."
 autowrap_mode = 2
 
 [node name="Label9" type="Label" parent="."]
