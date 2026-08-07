@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://das2x73tumbrb"]
+[gd_scene format=3 uid="uid://das2x73tumbrb"]
 
 [ext_resource type="Script" uid="uid://b2shq2gjd4fvt" path="res://addons/ropesim/Rope.gd" id="1_bxn20"]
 
@@ -9,7 +9,7 @@ point_count = 3
 [sub_resource type="Gradient" id="Gradient_iaspt"]
 colors = PackedColorArray(0.714844, 0.714844, 0.714844, 1, 1, 1, 1, 1)
 
-[node name="hair" type="Node2D"]
+[node name="hair" type="Node2D" unique_id=629420915]
 script = ExtResource("1_bxn20")
 num_segments = 15
 segment_length_distribution = SubResource("Curve_rwlaa")

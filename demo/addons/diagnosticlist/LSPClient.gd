@@ -25,7 +25,14 @@ var _jsonrpc := JSONRPC.new()
 var _client := StreamPeerTCP.new()
 var _id: int = 0
 var _timer: Timer
-var _lsp_project_path: String = ""  # Absolute project path reported by LS
+
+## Absolute project path reported by LS.
+## Will be initialized when the LSP connection is initialized ( _initialize()) and changed by
+## changeWorkspace events.
+var _ls_project_path: String = ""
+
+## Absolute path of the loaded project.
+var _project_path: String = ProjectSettings.globalize_path("res://").simplify_path()
 
 
 func _init(root: Node) -> void:
@@ -96,9 +103,11 @@ func update_diagnostics(res_path: String, content: String) -> void:
     })
 
 
-## Returns the absolute project path as reported by the LS.
-func get_project_path() -> String:
-    return _lsp_project_path
+## Returns whether the root directory reported by the LS is the same as the project root.
+## If there is a mismatch, the LSP client is very likely connected to a different Godot instance
+## with a different project opened.
+func lsp_root_matches_project_root() -> bool:
+    return _ls_project_path == _project_path
 
 
 func _reset_tick_interval() -> void:
@@ -224,7 +233,8 @@ func _handle_response(json: Dictionary) -> void:
 
         # Project path
         "gdscript_client/changeWorkspace":
-            _lsp_project_path = str(json["params"]["path"]).simplify_path()
+            _ls_project_path = str(json["params"]["path"]).simplify_path()
+            DiagnosticList_Utils.log_debug("Change Workspace: %s" % _ls_project_path)
             return
 
     # Initialization response
@@ -289,8 +299,14 @@ func _send(json: Dictionary) -> void:
 
 
 func _initialize() -> void:
+    # Comply with LSP, try to initialize root directory to the current project root.
+    # Godot will likely ignore it and send a changeWorkspace event anyway.
+    _ls_project_path = _project_path
+
     _send_request("initialize", {
         "processId": null,
+        "rootPath": _ls_project_path,
+        "rootUri": _res_path_to_lsp_uri("res://"),
         "capabilities": {
             "textDocument": {
                 "publishDiagnostics": {},

@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cioc6wtbs3ubf"]
+[gd_scene format=3 uid="uid://cioc6wtbs3ubf"]
 
 [ext_resource type="Script" uid="uid://b2shq2gjd4fvt" path="res://addons/ropesim/Rope.gd" id="1_mk4gc"]
 [ext_resource type="Script" uid="uid://y8nntt6dh711" path="res://rope_examples/scripts/character_body_2d.gd" id="1_ww34l"]
@@ -10,22 +10,22 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3g7xa"]
 size = Vector2(64, 64)
 
-[node name="rope_with_body" type="Node2D"]
+[node name="rope_with_body" type="Node2D" unique_id=2083570788]
 position = Vector2(479, 16)
 
-[node name="left_rope_mover" type="CharacterBody2D" parent="."]
+[node name="left_rope_mover" type="CharacterBody2D" parent="." unique_id=363233768]
 position = Vector2(-176, 62)
 motion_mode = 1
 script = ExtResource("1_ww34l")
 
-[node name="Rope" type="Node2D" parent="left_rope_mover"]
+[node name="Rope" type="Node2D" parent="left_rope_mover" unique_id=960765950]
 script = ExtResource("1_mk4gc")
 num_segments = 15
 rope_length = 250.0
 gravity = 61.765
 num_constraint_iterations = 20
 
-[node name="RopeInteraction" type="Node" parent="left_rope_mover/Rope" node_paths=PackedStringArray("target_node", "input_node_override", "rope")]
+[node name="RopeInteraction" type="Node" parent="left_rope_mover/Rope" unique_id=1492007388 node_paths=PackedStringArray("target_node", "input_node_override", "rope")]
 script = ExtResource("2_ww34l")
 disable_in_editor = true
 position_update_mode = 0
@@ -33,27 +33,27 @@ target_node = NodePath("../../../hanging_rigidbody/attach_marker/rope_end")
 input_node_override = NodePath("../../../hanging_rigidbody/attach_marker")
 rope = NodePath("..")
 
-[node name="Label" type="Label" parent="left_rope_mover"]
+[node name="Label" type="Label" parent="left_rope_mover" unique_id=2069135140]
 offset_left = -24.0
 offset_top = -34.0
 offset_right = 23.0
 offset_bottom = -11.0
 text = "WSAD"
 
-[node name="right_rope_mover" type="CharacterBody2D" parent="."]
+[node name="right_rope_mover" type="CharacterBody2D" parent="." unique_id=2135167818]
 position = Vector2(185, 80)
 motion_mode = 1
 script = ExtResource("1_ww34l")
 use_arrow_keys = true
 
-[node name="Rope2" type="Node2D" parent="right_rope_mover"]
+[node name="Rope2" type="Node2D" parent="right_rope_mover" unique_id=1566481206]
 script = ExtResource("1_mk4gc")
 num_segments = 15
 rope_length = 250.0
 gravity = 61.765
 num_constraint_iterations = 20
 
-[node name="RopeInteraction" type="Node" parent="right_rope_mover/Rope2" node_paths=PackedStringArray("target_node", "input_node_override", "rope")]
+[node name="RopeInteraction" type="Node" parent="right_rope_mover/Rope2" unique_id=2057573518 node_paths=PackedStringArray("target_node", "input_node_override", "rope")]
 script = ExtResource("2_ww34l")
 disable_in_editor = true
 position_update_mode = 0
@@ -61,55 +61,55 @@ target_node = NodePath("../../../hanging_rigidbody/attach_marker2/rope_end2")
 input_node_override = NodePath("../../../hanging_rigidbody/attach_marker2")
 rope = NodePath("..")
 
-[node name="Label" type="Label" parent="right_rope_mover"]
+[node name="Label" type="Label" parent="right_rope_mover" unique_id=1449932912]
 offset_left = -24.0
 offset_top = -34.0
 offset_right = 23.0
 offset_bottom = -11.0
 text = "Arrow keys"
 
-[node name="hanging_rigidbody" type="RigidBody2D" parent="."]
+[node name="hanging_rigidbody" type="RigidBody2D" parent="." unique_id=538520775]
 position = Vector2(-75, 156)
 mass = 20.091
 physics_material_override = SubResource("PhysicsMaterial_nwm6u")
 metadata/_edit_group_ = true
 
-[node name="attach_marker" type="Marker2D" parent="hanging_rigidbody"]
+[node name="attach_marker" type="Marker2D" parent="hanging_rigidbody" unique_id=1648579631]
 position = Vector2(-19, 0)
 metadata/_edit_group_ = true
 
-[node name="rope_end" type="CharacterBody2D" parent="hanging_rigidbody/attach_marker"]
+[node name="rope_end" type="CharacterBody2D" parent="hanging_rigidbody/attach_marker" unique_id=1891475176]
 collision_layer = 0
 collision_mask = 0
 motion_mode = 1
 
-[node name="PinJoint2D" type="PinJoint2D" parent="hanging_rigidbody/attach_marker/rope_end"]
+[node name="PinJoint2D" type="PinJoint2D" parent="hanging_rigidbody/attach_marker/rope_end" unique_id=1133068831]
 node_a = NodePath("../../..")
 node_b = NodePath("..")
 softness = 0.05
 
-[node name="attach_marker2" type="Marker2D" parent="hanging_rigidbody"]
+[node name="attach_marker2" type="Marker2D" parent="hanging_rigidbody" unique_id=1516190119]
 position = Vector2(22, 0)
 metadata/_edit_group_ = true
 
-[node name="rope_end2" type="CharacterBody2D" parent="hanging_rigidbody/attach_marker2"]
+[node name="rope_end2" type="CharacterBody2D" parent="hanging_rigidbody/attach_marker2" unique_id=839554125]
 collision_layer = 0
 collision_mask = 0
 motion_mode = 1
 
-[node name="PinJoint2D2" type="PinJoint2D" parent="hanging_rigidbody/attach_marker2/rope_end2"]
+[node name="PinJoint2D2" type="PinJoint2D" parent="hanging_rigidbody/attach_marker2/rope_end2" unique_id=1644874258]
 node_a = NodePath("../../..")
 node_b = NodePath("..")
 softness = 0.05
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="hanging_rigidbody"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hanging_rigidbody" unique_id=108389870]
 shape = SubResource("RectangleShape2D_3g7xa")
 
-[node name="Icon" type="Sprite2D" parent="hanging_rigidbody"]
+[node name="Icon" type="Sprite2D" parent="hanging_rigidbody" unique_id=428534972]
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("3_ovf25")
 
-[node name="Label" type="Label" parent="."]
+[node name="Label" type="Label" parent="." unique_id=1099817405]
 offset_left = -467.0
 offset_top = 466.0
 offset_right = 709.0

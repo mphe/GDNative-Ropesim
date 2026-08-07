@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://c7p2vp6s5nvem"]
+[gd_scene format=3 uid="uid://c7p2vp6s5nvem"]
 
 [ext_resource type="Script" uid="uid://1xluodkpnre3" path="res://addons/ropesim/RopeHandle.gd" id="1_flav6"]
 [ext_resource type="Script" uid="uid://c8aemupwcpls1" path="res://rope_examples/scripts/animation_player.gd" id="1_gnk3l"]
@@ -81,55 +81,53 @@ expand_margin_right = 2.0
 [sub_resource type="RopeStiffnessParameters" id="RopeStiffnessParameters_o81b5"]
 stiffness = 40.0
 
-[node name="main" type="Node2D"]
+[node name="main" type="Node2D" unique_id=238457725]
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_o81b5")
-}
-autoplay = "moving"
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=671356284]
+libraries/ = SubResource("AnimationLibrary_o81b5")
+autoplay = &"moving"
 script = ExtResource("1_gnk3l")
 
-[node name="RopeHandle" type="Marker2D" parent="."]
+[node name="RopeHandle" type="Marker2D" parent="." unique_id=1615559452]
 position = Vector2(110.049, 130.049)
 rotation = 1.56586
 script = ExtResource("1_flav6")
 strength = 1.0
 rope_path = NodePath("../Rope")
 
-[node name="Rope" type="Node2D" parent="."]
+[node name="Rope" type="Node2D" parent="." unique_id=974201855]
 position = Vector2(89, 125.048996)
 rotation = -1.0472
 script = ExtResource("4_ty6wv")
 num_segments = 20
 rope_length = 200.0
 
-[node name="Node2D" type="Node2D" parent="."]
+[node name="Node2D" type="Node2D" parent="." unique_id=2055416482]
 position = Vector2(-118, 224)
 
-[node name="Rope3" type="Node2D" parent="Node2D"]
+[node name="Rope3" type="Node2D" parent="Node2D" unique_id=878621283]
 position = Vector2(174.00002, 200.00002)
 rotation = -1.0472
 script = ExtResource("4_ty6wv")
 
-[node name="Rope4" type="Node2D" parent="Node2D"]
+[node name="Rope4" type="Node2D" parent="Node2D" unique_id=507105196]
 position = Vector2(470, 200.00002)
 rotation = -1.0472
 script = ExtResource("4_ty6wv")
 stiffness_settings = SubResource("RopeStiffnessParameters_78hha")
 
-[node name="Rope5" type="Node2D" parent="."]
+[node name="Rope5" type="Node2D" parent="." unique_id=384249647]
 position = Vector2(94, 285)
 rotation = -1.0472
 script = ExtResource("4_ty6wv")
 
-[node name="Rope6" type="Node2D" parent="."]
+[node name="Rope6" type="Node2D" parent="." unique_id=1786620150]
 position = Vector2(390, 285)
 rotation = -1.0472
 script = ExtResource("4_ty6wv")
 stiffness_settings = SubResource("RopeStiffnessParameters_78hha")
 
-[node name="Label" type="Label" parent="."]
+[node name="Label" type="Label" parent="." unique_id=1005677448]
 offset_left = 11.0
 offset_top = 12.0
 offset_right = 592.0
@@ -137,21 +135,21 @@ offset_bottom = 61.0
 text = "Stiffness forces the rope to return to its resting position.
 The resting direction is downwards and affected by the the node's rotation."
 
-[node name="Without stiffness" type="Label" parent="."]
+[node name="Without stiffness" type="Label" parent="." unique_id=1139752562]
 offset_left = 55.0
 offset_top = 87.0
 offset_right = 192.0
 offset_bottom = 110.0
 text = "Without stiffness:"
 
-[node name="With stiffness" type="Label" parent="."]
+[node name="With stiffness" type="Label" parent="." unique_id=1957107552]
 offset_left = 365.0
 offset_top = 87.0
 offset_right = 520.0
 offset_bottom = 110.0
 text = "With stiffness (-60°):"
 
-[node name="Rope2" type="Node2D" parent="."]
+[node name="Rope2" type="Node2D" parent="." unique_id=1921684705]
 position = Vector2(361.00003, 123.048996)
 rotation = -1.0472
 script = ExtResource("4_ty6wv")
@@ -160,21 +158,21 @@ rope_length = 200.0
 stiffness_settings = SubResource("RopeStiffnessParameters_gnk3l")
 damping = 2.755
 
-[node name="RopeHandle2" type="Marker2D" parent="Rope2"]
+[node name="RopeHandle2" type="Marker2D" parent="Rope2" unique_id=286796988]
 position = Vector2(6.1943207, 20.729004)
 rotation = 2.61306
 script = ExtResource("1_flav6")
 strength = 1.0
 rope_path = NodePath("..")
 
-[node name="VSeparator2" type="VSeparator" parent="."]
+[node name="VSeparator2" type="VSeparator" parent="." unique_id=1506316573]
 offset_left = 504.0
 offset_top = -13.0
 offset_right = 708.0
 offset_bottom = 765.0
 theme_override_styles/separator = SubResource("StyleBoxFlat_gnk3l")
 
-[node name="Label2" type="Label" parent="."]
+[node name="Label2" type="Label" parent="." unique_id=708902067]
 offset_left = 619.0
 offset_top = 12.0
 offset_right = 1148.0
@@ -183,7 +181,7 @@ text = "If stiffness causes the rope to move erratically, there is likely an imb
 For example, the gravity could be too strong for the stiffness to counteract."
 autowrap_mode = 3
 
-[node name="Label3" type="Label" parent="."]
+[node name="Label3" type="Label" parent="." unique_id=691951300]
 offset_left = 966.0
 offset_top = 177.0
 offset_right = 1055.0
@@ -191,7 +189,7 @@ offset_bottom = 226.0
 text = "Gravity 30
 Stiffness 40"
 
-[node name="Label4" type="Label" parent="."]
+[node name="Label4" type="Label" parent="." unique_id=696124128]
 offset_left = 663.0
 offset_top = 177.0
 offset_right = 752.0
@@ -199,7 +197,7 @@ offset_bottom = 226.0
 text = "Gravity 100
 Stiffness 40"
 
-[node name="Rope7" type="Node2D" parent="."]
+[node name="Rope7" type="Node2D" parent="." unique_id=280307410]
 position = Vector2(998, 386)
 script = ExtResource("4_ty6wv")
 num_segments = 20
@@ -212,7 +210,7 @@ resolve_collisions_while_constraining = true
 report_contact_points = true
 metadata/_custom_type_script = "uid://b2shq2gjd4fvt"
 
-[node name="RopeHandle4" type="Marker2D" parent="Rope7"]
+[node name="RopeHandle4" type="Marker2D" parent="Rope7" unique_id=204050377]
 position = Vector2(54, -28)
 rotation = -2.8955657
 script = ExtResource("1_flav6")
@@ -221,7 +219,7 @@ rope_path = NodePath("..")
 rope_position = 0.37
 metadata/_custom_type_script = "uid://1xluodkpnre3"
 
-[node name="RopeHandle3" type="Marker2D" parent="Rope7/RopeHandle4"]
+[node name="RopeHandle3" type="Marker2D" parent="Rope7/RopeHandle4" unique_id=1213696267]
 position = Vector2(30.131355, 54.29643)
 script = ExtResource("1_flav6")
 strength = 1.0
@@ -229,7 +227,7 @@ rope_path = NodePath("../..")
 rope_position = 0.695
 metadata/_custom_type_script = "uid://1xluodkpnre3"
 
-[node name="Rope8" type="Node2D" parent="."]
+[node name="Rope8" type="Node2D" parent="." unique_id=953782644]
 position = Vector2(702, 375)
 script = ExtResource("4_ty6wv")
 num_segments = 20
@@ -241,7 +239,7 @@ resolve_collisions_while_constraining = true
 report_contact_points = true
 metadata/_custom_type_script = "uid://b2shq2gjd4fvt"
 
-[node name="RopeHandle4" type="Marker2D" parent="Rope8"]
+[node name="RopeHandle4" type="Marker2D" parent="Rope8" unique_id=1694876366]
 position = Vector2(53, -28)
 rotation = -2.8955657
 script = ExtResource("1_flav6")
@@ -250,7 +248,7 @@ rope_path = NodePath("..")
 rope_position = 0.37
 metadata/_custom_type_script = "uid://1xluodkpnre3"
 
-[node name="RopeHandle3" type="Marker2D" parent="Rope8/RopeHandle4"]
+[node name="RopeHandle3" type="Marker2D" parent="Rope8/RopeHandle4" unique_id=640669452]
 position = Vector2(25.521147, 52.360977)
 script = ExtResource("1_flav6")
 strength = 1.0

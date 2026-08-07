@@ -108,7 +108,7 @@ func start(provider: DiagnosticList_DiagnosticProvider) -> void:
     _start_stop_auto_refresh()
 
     # If connected to a LS of a different Godot instance, show a warning
-    if provider.get_lsp_client().get_project_path() != ProjectSettings.globalize_path("res://").simplify_path():
+    if not provider.get_lsp_client().lsp_root_matches_project_root():
         _multiple_instances_alert.popup_centered()
 
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cdjoxiv0y7jrp"]
+[gd_scene format=3 uid="uid://cdjoxiv0y7jrp"]
 
 [ext_resource type="Script" uid="uid://c8aemupwcpls1" path="res://rope_examples/scripts/animation_player.gd" id="1_26382"]
 [ext_resource type="Script" uid="uid://b2shq2gjd4fvt" path="res://addons/ropesim/Rope.gd" id="2_f7f8s"]
@@ -77,16 +77,14 @@ radius = 43.1741
 radius = 25.0
 height = 224.0
 
-[node name="collisions_demo" type="Node2D"]
+[node name="collisions_demo" type="Node2D" unique_id=794504265]
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_d00lc")
-}
-autoplay = "moving"
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1584721731]
+libraries/ = SubResource("AnimationLibrary_d00lc")
+autoplay = &"moving"
 script = ExtResource("1_26382")
 
-[node name="Rope" type="Node2D" parent="."]
+[node name="Rope" type="Node2D" parent="." unique_id=931954003]
 texture_repeat = 2
 position = Vector2(-14, 19)
 script = ExtResource("2_f7f8s")
@@ -100,34 +98,34 @@ collision_radius = 5.0
 resolve_collisions_while_constraining = true
 metadata/_edit_group_ = true
 
-[node name="RopeRendererLine2D" type="Line2D" parent="Rope"]
+[node name="RopeRendererLine2D" type="Line2D" parent="Rope" unique_id=2145820214]
 show_behind_parent = true
 points = PackedVector2Array(-4.80347, -0.761364, -10.5067, 4.73146, -16.2553, 10.1485, -22.0847, 15.4381, -28.0196, 20.5571, -34.0784, 25.4675, -40.2769, 30.13, -46.6331, 34.4975, -53.1677, 38.508, -59.8992, 42.0816, -66.8356, 45.1321, -73.9514, 47.6038, -81.184, 49.5443, -88.4286, 51.1361, -95.6589, 52.6133, -102.818, 54.1794, -110.062, 55.7639, -117.205, 57.3264, -124.137, 59.5047, -130.619, 62.4396, -137.429, 64.4097, -144.43, 65.1974, -151.431, 64.8602, -158.295, 63.6191, -164.975, 61.7275, -171.526, 59.542, -178.05, 57.3897, -184.654, 59.0407, -191.195, 60.6472, -197.749, 62.0709, -204.415, 62.0989)
 texture = ExtResource("3_h0ft8")
 texture_mode = 1
 script = ExtResource("4_gll4t")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1383269874]
 position = Vector2(69, 204)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1938157889]
 position = Vector2(-18, -52)
 shape = SubResource("RectangleShape2D_aatbp")
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D" unique_id=674665746]
 position = Vector2(78, 43)
 shape = SubResource("CircleShape2D_fvc1g")
 
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D"]
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D" unique_id=1785076756]
 position = Vector2(203, 3)
 rotation = -0.719538
 shape = SubResource("CapsuleShape2D_6b71f")
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D" unique_id=345925306]
 position = Vector2(335, 23)
 polygon = PackedVector2Array(-24, -54, -16, -109, 28, -120, 58, -81, 84, -119, 116, -126, 144, -61, 219, -114, 301, -101, 306, 90, 211, 113, 186, -9, 81, 91, 33, -9)
 
-[node name="Label" type="Label" parent="."]
+[node name="Label" type="Label" parent="." unique_id=1630175752]
 offset_left = 9.0
 offset_top = 448.0
 offset_right = 471.0

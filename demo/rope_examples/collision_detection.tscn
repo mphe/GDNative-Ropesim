@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://d3hb4pwl1ucly"]
+[gd_scene format=3 uid="uid://d3hb4pwl1ucly"]
 
 [ext_resource type="Script" uid="uid://c8aemupwcpls1" path="res://rope_examples/scripts/animation_player.gd" id="1_auvbo"]
 [ext_resource type="Script" uid="uid://p7agqkyx3kru" path="res://addons/ropesim/RopeCollisionShapeGenerator.gd" id="3_10pwp"]
@@ -47,15 +47,13 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xyd70"]
 size = Vector2(128, 128)
 
-[node name="main" type="Node2D"]
+[node name="main" type="Node2D" unique_id=1039062841]
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_agh7j")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1050192619]
+libraries/ = SubResource("AnimationLibrary_agh7j")
 script = ExtResource("1_auvbo")
 
-[node name="Label" type="Label" parent="."]
+[node name="Label" type="Label" parent="." unique_id=1368098715]
 offset_left = 18.0
 offset_top = 6.0
 offset_right = 937.0
@@ -66,7 +64,7 @@ Other shapes are not supported at the moment.
 
 NOTE: Collisions don't work in editor. Run this scene to see the example work."
 
-[node name="Rope" type="Node2D" parent="."]
+[node name="Rope" type="Node2D" parent="." unique_id=330369671]
 position = Vector2(199, 113)
 script = ExtResource("4_wgvfy")
 num_segments = 20
@@ -74,15 +72,15 @@ rope_length = 200.0
 gravity = 25.0
 metadata/_edit_group_ = true
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." unique_id=965447541]
 position = Vector2(19, 114)
 script = ExtResource("4_b0a70")
 
-[node name="RopeCollisionShapeGenerator" type="Node" parent="Area2D"]
+[node name="RopeCollisionShapeGenerator" type="Node" parent="Area2D" unique_id=259256064]
 script = ExtResource("3_10pwp")
 rope_path = NodePath("../../Rope")
 
-[node name="indicator" type="Label" parent="Area2D"]
+[node name="indicator" type="Label" parent="Area2D" unique_id=1799072563]
 visible = false
 offset_left = 411.0
 offset_top = 142.0
@@ -91,11 +89,11 @@ offset_bottom = 165.0
 text = "Collision!"
 metadata/_edit_use_anchors_ = true
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+[node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=1802913507]
 position = Vector2(133, 400)
 
-[node name="Icon" type="Sprite2D" parent="CharacterBody2D"]
+[node name="Icon" type="Sprite2D" parent="CharacterBody2D" unique_id=869191457]
 texture = ExtResource("3_jqc61")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D" unique_id=569923043]
 shape = SubResource("RectangleShape2D_xyd70")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://l03q4o7r2nuk"]
+[gd_scene format=3 uid="uid://l03q4o7r2nuk"]
 
 [ext_resource type="Script" uid="uid://c8aemupwcpls1" path="res://rope_examples/scripts/animation_player.gd" id="1_sodim"]
 [ext_resource type="Script" uid="uid://brklaoabvl73l" path="res://addons/ropesim/RopeAnchor.gd" id="2_hm10y"]
@@ -43,39 +43,37 @@ _data = {
 &"moving": SubResource("Animation_q02ig")
 }
 
-[node name="main" type="Node2D"]
+[node name="main" type="Node2D" unique_id=1792756372]
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_agh7j")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2011618909]
+libraries/ = SubResource("AnimationLibrary_agh7j")
 script = ExtResource("1_sodim")
 
-[node name="RopeAnchor" type="Marker2D" parent="."]
+[node name="RopeAnchor" type="Marker2D" parent="." unique_id=2104345428]
 position = Vector2(358.629, 170.15)
 script = ExtResource("2_hm10y")
 rope_path = NodePath("../Rope")
 rope_position = 0.322
 
-[node name="Icon" type="Sprite2D" parent="RopeAnchor"]
+[node name="Icon" type="Sprite2D" parent="RopeAnchor" unique_id=644882805]
 position = Vector2(0, 32)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("3_y0u5w")
 
-[node name="RopeAnchor2" type="Marker2D" parent="."]
+[node name="RopeAnchor2" type="Marker2D" parent="." unique_id=1109622679]
 position = Vector2(252.384, 257.986)
 rotation = 2.85458
 script = ExtResource("2_hm10y")
-rope_path = NodePath("../Rope")
 apply_angle = true
+rope_path = NodePath("../Rope")
 
-[node name="Icon" type="Sprite2D" parent="RopeAnchor2"]
+[node name="Icon" type="Sprite2D" parent="RopeAnchor2" unique_id=1629944861]
 position = Vector2(32, 0)
 rotation = -1.5708
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("3_y0u5w")
 
-[node name="Rope" type="Node2D" parent="."]
+[node name="Rope" type="Node2D" parent="." unique_id=1034831629]
 position = Vector2(199, 113)
 script = ExtResource("4_jxxrc")
 num_segments = 20
@@ -84,7 +82,7 @@ gravity = 39.41
 num_constraint_iterations = 15
 metadata/_edit_group_ = true
 
-[node name="Label" type="Label" parent="."]
+[node name="Label" type="Label" parent="." unique_id=1656855109]
 offset_left = 156.0
 offset_top = 37.0
 offset_right = 514.0

@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://tsfsnxbfcax6"]
+[gd_scene format=3 uid="uid://tsfsnxbfcax6"]
 
 [ext_resource type="Script" uid="uid://b3dpnradvv4q5" path="res://addons/diagnosticlist/Panel.gd" id="1_fewy8"]
 
-[node name="DiagnosticsPanel" type="Control"]
+[node name="DiagnosticsPanel" type="Control" unique_id=845773555]
 custom_minimum_size = Vector2(250, 225)
 layout_mode = 3
 anchors_preset = 15
@@ -12,7 +12,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_fewy8")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=2132615381]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -20,7 +20,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="error_tree_list" type="Tree" parent="HBoxContainer"]
+[node name="error_tree_list" type="Tree" parent="HBoxContainer" unique_id=793942464]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -31,30 +31,30 @@ hide_root = true
 select_mode = 1
 scroll_horizontal_enabled = false
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer" unique_id=1126832621]
 layout_mode = 2
 
-[node name="cb_auto_refresh" type="CheckBox" parent="HBoxContainer/VBoxContainer"]
+[node name="cb_auto_refresh" type="CheckBox" parent="HBoxContainer/VBoxContainer" unique_id=792219765]
 unique_name_in_owner = true
 layout_mode = 2
 button_pressed = true
 text = "Auto-Refresh"
 
-[node name="btn_refresh_errors" type="Button" parent="HBoxContainer/VBoxContainer"]
+[node name="btn_refresh_errors" type="Button" parent="HBoxContainer/VBoxContainer" unique_id=1038966580]
 unique_name_in_owner = true
+auto_translate_mode = 2
 layout_mode = 2
-auto_translate = false
 text = "Refresh"
 
-[node name="HSeparator" type="HSeparator" parent="HBoxContainer/VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="HBoxContainer/VBoxContainer" unique_id=1493726401]
 layout_mode = 2
 
-[node name="cb_group_by_file" type="CheckBox" parent="HBoxContainer/VBoxContainer"]
+[node name="cb_group_by_file" type="CheckBox" parent="HBoxContainer/VBoxContainer" unique_id=723601327]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Group by file"
 
-[node name="btn_filter_errors" type="Button" parent="HBoxContainer/VBoxContainer"]
+[node name="btn_filter_errors" type="Button" parent="HBoxContainer/VBoxContainer" unique_id=903089998]
 unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 0
@@ -63,7 +63,7 @@ toggle_mode = true
 button_pressed = true
 text = "0"
 
-[node name="btn_filter_warnings" type="Button" parent="HBoxContainer/VBoxContainer"]
+[node name="btn_filter_warnings" type="Button" parent="HBoxContainer/VBoxContainer" unique_id=1815741718]
 unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 0
@@ -72,17 +72,7 @@ toggle_mode = true
 button_pressed = true
 text = "0"
 
-[node name="btn_filter_infos" type="Button" parent="HBoxContainer/VBoxContainer"]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-focus_mode = 0
-theme_type_variation = &"EditorLogFilterButton"
-toggle_mode = true
-button_pressed = true
-text = "0"
-
-[node name="btn_filter_hints" type="Button" parent="HBoxContainer/VBoxContainer"]
+[node name="btn_filter_infos" type="Button" parent="HBoxContainer/VBoxContainer" unique_id=167265356]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
@@ -92,7 +82,17 @@ toggle_mode = true
 button_pressed = true
 text = "0"
 
-[node name="label_refresh_time" type="Label" parent="HBoxContainer/VBoxContainer"]
+[node name="btn_filter_hints" type="Button" parent="HBoxContainer/VBoxContainer" unique_id=444082628]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+focus_mode = 0
+theme_type_variation = &"EditorLogFilterButton"
+toggle_mode = true
+button_pressed = true
+text = "0"
+
+[node name="label_refresh_time" type="Label" parent="HBoxContainer/VBoxContainer" unique_id=1734768323]
 unique_name_in_owner = true
 self_modulate = Color(1, 1, 1, 0.541176)
 layout_mode = 2
@@ -101,7 +101,7 @@ text = "Connecting..."
 horizontal_alignment = 2
 autowrap_mode = 2
 
-[node name="multiple_instances_alert" type="AcceptDialog" parent="."]
+[node name="multiple_instances_alert" type="AcceptDialog" parent="." unique_id=103434489]
 unique_name_in_owner = true
 title = "Diagnostic List - Warning!"
 position = Vector2i(0, 36)

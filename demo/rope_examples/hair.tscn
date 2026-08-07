@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://meudxbssctd7"]
+[gd_scene format=3 uid="uid://meudxbssctd7"]
 
 [ext_resource type="Script" uid="uid://c8aemupwcpls1" path="res://rope_examples/scripts/animation_player.gd" id="1_hhfs1"]
 [ext_resource type="Texture2D" uid="uid://criwv6nuivcxy" path="res://rope_examples/icon.svg" id="2_3mr5p"]
@@ -282,242 +282,256 @@ _data = {
 &"moving": SubResource("Animation_sbles")
 }
 
-[node name="Node2D" type="Node2D"]
+[sub_resource type="Curve" id="Curve_l7nak"]
+_data = [Vector2(0, 0), 0.0, 1.0, 1, 1, Vector2(1, 1), 1.0, 0.0, 1, 1]
+point_count = 2
+
+[sub_resource type="RopeStiffnessParameters" id="RopeStiffnessParameters_o1wqw"]
+stiffness = 4.555
+stiffness_bend_curve = SubResource("Curve_l7nak")
+
+[sub_resource type="Curve" id="Curve_27p7j"]
+_data = [Vector2(0, 0), 0.0, 1.0, 1, 1, Vector2(1, 1), 1.0, 0.0, 1, 1]
+point_count = 2
+
+[sub_resource type="RopeStiffnessParameters" id="RopeStiffnessParameters_38piu"]
+stiffness = 4.555
+stiffness_bend_curve = SubResource("Curve_27p7j")
+
+[node name="Node2D" type="Node2D" unique_id=1359667809]
 position = Vector2(246, 121)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_vgrqo")
-}
-autoplay = "moving"
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2116547472]
+libraries/ = SubResource("AnimationLibrary_vgrqo")
+autoplay = &"moving"
 script = ExtResource("1_hhfs1")
 
-[node name="Node2D" type="Node2D" parent="."]
+[node name="Node2D" type="Node2D" parent="." unique_id=1972012431]
 position = Vector2(-3, 89)
 
-[node name="body" type="Sprite2D" parent="Node2D"]
+[node name="body" type="Sprite2D" parent="Node2D" unique_id=2012174595]
 position = Vector2(1, -4.1875)
 scale = Vector2(0.287109, 0.84668)
 texture = ExtResource("2_3mr5p")
 
-[node name="arm" type="Node2D" parent="Node2D"]
+[node name="arm" type="Node2D" parent="Node2D" unique_id=1429389847]
 position = Vector2(16, -47)
 rotation = 1.57079
 
-[node name="arm5" type="Sprite2D" parent="Node2D/arm"]
+[node name="arm5" type="Sprite2D" parent="Node2D/arm" unique_id=204403903]
 position = Vector2(7.80821e-06, 3.13916e-07)
 scale = Vector2(0.125226, 0.506219)
 texture = ExtResource("2_3mr5p")
 offset = Vector2(0, -64)
 
-[node name="arm6" type="Sprite2D" parent="Node2D/arm"]
+[node name="arm6" type="Sprite2D" parent="Node2D/arm" unique_id=743912613]
 position = Vector2(0.000147748, -63)
 scale = Vector2(0.125226, 0.506219)
 texture = ExtResource("2_3mr5p")
 offset = Vector2(0, -64)
 
-[node name="arm2" type="Node2D" parent="Node2D"]
+[node name="arm2" type="Node2D" parent="Node2D" unique_id=1600801163]
 position = Vector2(-17, -47)
 
-[node name="arm2" type="Sprite2D" parent="Node2D/arm2"]
+[node name="arm2" type="Sprite2D" parent="Node2D/arm2" unique_id=1098574197]
 rotation = -1.57079
 scale = Vector2(0.125226, 0.506219)
 texture = ExtResource("2_3mr5p")
 offset = Vector2(0, -64)
 
-[node name="Icon5" type="Sprite2D" parent="Node2D/arm2"]
+[node name="Icon5" type="Sprite2D" parent="Node2D/arm2" unique_id=1827193623]
 position = Vector2(-65, 0)
 scale = Vector2(0.125226, 0.506219)
 texture = ExtResource("2_3mr5p")
 offset = Vector2(0, -64)
 
-[node name="neck" type="Sprite2D" parent="Node2D"]
+[node name="neck" type="Sprite2D" parent="Node2D" unique_id=1526151143]
 position = Vector2(1, -73)
 scale = Vector2(0.195313, 0.289062)
 texture = ExtResource("2_3mr5p")
 
-[node name="head" type="Sprite2D" parent="Node2D"]
+[node name="head" type="Sprite2D" parent="Node2D" unique_id=154392497]
 position = Vector2(0, -96)
 rotation = 0.261799
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_3mr5p")
 
-[node name="hair_behind" type="Node2D" parent="Node2D/head"]
+[node name="hair_behind" type="Node2D" parent="Node2D/head" unique_id=906233807]
 modulate = Color(0.851562, 0.851562, 0.851562, 1)
 z_index = -140
 scale = Vector2(2, 2)
 
-[node name="hair" parent="Node2D/head/hair_behind" instance=ExtResource("3_xmkdr")]
+[node name="hair" parent="Node2D/head/hair_behind" unique_id=856390531 instance=ExtResource("3_xmkdr")]
 position = Vector2(2, -25)
 rope_length = 86.0
 line_width = 14.0
 
-[node name="hair2" parent="Node2D/head/hair_behind" instance=ExtResource("3_xmkdr")]
+[node name="hair2" parent="Node2D/head/hair_behind" unique_id=801454889 instance=ExtResource("3_xmkdr")]
 position = Vector2(1, -20)
 line_width = 8.0
 
-[node name="RopeHandle" type="Marker2D" parent="Node2D/head/hair_behind/hair2"]
+[node name="RopeHandle" type="Marker2D" parent="Node2D/head/hair_behind/hair2" unique_id=1593783362]
 position = Vector2(31, -20)
 script = ExtResource("4_r73xa")
 rope_path = NodePath("..")
 rope_position = 0.445
 
-[node name="hair3" parent="Node2D/head/hair_behind" instance=ExtResource("3_xmkdr")]
+[node name="hair3" parent="Node2D/head/hair_behind" unique_id=263558455 instance=ExtResource("3_xmkdr")]
 position = Vector2(1, -20)
 line_width = 8.0
 
-[node name="RopeHandle" type="Marker2D" parent="Node2D/head/hair_behind/hair3"]
+[node name="RopeHandle" type="Marker2D" parent="Node2D/head/hair_behind/hair3" unique_id=1888388722]
 position = Vector2(-28, -20)
 script = ExtResource("4_r73xa")
 rope_path = NodePath("..")
 rope_position = 0.445
 
-[node name="hair4" parent="Node2D/head/hair_behind" instance=ExtResource("3_xmkdr")]
+[node name="hair4" parent="Node2D/head/hair_behind" unique_id=1947977677 instance=ExtResource("3_xmkdr")]
 position = Vector2(3, -13)
 line_width = 12.0
 
-[node name="RopeHandle" type="Marker2D" parent="Node2D/head/hair_behind/hair4"]
+[node name="RopeHandle" type="Marker2D" parent="Node2D/head/hair_behind/hair4" unique_id=669729797]
 position = Vector2(13, -20)
 script = ExtResource("4_r73xa")
 rope_path = NodePath("..")
 rope_position = 0.445
 
-[node name="hair5" parent="Node2D/head/hair_behind" instance=ExtResource("3_xmkdr")]
+[node name="hair5" parent="Node2D/head/hair_behind" unique_id=105292583 instance=ExtResource("3_xmkdr")]
 position = Vector2(3, -13)
 line_width = 12.0
 
-[node name="RopeHandle" type="Marker2D" parent="Node2D/head/hair_behind/hair5"]
+[node name="RopeHandle" type="Marker2D" parent="Node2D/head/hair_behind/hair5" unique_id=1536950101]
 position = Vector2(-14, -20)
 script = ExtResource("4_r73xa")
 rope_path = NodePath("..")
 rope_position = 0.445
 
-[node name="hair" type="Node2D" parent="Node2D/head"]
+[node name="hair" type="Node2D" parent="Node2D/head" unique_id=1256551484]
 scale = Vector2(2, 2)
 
-[node name="hair4" parent="Node2D/head/hair" instance=ExtResource("3_xmkdr")]
+[node name="hair4" parent="Node2D/head/hair" unique_id=1381870089 instance=ExtResource("3_xmkdr")]
 position = Vector2(1, -30)
 
-[node name="RopeHandle" type="Marker2D" parent="Node2D/head/hair/hair4"]
+[node name="RopeHandle" type="Marker2D" parent="Node2D/head/hair/hair4" unique_id=492004969]
 position = Vector2(72, -26)
 script = ExtResource("4_r73xa")
 rope_path = NodePath("..")
 rope_position = 0.445
 
-[node name="hair3" parent="Node2D/head/hair" instance=ExtResource("3_xmkdr")]
+[node name="hair3" parent="Node2D/head/hair" unique_id=596434947 instance=ExtResource("3_xmkdr")]
 position = Vector2(1, -30)
 
-[node name="RopeHandle" type="Marker2D" parent="Node2D/head/hair/hair3"]
+[node name="RopeHandle" type="Marker2D" parent="Node2D/head/hair/hair3" unique_id=435321002]
 position = Vector2(-66, -29)
 script = ExtResource("4_r73xa")
 rope_path = NodePath("..")
 rope_position = 0.445
 
-[node name="hair6" parent="Node2D/head/hair" instance=ExtResource("3_xmkdr")]
+[node name="hair6" parent="Node2D/head/hair" unique_id=1820609009 instance=ExtResource("3_xmkdr")]
 position = Vector2(3, -25)
 
-[node name="RopeHandle" type="Marker2D" parent="Node2D/head/hair/hair6"]
+[node name="RopeHandle" type="Marker2D" parent="Node2D/head/hair/hair6" unique_id=1559744739]
 position = Vector2(-56, -31)
 script = ExtResource("4_r73xa")
 rope_path = NodePath("..")
 rope_position = 0.445
 
-[node name="hair5" parent="Node2D/head/hair" instance=ExtResource("3_xmkdr")]
+[node name="hair5" parent="Node2D/head/hair" unique_id=615137068 instance=ExtResource("3_xmkdr")]
 position = Vector2(1, -25)
 
-[node name="RopeHandle" type="Marker2D" parent="Node2D/head/hair/hair5"]
+[node name="RopeHandle" type="Marker2D" parent="Node2D/head/hair/hair5" unique_id=1997882281]
 position = Vector2(55, -29)
 script = ExtResource("4_r73xa")
 rope_path = NodePath("..")
 rope_position = 0.445
 
-[node name="hair" parent="Node2D/head/hair" instance=ExtResource("3_xmkdr")]
+[node name="hair" parent="Node2D/head/hair" unique_id=832925962 instance=ExtResource("3_xmkdr")]
 position = Vector2(1, -21)
 
-[node name="RopeHandle" type="Marker2D" parent="Node2D/head/hair/hair"]
+[node name="RopeHandle" type="Marker2D" parent="Node2D/head/hair/hair" unique_id=1854707317]
 position = Vector2(78, -62)
 script = ExtResource("4_r73xa")
 rope_path = NodePath("..")
 rope_position = 0.27
 
-[node name="hair2" parent="Node2D/head/hair" instance=ExtResource("3_xmkdr")]
+[node name="hair2" parent="Node2D/head/hair" unique_id=1840824879 instance=ExtResource("3_xmkdr")]
 position = Vector2(1, -21)
 
-[node name="RopeHandle" type="Marker2D" parent="Node2D/head/hair/hair2"]
+[node name="RopeHandle" type="Marker2D" parent="Node2D/head/hair/hair2" unique_id=232731819]
 position = Vector2(-49, -38)
 script = ExtResource("4_r73xa")
 rope_path = NodePath("..")
 rope_position = 0.375
 
-[node name="hair2" parent="Node2D/head" instance=ExtResource("3_xmkdr")]
+[node name="hair2" parent="Node2D/head" unique_id=398330833 instance=ExtResource("3_xmkdr")]
 position = Vector2(5.69318, 15.4578)
 rotation = -1.57079
 num_segments = 5
 rope_length = 18.85
 segment_length_distribution = null
-stiffness = 4.555
+stiffness_settings = SubResource("RopeStiffnessParameters_o1wqw")
 gravity = 26.78
 line_width = 3.26
 
-[node name="RopeHandle" type="Marker2D" parent="Node2D/head/hair2"]
+[node name="RopeHandle" type="Marker2D" parent="Node2D/head/hair2" unique_id=1965467997]
 position = Vector2(14.2923, 22.8913)
 script = ExtResource("4_r73xa")
 rope_path = NodePath("..")
 
-[node name="hair3" parent="Node2D/head" instance=ExtResource("3_xmkdr")]
+[node name="hair3" parent="Node2D/head" unique_id=1385863119 instance=ExtResource("3_xmkdr")]
 position = Vector2(-5.41547, 15.1655)
 rotation = -4.71238
 num_segments = 5
 rope_length = 18.85
 segment_length_distribution = null
-stiffness = 4.555
+stiffness_settings = SubResource("RopeStiffnessParameters_38piu")
 gravity = 26.78
 line_width = 3.26
 
-[node name="RopeHandle" type="Marker2D" parent="Node2D/head/hair3"]
+[node name="RopeHandle" type="Marker2D" parent="Node2D/head/hair3" unique_id=853784411]
 position = Vector2(-10.9885, 29.6655)
 script = ExtResource("4_r73xa")
 rope_path = NodePath("..")
 
-[node name="leg" type="Node2D" parent="Node2D"]
+[node name="leg" type="Node2D" parent="Node2D" unique_id=1318753737]
 position = Vector2(12, 43)
 rotation = 2.35619
 
-[node name="leg" type="Sprite2D" parent="Node2D/leg"]
+[node name="leg" type="Sprite2D" parent="Node2D/leg" unique_id=1200428280]
 position = Vector2(7.80821e-06, 3.13916e-07)
 scale = Vector2(0.125226, 0.506219)
 texture = ExtResource("2_3mr5p")
 offset = Vector2(0, -64)
 
-[node name="leg2" type="Sprite2D" parent="Node2D/leg"]
+[node name="leg2" type="Sprite2D" parent="Node2D/leg" unique_id=455961857]
 position = Vector2(0.000147748, -63)
 rotation = 0.523598
 scale = Vector2(0.125226, 0.506219)
 texture = ExtResource("2_3mr5p")
 offset = Vector2(0, -64)
 
-[node name="leg2" type="Node2D" parent="Node2D"]
+[node name="leg2" type="Node2D" parent="Node2D" unique_id=726196257]
 position = Vector2(-13.3892, 46.1056)
 rotation = 4.71238
 
-[node name="leg" type="Sprite2D" parent="Node2D/leg2"]
+[node name="leg" type="Sprite2D" parent="Node2D/leg2" unique_id=2049973555]
 position = Vector2(7.80821e-06, 3.13916e-07)
 scale = Vector2(0.125226, 0.506219)
 texture = ExtResource("2_3mr5p")
 offset = Vector2(0, -64)
 
-[node name="leg2" type="Sprite2D" parent="Node2D/leg2"]
+[node name="leg2" type="Sprite2D" parent="Node2D/leg2" unique_id=333413139]
 position = Vector2(0.000147748, -63)
 rotation = -1.0472
 scale = Vector2(0.125226, 0.506219)
 texture = ExtResource("2_3mr5p")
 offset = Vector2(0, -64)
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1580448356]
 position = Vector2(13, 74)
 zoom = Vector2(1.84, 1.84)
 
-[node name="Label" type="Label" parent="."]
+[node name="Label" type="Label" parent="." unique_id=803589459]
 offset_left = 173.0
 offset_top = -67.0
 offset_right = 280.0

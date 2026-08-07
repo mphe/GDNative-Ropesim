@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dkkstr4acmsvu"]
+[gd_scene format=3 uid="uid://dkkstr4acmsvu"]
 
 [ext_resource type="Script" uid="uid://dwq48xlus2mja" path="res://rope_examples/scripts/split_controller.gd" id="1_34iqv"]
 [ext_resource type="Script" uid="uid://b2shq2gjd4fvt" path="res://addons/ropesim/Rope.gd" id="2_dlb8k"]
@@ -15,52 +15,52 @@ expand_margin_right = 2.0
 color = Color(1, 1, 1, 1)
 thickness = 4
 
-[node name="rope_break_example" type="Node2D"]
+[node name="rope_break_example" type="Node2D" unique_id=332442077]
 script = ExtResource("1_34iqv")
 
-[node name="main_rope" type="Node2D" parent="."]
+[node name="main_rope" type="Node2D" parent="." unique_id=848453049]
 unique_name_in_owner = true
 position = Vector2(537, 405)
 script = ExtResource("2_dlb8k")
 num_segments = 20
 rope_length = 200.0
 
-[node name="fixation" type="Marker2D" parent="main_rope"]
+[node name="fixation" type="Marker2D" parent="main_rope" unique_id=679196319]
 unique_name_in_owner = true
 position = Vector2(118, 3)
 script = ExtResource("3_nlat5")
 strength = 1.0
 rope_path = NodePath("..")
 
-[node name="split_rope_right" type="Node2D" parent="main_rope/fixation"]
+[node name="split_rope_right" type="Node2D" parent="main_rope/fixation" unique_id=209620245]
 unique_name_in_owner = true
 visible = false
 script = ExtResource("2_dlb8k")
 
-[node name="split_rope_left" type="Node2D" parent="main_rope"]
+[node name="split_rope_left" type="Node2D" parent="main_rope" unique_id=98245147]
 unique_name_in_owner = true
 visible = false
 script = ExtResource("2_dlb8k")
 
-[node name="center" type="Marker2D" parent="main_rope"]
+[node name="center" type="Marker2D" parent="main_rope" unique_id=1044337440]
 position = Vector2(57.7058, 84.7856)
 script = ExtResource("4_2ql0w")
 rope_path = NodePath("..")
 rope_position = 0.5
 
-[node name="split_rope_left_handle" type="Marker2D" parent="main_rope/center"]
+[node name="split_rope_left_handle" type="Marker2D" parent="main_rope/center" unique_id=149631325]
 unique_name_in_owner = true
 script = ExtResource("3_nlat5")
 strength = 1.0
 rope_path = NodePath("../../split_rope_left")
 
-[node name="split_rope_right_handle" type="Marker2D" parent="main_rope/center"]
+[node name="split_rope_right_handle" type="Marker2D" parent="main_rope/center" unique_id=365929540]
 unique_name_in_owner = true
 script = ExtResource("3_nlat5")
 strength = 1.0
 rope_path = NodePath("../../fixation/split_rope_right")
 
-[node name="Label" type="Label" parent="."]
+[node name="Label" type="Label" parent="." unique_id=804025939]
 offset_left = 17.0
 offset_top = 15.0
 offset_right = 504.0
@@ -75,7 +75,7 @@ This gives the illusion of a breakable rope.
 Left click to snap the right fixation point to the mouse position."
 metadata/_edit_use_anchors_ = true
 
-[node name="Label2" type="Label" parent="."]
+[node name="Label2" type="Label" parent="." unique_id=699512470]
 offset_left = 296.0
 offset_top = 294.0
 offset_right = 783.0
@@ -83,7 +83,7 @@ offset_bottom = 317.0
 text = "The rope will break after this distance."
 horizontal_alignment = 1
 
-[node name="VSeparator" type="VSeparator" parent="."]
+[node name="VSeparator" type="VSeparator" parent="." unique_id=1887830737]
 offset_left = 822.0
 offset_top = 339.0
 offset_right = 845.0
@@ -92,7 +92,7 @@ size_flags_horizontal = 0
 size_flags_vertical = 0
 theme_override_styles/separator = SubResource("StyleBoxFlat_6bata")
 
-[node name="VSeparator2" type="VSeparator" parent="."]
+[node name="VSeparator2" type="VSeparator" parent="." unique_id=393666761]
 offset_left = 233.0
 offset_top = 339.0
 offset_right = 256.0
@@ -101,7 +101,7 @@ size_flags_horizontal = 0
 size_flags_vertical = 0
 theme_override_styles/separator = SubResource("StyleBoxFlat_6bata")
 
-[node name="HSeparator" type="HSeparator" parent="."]
+[node name="HSeparator" type="HSeparator" parent="." unique_id=543462877]
 offset_left = 244.0
 offset_top = 354.0
 offset_right = 831.0
