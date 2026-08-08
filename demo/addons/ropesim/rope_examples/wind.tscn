@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://dedfd3r8spcaq"]
 
 [ext_resource type="Script" uid="uid://b2shq2gjd4fvt" path="res://addons/ropesim/Rope.gd" id="1_8m3e7"]
-[ext_resource type="Script" uid="uid://8rd342pwvcf8" path="res://rope_examples/scripts/PerformanceLabel.gd" id="1_pmk4g"]
+[ext_resource type="Script" uid="uid://8rd342pwvcf8" path="res://addons/ropesim/rope_examples/scripts/PerformanceLabel.gd" id="1_pmk4g"]
 [ext_resource type="Script" uid="uid://dfppmnngy2wx4" path="res://addons/ropesim/RopeRendererLine2D.gd" id="2_8vldf"]
-[ext_resource type="Texture2D" uid="uid://criwv6nuivcxy" path="res://rope_examples/icon.svg" id="2_pmk4g"]
+[ext_resource type="Texture2D" uid="uid://criwv6nuivcxy" path="res://addons/ropesim/rope_examples/icon.svg" id="2_pmk4g"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_pmk4g"]
 frequency = 0.0012

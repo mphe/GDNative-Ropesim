@@ -42,7 +42,7 @@ The following nodes exist:
 Use the in-engine help to view the full documentation for each node.
 
 ### Examples
-The project includes various example scenes that demonstrate the features of this plugin.
+The project includes various example scenes in `addons/ropesim/rope_examples/` that demonstrate the features of this plugin.
 See also the [showcase video](#showcase) for a basic usage example.
 
 ### Editor Menu

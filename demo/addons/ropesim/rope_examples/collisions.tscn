@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://cdjoxiv0y7jrp"]
 
-[ext_resource type="Script" uid="uid://c8aemupwcpls1" path="res://rope_examples/scripts/animation_player.gd" id="1_26382"]
+[ext_resource type="Script" uid="uid://c8aemupwcpls1" path="res://addons/ropesim/rope_examples/scripts/animation_player.gd" id="1_26382"]
 [ext_resource type="Script" uid="uid://b2shq2gjd4fvt" path="res://addons/ropesim/Rope.gd" id="2_f7f8s"]
-[ext_resource type="Texture2D" uid="uid://criwv6nuivcxy" path="res://rope_examples/icon.svg" id="3_h0ft8"]
+[ext_resource type="Texture2D" uid="uid://criwv6nuivcxy" path="res://addons/ropesim/rope_examples/icon.svg" id="3_h0ft8"]
 [ext_resource type="Script" uid="uid://dfppmnngy2wx4" path="res://addons/ropesim/RopeRendererLine2D.gd" id="4_gll4t"]
 
 [sub_resource type="Animation" id="Animation_6b71f"]

@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://cioc6wtbs3ubf"]
 
 [ext_resource type="Script" uid="uid://b2shq2gjd4fvt" path="res://addons/ropesim/Rope.gd" id="1_mk4gc"]
-[ext_resource type="Script" uid="uid://y8nntt6dh711" path="res://rope_examples/scripts/character_body_2d.gd" id="1_ww34l"]
+[ext_resource type="Script" uid="uid://y8nntt6dh711" path="res://addons/ropesim/rope_examples/scripts/character_body_2d.gd" id="1_ww34l"]
 [ext_resource type="Script" uid="uid://dvxegqp0cf77n" path="res://addons/ropesim/RopeInteraction.gd" id="2_ww34l"]
-[ext_resource type="Texture2D" uid="uid://criwv6nuivcxy" path="res://rope_examples/icon.svg" id="3_ovf25"]
+[ext_resource type="Texture2D" uid="uid://criwv6nuivcxy" path="res://addons/ropesim/rope_examples/icon.svg" id="3_ovf25"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_nwm6u"]
 
