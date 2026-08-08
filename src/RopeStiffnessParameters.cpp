@@ -49,5 +49,4 @@ void RopeStiffnessParameters::_bind_methods()
     ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "stiffness"), "set_stiffness", "get_stiffness");
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "stiffness_curve", PROPERTY_HINT_RESOURCE_TYPE, "Curve"), "set_stiffness_curve", "get_stiffness_curve");
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "stiffness_bend_curve", PROPERTY_HINT_RESOURCE_TYPE, "Curve"), "set_stiffness_bend_curve", "get_stiffness_bend_curve");
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "stiffness_damping"), "set_stiffness_damping", "get_stiffness_damping");
 }
